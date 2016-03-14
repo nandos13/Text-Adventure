@@ -1,0 +1,28 @@
+Member function getLength returns number of characters in string
+PASSED!
+Constructor with const char* parameter test
+PASSED!
+Equal operator overloader
+PASSED!
+Get a character at any point in the string class
+PASSED!
+Get a substring from any point in the string class
+PASSED!
+Append one string with another
+PASSED!
+Prepend one string with another
+PASSED!
+Return as basic constant C-style string
+PASSED!
+Converting string to lowercase
+PASSED!
+Converting string to uppercase
+PASSED!
+Find the position of a substring within a string
+PASSED!
+Find the position of a substring, after a given position in the string
+PASSED!
+Replace a substring at a given position with another string
+PASSED!
+
+13 of 13 tests passed. Pass rate: 100%
