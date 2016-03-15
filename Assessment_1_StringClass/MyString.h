@@ -4,356 +4,38 @@ class MyString {
 private:
 	char* m_MyString;
 public:
-	~MyString() {
-		if (m_MyString != nullptr) {
-			delete[] m_MyString;
-		}
-	}
-	MyString(const char* str) {
-		m_MyString = new char[strlen(str) + 1];
-		for (int i = 0; i <= strlen(m_MyString); i++) {
-			m_MyString[i] = str[i];
-		}
-		m_MyString[strlen(m_MyString)] = '\0';
-	}
-	MyString(const int i) {
-		m_MyString = new char[i];
-		setCharAtIndex(0, '\0');
-	}
-	MyString() {
-		m_MyString = new char[1];
-		setCharAtIndex(0, '\0');
-	}
+	~MyString();
+	MyString(const char* str);
+	MyString(const int i);
+	MyString();
 
-	MyString(MyString& str) {
-		if (m_MyString == '\0') {
-			delete[] m_MyString;
-		}
-		m_MyString = new char[str.getLength()+1];
-		for (int i = 0; i < strlen(m_MyString); i++) {
-			m_MyString[i] = str.getCharAtIndex(i);
-		}
-		m_MyString[strlen(m_MyString)] = '\0';
-	}
+	MyString(MyString& str);
 
-	MyString& operator=(const MyString& rhs) {
-		if (m_MyString=='\0') {
-			delete[] m_MyString;
-		}
-		m_MyString = new char[rhs.getLength() + 1];
-		for (int i = 0; i < rhs.getLength() + 1; i++) {
-			m_MyString[i] = rhs.getCharAtIndex(i);
-		}
-		return *this;
-	}
-	MyString& operator=(const char*& rhs) {
-		if (m_MyString == '\0') {
-			delete[] m_MyString;
-		}
-		m_MyString = new char[strlen(rhs) + 1];
-		for (int i = 0; i < strlen(rhs) + 1; i++) {
-			m_MyString[i] = rhs[i];
-		}
-		return *this;
-	}
-	const bool& operator== (const char* rhs) {
-		bool answer = false;
-		MyString newString = rhs;
-		if (stringCompare(newString) == 0) {
-			answer = true;
-		}
-		return answer; //TODO : FIX THESE OPERATORS TO WORK
-	}
-	const bool& operator== (MyString& rhs) {
-		bool answer = false;
-		if (stringCompare(rhs) == 0) {
-			answer = true;
-		}
-		return answer;
-	}
+	MyString& operator=(const MyString& rhs);
+	MyString& operator=(const char*& rhs);
+	const bool& operator== (const char* rhs);
+	const bool& operator== (MyString& rhs);
 
-	void setString(const char* str) {
-		m_MyString = new char[strlen(str) + 1];
-		for (int i = 0; i <= strlen(m_MyString); i++) {
-			m_MyString[i] = str[i];
-		}
-		m_MyString[strlen(m_MyString)] = '\0';
-	}
-	void setString(MyString str) {
-		m_MyString = new char[strlen(str.stringOutput())];
-		for (int i = 0; i <= strlen(m_MyString); i++) {
-			m_MyString[i] = str.getCharAtIndex(i);
-		}
-		m_MyString[strlen(m_MyString)] = '\0';
-	}
-	const char* stringOutput() {
-		return m_MyString;
-	}
+	void setString(const char* str);
+	void setString(MyString str);
+	const char* stringOutput();
 
-	unsigned int getLength() const {
-		unsigned int length = 0;
-		unsigned int i = 0;
-		while (true) {
-			if (m_MyString[i] != '\0') {
-				length++;
-			}
-			else {
-				break;
-			}
-			i++;
-		}
-		return length;
-	}
-	char getCharAtIndex(unsigned int i) const {
-		return m_MyString[i];
-	}
-	void setCharAtIndex(unsigned int i, char c) const {
-		m_MyString[i] = c;
-	}
-	int stringCompare(MyString strB) const {
-		int answer = 2;
-		MyString string1 = m_MyString;
-		MyString string2 = strB;
-		//convert to lower case for accurate comparison
-		string1 = string1.toLowercase();
-		string2 = string2.toLowercase();
-		for (unsigned int i = 0; i < string1.getLength(); i++) {
-			/*Check if second string ends at index, before first string.
-			If it does, string 1 comes after, lexographically*/
-			if (string2.getCharAtIndex(i) == '\0') {
-				answer = 1;
-				break;
-			}
-			else {
-				if (string1.getCharAtIndex(i) == string2.getCharAtIndex(i)) {
-					answer = 0;
-					/*If all is same up until index, check that string2 doesnt carry on
-					after the null terminator.
-					If it does, string 2 comes after, lexographically*/
-					if (i == string1.getLength() - 1 && string2.getCharAtIndex(i + 1) != '\0') {
-						answer = -1;
-						break;
-					}
-				}
-				else if (string1.getCharAtIndex(i) > string2.getCharAtIndex(i)) {
-					answer = 1;
-					break;
-				}
-				else {
-					answer = -1;
-					break;
-				}
-			}
-		}
-		return answer;
-	}
-	int stringCompare(const char* strB) const {
-		int answer = 2;
-		MyString string1 = m_MyString;
-		MyString string2 = strB;
-		//convert to lower case for accurate comparison
-		string1 = string1.toLowercase();
-		string2 = string2.toLowercase();
-		for (unsigned int i = 0; i < string1.getLength(); i++) {
-			/*Check if second string ends at index, before first string.
-			If it does, string 1 comes after, lexographically*/
-			if (string2.getCharAtIndex(i) == '\0') {
-				answer = 1;
-				break;
-			}
-			else {
-				if (string1.getCharAtIndex(i) == string2.getCharAtIndex(i)) {
-					answer = 0;
-					/*If all is same up until index, check that string2 doesnt carry on
-					after the null terminator.
-					If it does, string 2 comes after, lexographically*/
-					if (i == string1.getLength() - 1 && string2.getCharAtIndex(i + 1) != '\0') {
-						answer = -1;
-						break;
-					}
-				}
-				else if (string1.getCharAtIndex(i) > string2.getCharAtIndex(i)) {
-					answer = 1;
-					break;
-				}
-				else {
-					answer = -1;
-					break;
-				}
-			}
-		}
-		return answer;
-	}
+	unsigned int getLength() const;
+	char getCharAtIndex(unsigned int i) const;
+	void setCharAtIndex(unsigned int i, char c) const;
+	int stringCompare(MyString strB) const;
+	int stringCompare(const char* strB) const;
 
-	MyString toLowercase() {
-		MyString result(getLength() + 1);
-		result = m_MyString;
-		for (int i = 0; i < getLength(); i++) {
-			if (m_MyString[i]=='\0') {
-				//end of array
-			}else if (m_MyString[i] >= 65 && m_MyString[i] <= 90) {
-				//is capital
-				result.setCharAtIndex(i, (result.getCharAtIndex(i) + 32));
-			}
-		}
-		return result;
-	}
-	MyString toUppercase() {
-		MyString result(getLength() + 1);
-		result = m_MyString;
-		for (int i = 0; i < getLength(); i++) {
-			if (m_MyString[i] == '\0') {
-				//end of array
-			}
-			else if (m_MyString[i] >= 97 && m_MyString[i] <= 122) {
-				//is capital
-				result.setCharAtIndex(i, (result.getCharAtIndex(i) - 32));
-			}
-		}
-		return result;
-	}
+	MyString toLowercase();
+	MyString toUppercase();
 
-	MyString stringAppend(MyString strB) {
-		MyString result((getLength()) + (strB.getLength()) + 1);
-		result.setCharAtIndex(0, '\0');
-		unsigned int i = 0, ii = 0;
-		//fill result with the first string, up to null terminator
-		while (true) {
-			if (m_MyString[i] != '\0') {
-				result.setCharAtIndex(i, m_MyString[i]);
-				result.setCharAtIndex(i+1, '\0');
-			}
-			else {
-				break;
-			}
-			i++;
-		}
-		//add second string on to the end of result
-		while (true) {
-			if (strB.getCharAtIndex(ii) != '\0') {
-				result.setCharAtIndex(i, strB.getCharAtIndex(ii));
-				result.setCharAtIndex(i+1, '\0');
-			}
-			else {
-				break;
-			}
-			ii++;
-			i++;
-		}
-		return result;
-	}
-	MyString stringPrepend(MyString strB) {
-		MyString result((getLength()) + (strB.getLength()) + 1);
-		result.setCharAtIndex(0, '\0');
-		unsigned int i = 0, ii = 0;
-		//fill result with the first string, up to null terminator
-		while (true) {
-			if (strB.getCharAtIndex(i) != '\0') {
-				result.setCharAtIndex(i, strB.getCharAtIndex(i));
-				result.setCharAtIndex(i + 1, '\0');
-			}
-			else {
-				break;
-			}
-			i++;
-		}
-		//add second string on to the end of result
-		while (true) {
-			if (m_MyString[ii] != '\0') {
-				result.setCharAtIndex(i, m_MyString[ii]);
-				result.setCharAtIndex(i + 1, '\0');
-			}
-			else {
-				break;
-			}
-			ii++;
-			i++;
-		}
-		return result;
-	}
+	MyString stringAppend(MyString strB);
+	MyString stringPrepend(MyString strB);
 
-	int find(const char* c) const {
-		int result = -1; //If character not found, returns -1 as error
-		bool same = false;
-		for (int i = 0; i < (getLength() + 1); i++) {
-			if (getCharAtIndex(i)==c[0]) {
-				same = true;
-				for (int k = 1; k < (strlen(c)); k++) {
-					if (getCharAtIndex(i+k)==c[k]) {
-						same = true;
-					}
-					else {
-						same = false;
-						break;
-					}
-				}
-			}
-			if (same==true) {
-				result = i;
-				break;
-			}
-		}
-		return result;
-	}
-	int find(const char* c, int startPosition) const {
-		int result = -1; //If character not found, returns -1 as error
-		bool same = false;
-		for (int i = startPosition; i < (getLength() + 1); i++) {
-			if (getCharAtIndex(i) == c[0]) {
-				same = true;
-				for (int k = 1; k < (strlen(c)); k++) {
-					if (getCharAtIndex(i + k) == c[k]) {
-						same = true;
-					}
-					else {
-						same = false;
-						break;
-					}
-				}
-			}
-			if (same == true) {
-				result = i;
-				break;
-			}
-		}
-		return result;
-	}
-	MyString subString(const unsigned int position, unsigned int returnAmount) const {
-		MyString result(returnAmount+1);
-		unsigned int i = position;
-		while (i < (position + returnAmount)) {
-			result.setCharAtIndex((i - position), getCharAtIndex(i));
-			result.setCharAtIndex((i - position + 1), '\0');
-			i++;
-		}
-		return result;
-	}
-	MyString subString(const unsigned int position) const {
-		MyString result(getLength() - position + 1);
-		unsigned int i = position;
-		while (i < getLength()) {
-			result.setCharAtIndex((i - position), getCharAtIndex(i));
-			result.setCharAtIndex((i - position + 1), '\0');
-			i++;
-		}
-		return result;
-	}
-	MyString subReplace(const unsigned int position, const unsigned int replaceAmount, char* replacementSubString) {
-		MyString result((getLength() - replaceAmount) + (strlen(replacementSubString)) + 1);
-		result = subString(0, position);
-		result = result.stringAppend(replacementSubString);
-		result = result.stringAppend(subString(position + replaceAmount));
-		return result;
-	}
-	MyString setToString(std::string str) {
-		if (m_MyString == '\0') {
-			delete[] m_MyString;
-		}
-		m_MyString = new char[str.length() + 1];
-		for (int i = 0; i <= strlen(m_MyString); i++) {
-			m_MyString[i] = str[i];
-		}
-		m_MyString[strlen(m_MyString)] = '\0';
-		return *this;
-	}
+	int find(const char* c) const;
+	int find(const char* c, int startPosition) const;
+	MyString subString(const unsigned int position, unsigned int returnAmount) const;
+	MyString subString(const unsigned int position) const;
+	MyString subReplace(const unsigned int position, const unsigned int replaceAmount, char* replacementSubString);
+	MyString setToString(std::string str);
 };
