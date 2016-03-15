@@ -2,7 +2,8 @@
 #include "MyString.h"
 #include "MapLocation.h"
 #include "Inventory.h"
-#include "Player.h"
+#include <vector>
+class Player;		//Forward-Declaration of class Room, prevents circular dependency issue
 class Room {
 protected:
 	MyString m_areaName = ""; //Name of the area

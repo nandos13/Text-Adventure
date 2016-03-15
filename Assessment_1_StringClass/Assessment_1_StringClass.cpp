@@ -2,14 +2,13 @@
 //
 
 #include "stdafx.h"
-#include "MyString.h"
-#include "Room.h"
 #include "Player.h"
-#include "MapLocation.h"
-#include "Inventory.h"
+//#include "MyString.h"					//	Included in Room.h through Player.h, probably don't need these anymore
+//#include "Room.h"						//<--------^
+//#include "MapLocation.h"				//<------^
+//#include "Inventory.h"				//<----^
 #include <iostream>
 #include <fstream>
-#include <Windows.h>
 #include <vector>
 using namespace std;
 
@@ -113,7 +112,6 @@ MyString getUserInput() {
 	return strInput.stringOutput();
 }
 
-
 void startGame() {
 	//Initialize all (restart the game)
 	vector<Room*> map;
@@ -122,7 +120,7 @@ void startGame() {
 	initializeMap(map);
 	Player* player = new Player();
 	gamePlaying = true;
-	//player->visitRoom(0, 0, map); // Spawns the player in Room at 0, 0 (The spawn room)
+	player->visitRoom(0, 0, map); // Spawns the player in Room at 0, 0 (The spawn room)
 	//---------------------------------------------------------------------------------
 	
 
@@ -143,6 +141,9 @@ int main()
 	cin.get();
     return 0;
 }
+
+/* http://stackoverflow.com/questions/625799/resolve-circular-dependencies-in-c */
+
 //FUNCTION HANDLE INPUT (USING SPACES)
 /*void handleInput(MyString str, vector<Room*> m, Player* p) {
 MyString temp = str;
