@@ -98,12 +98,11 @@ public:
 	{
 		// Default room code goes here
 		if (str == "north" || str == "east" || str == "south" || str == "west") {
-			//p->move(str, m);
+			p->move(str, m);
 		}
 		else if (str == "look" || str == "surroundings" || str == "explore") {
 			//cout << (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
 		}
-		std::cout << "This is a room\n";
 	}
 };
 
