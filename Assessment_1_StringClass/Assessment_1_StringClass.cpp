@@ -85,23 +85,44 @@ void initializeMap(vector<Room*> &m) {
 	MyString txtReturn;
 	MyString txtSurroundings;
 	MyString itemLoot;
-	txtName = "OLD TREE";
-	txtDiscover = "You awake under the shade of a large tree, head pounding and body weak. The air is still, almost silent. Concentrating, you notice a faint humming sound resonating from a nearby barn that sits just a few short paces North down an old stony path. To the East lay a small and peaceful looking garden abundant with vibrant flowers. To your West is a dense, dark forest which wraps around to meet a lake to your South. \nGripping a low branch to support yourself with your left hand, you painfully summon the strength to stand. ";
-	txtReturn = "You return to the large tree. It casts shade over a lush patch of grass, and you feel at rest as you approach. It's not hard to see how you fell asleep in this comfortable spot.";
-	txtSurroundings = "An old barn lies to your North. To the East is a vibrant garden, and to the West, a dense forest.";
-	m.push_back(new Room(0, 0, txtName, txtDiscover, txtReturn, txtSurroundings));
-	txtName = "GARDEN";
-	txtDiscover = "A pleasant aroma overwhelms your senses as you approach the small garden. Between rows of assorted flowers lay a narrow gravel path lined with old bricks. Towards the East end of the garden, a heavy, rusted looking shovel is sticking out of the dirt. Beyond the shovel lies a shed, which you think might be worth exploring. The lake to your south still seems difficult to cross. Several meters to your North stands a sign post.";
-	txtReturn = "You make your way back to the quaint garden.";
-	txtSurroundings = "You can see a sign post to your North, an old shed to your East, and to your West lies the field where you woke up.";
-	itemLoot = "shovel";
-	m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, Item(itemLoot)));
-	txtName = "SHED";
-	txtDiscover = "The shed is decrepit and covered in spider webs. Left ajar, the tin door creaks in the wind. The interior is dark and you struggle to see what is inside. As you decide whether or not to enter, you survey your surroundings; Your South side is covered by a rocky hill which seems impossible to cross, and to your North you can see a small water well. The garden lies to your West.";
-	txtReturn = "You return to the old shed.";
-	txtSurroundings = "A small water well lies to your North. The garden sits to your West. Your South is covered by a steep rocky hill which looks too hard to climb. To your East is a large, bare paddock which stretches for a few kilometers at least. You don’t have the energy to walk that far.";
-	m.push_back(new Room(2, 0, txtName, txtDiscover, txtReturn, txtSurroundings));
-
+	{
+		txtName = "OLD TREE";
+		txtDiscover = "You awake under the shade of a large tree, head pounding and body weak. The air is still, almost silent. Concentrating, you notice a faint humming sound resonating from a nearby barn that sits just a few short paces North down an old stony path. To the East lay a small and peaceful looking garden abundant with vibrant flowers. To your West is a dense, dark forest which wraps around to meet a lake to your South. \nGripping a low branch to support yourself with your left hand, you painfully summon the strength to stand. ";
+		txtReturn = "You return to the large tree. It casts shade over a lush patch of grass, and you feel at rest as you approach. It's not hard to see how you fell asleep in this comfortable spot.";
+		txtSurroundings = "An old barn lies to your North. To the East is a vibrant garden, and to the West, a dense forest.";
+		m.push_back(new Room(0, 0, txtName, txtDiscover, txtReturn, txtSurroundings));
+	}
+	{
+		txtName = "GARDEN";
+		txtDiscover = "A pleasant aroma overwhelms your senses as you approach the small garden. Between rows of assorted flowers lay a narrow gravel path lined with old bricks. Towards the East end of the garden, a heavy, rusted looking shovel is sticking out of the dirt. Beyond the shovel lies a shed, which you think might be worth exploring. The lake to your south still seems difficult to cross. Several meters to your North stands a sign post.";
+		txtReturn = "You make your way back to the quaint garden.";
+		txtSurroundings = "You can see a sign post to your North, an old shed to your East, and to your West lies the field where you woke up.";
+		itemLoot = "shovel";
+		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, Item(itemLoot)));
+	}
+	{
+		txtName = "SHED";
+		txtDiscover = "The shed is decrepit and covered in spider webs. Left ajar, the tin door creaks in the wind. The interior is dark and you struggle to see what is inside. As you decide whether or not to enter, you survey your surroundings; Your South side is covered by a rocky hill which seems impossible to cross, and to your North you can see a small water well. The garden lies to your West.";
+		txtReturn = "You return to the old shed.";
+		txtSurroundings = "A small water well lies to your North. The garden sits to your West. Your South is covered by a steep rocky hill which looks too hard to climb. To your East is a large, bare paddock which stretches for a few kilometers at least. You don’t have the energy to walk that far.";
+		DoorRoom *tempShedRoom = new DoorRoom(2, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(20, 20));
+		tempShedRoom->canMoveEast(false);
+		tempShedRoom->interior(false);
+		m.push_back(tempShedRoom);
+	}
+	{
+		txtName = "INSIDE SHED";
+		txtDiscover = "TODO: inside shed";
+		txtReturn = "TODO: return to inside shed";
+		txtSurroundings = "TODO: look out window?";
+		DoorRoom *tempShedInteriorRoom = new DoorRoom(20, 20, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0));
+		tempShedInteriorRoom->canMoveNorth(false);
+		tempShedInteriorRoom->canMoveEast(false);
+		tempShedInteriorRoom->canMoveSouth(false);
+		tempShedInteriorRoom->canMoveWest(false);
+		tempShedInteriorRoom->interior(true);
+		m.push_back(tempShedInteriorRoom); //TODO: FINISH THIS SO IT ACTUALLY SPAWNS AS PROPER DOOR ROOM
+	}
 }
 MyString getUserInput() {
 	cout << "> ";
@@ -123,7 +144,6 @@ void startGame() {
 	player->visitRoom(0, 0, map); // Spawns the player in Room at 0, 0 (The spawn room)
 	//---------------------------------------------------------------------------------
 	
-
 	while (gamePlaying == true) {
 		//TODO: *******************
 		map[player->findRoomAt(player->getPlayerLocX(), player->getPlayerLocY(), map, numberOfMapRooms)]->handleInput(getUserInput(), map, player);

@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="MapLocation.h" />
     <ClInclude Include="MyString.h" />

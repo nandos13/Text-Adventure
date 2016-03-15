@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Globals.h"
 
 Player::~Player()
 {
@@ -39,7 +40,6 @@ void Player::addItem(Item i)
 
 void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)
 {
-	const int maxRooms = 3; //TODO: FIGURE OUT BETTER WAY TO DECLARE MAX SIZE OF MAP VECTOR
 	unsigned int roomToVisit = 0;
 	roomToVisit = findRoomAt(posX, posY, m, maxRooms);
 	setPlayerLocation(m.at(roomToVisit)->getCoordinate());
@@ -80,7 +80,6 @@ unsigned int Player::findCurrentRoom(std::vector<Room*>& m, unsigned int maxRoom
 
 void Player::move(MyString direction, std::vector<Room*>& m)
 {
-	const int maxRooms = 3; //TODO: FIGURE OUT BETTER WAY TO DECLARE MAX SIZE OF MAP VECTOR
 	int currentRoom = findRoomAt(getPlayerLocX(), getPlayerLocY(), m, maxRooms);
 	if (direction == "north") {
 		if (m.at(currentRoom)->canMoveNorth() == true) {
@@ -136,5 +135,13 @@ void Player::move(MyString direction, std::vector<Room*>& m)
 	}
 	else {
 		std::cout << "Try that again!" << std::endl;
+	}
+}
+
+void Player::move(MapLocation mLoc, std::vector<Room*>& m)
+{
+	int destinationRoom = findRoomAt(mLoc.m_x, mLoc.m_y, m, maxRooms);
+	if (m.at(destinationRoom)->locked() == false) {
+		visitRoom(mLoc.m_x, mLoc.m_y, m);
 	}
 }

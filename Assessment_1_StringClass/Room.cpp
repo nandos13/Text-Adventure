@@ -1,5 +1,7 @@
 #include "Room.h"
 #include "Player.h"
+#include "Globals.h"
+
 Room::~Room()
 {
 }
@@ -94,9 +96,19 @@ bool Room::canMoveNorth()
 	return m_canMoveNorth;
 }
 
+void Room::canMoveNorth(bool b)
+{
+	m_canMoveNorth = b;
+}
+
 bool Room::canMoveEast()
 {
 	return m_canMoveEast;
+}
+
+void Room::canMoveEast(bool b)
+{
+	m_canMoveEast = b;
 }
 
 bool Room::canMoveSouth()
@@ -104,9 +116,19 @@ bool Room::canMoveSouth()
 	return m_canMoveSouth;
 }
 
+void Room::canMoveSouth(bool b)
+{
+	m_canMoveSouth = b;
+}
+
 bool Room::canMoveWest()
 {
 	return m_canMoveWest;
+}
+
+void Room::canMoveWest(bool b)
+{
+	m_canMoveWest = b;
 }
 
 bool Room::locked()
@@ -122,7 +144,6 @@ MyString Room::roomType()
 void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	// Default room code goes here
-	unsigned int maxRooms = 3;
 	if (str == "north" || str == "east" || str == "south" || str == "west") {
 		p->move(str, m);
 	}
@@ -134,10 +155,15 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	}
 	else {
 		//Check for two-word commands (Eg. Move North)
-		unsigned int spaceLocation = str.find(" "); //Locates the first space between words
-		if (str.subString(0, spaceLocation) == "move" || str.subString(0, spaceLocation) == "walk") { //TODO: FINISH THIS FUNCTION
-			MyString direction = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
-			p->move(direction, m);
+		int spaceLocation = str.find(" "); //Locates the first space between words
+		if (spaceLocation >= 0) {
+			if (str.subString(0, spaceLocation) == "move" || str.subString(0, spaceLocation) == "walk") { //TODO: FINISH THIS FUNCTION
+				MyString direction = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
+				p->move(direction, m);
+			}
+		}
+		else {
+			std::cout << "Try that again!" << std::endl;
 		}
 	}
 }
@@ -193,6 +219,49 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	}
 	else {
 		//Call superclass methods
+		Room::handleInput(str, m, p);
+	}
+}
+
+bool DoorRoom::interior()
+{
+	return m_interior;
+}
+
+void DoorRoom::interior(bool b)
+{
+	m_interior = b;
+}
+
+DoorRoom::~DoorRoom()
+{
+}
+
+DoorRoom::DoorRoom()
+{
+	m_roomType = "door";
+}
+
+DoorRoom::DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_toRoom = toRoom;
+	m_interior = false;
+	m_roomType = "door";
+
+}
+
+void DoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
+		p->move(m_toRoom, m);
+	}
+	else {
 		Room::handleInput(str, m, p);
 	}
 }

@@ -37,9 +37,13 @@ public:
 	MapLocation getCoordinate();
 	MyString getAreaName();
 	bool canMoveNorth();
+	void canMoveNorth(bool b);
 	bool canMoveEast();
+	void canMoveEast(bool b);
 	bool canMoveSouth();
+	void canMoveSouth(bool b);
 	bool canMoveWest();
+	void canMoveWest(bool b);
 	bool locked();
 	MyString roomType();
 	
@@ -66,7 +70,13 @@ public:
 };
 class DoorRoom : public Room {
 private:
-	MapLocation m_toRoom ;
+	MapLocation m_toRoom;
+	bool m_interior;
 public:
-
+	bool interior();
+	void interior(bool b);
+	~DoorRoom();
+	DoorRoom();
+	DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 };
