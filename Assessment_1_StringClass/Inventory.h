@@ -12,7 +12,11 @@ public:
 	}
 	Item(MyString c) {
 		m_itemID = c.toLowercase();
-		if (m_itemID =="shovel") {
+		if (m_itemID == "empty") {
+			m_itemName = "";
+			m_description = "";
+		}
+		else if (m_itemID =="shovel") {
 			m_itemName = "Garden Shovel";
 			m_description = "A sturdy garden shovel";
 		}

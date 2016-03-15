@@ -5,9 +5,6 @@
 #include "Room.h"
 class Player {
 private:
-	bool m_alive = true;
-	bool m_carryingShovel = false;
-	bool m_carryingRaft = false;
 	MapLocation *m_playerLoc = new MapLocation(0, 0);
 	std::vector<Item*> m_inventory;
 public:

@@ -132,6 +132,14 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	else if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
 		std::cout << "There is nothing to loot!" << std::endl;
 	}
+	else {
+		//Check for two-word commands (Eg. Move North)
+		unsigned int spaceLocation = str.find(" "); //Locates the first space between words
+		if (str.subString(0, spaceLocation) == "move" || str.subString(0, spaceLocation) == "walk") { //TODO: FINISH THIS FUNCTION
+			MyString direction = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
+			p->move(direction, m);
+		}
+	}
 }
 
 LootRoom::~LootRoom()
@@ -172,18 +180,19 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
 		//Check if this room has already been looted
-		if ((m_loot.itemID()).stringOutput()=="") { //TODO: FIX THIS
+		if (m_loot.itemID() == "empty") {
 			//No loot
 			std::cout << "There is nothing to loot!"  << std::endl;
 		}
 		else {
+			//Add loot to player inventory and despawn loot in the room
 			p->addItem(m_loot);
 			std::cout << "You picked up: " << (m_loot.itemName()).stringOutput() << std::endl;
-			m_loot = Item("");
+			m_loot = Item("empty");
 		}
 	}
 	else {
-		// Call superclass methods
+		//Call superclass methods
 		Room::handleInput(str, m, p);
 	}
 }

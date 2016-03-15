@@ -125,7 +125,7 @@ void startGame() {
 	
 
 	while (gamePlaying == true) {
-		//TODO: **************************************************************************************************
+		//TODO: *******************
 		map[player->findRoomAt(player->getPlayerLocX(), player->getPlayerLocY(), map, numberOfMapRooms)]->handleInput(getUserInput(), map, player);
 		//FINISH FUNCTION
 		//interprit first word, up to space (eg move)
