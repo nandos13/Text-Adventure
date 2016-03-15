@@ -73,6 +73,11 @@ unsigned int Player::findRoomAt(int posX, int posY, std::vector<Room*>& m, unsig
 	return resultRoom; //Returns index of room
 }
 
+unsigned int Player::findCurrentRoom(std::vector<Room*>& m, unsigned int maxRooms)
+{
+	return findRoomAt(getPlayerLocX(), getPlayerLocY(), m, maxRooms);
+}
+
 void Player::move(MyString direction, std::vector<Room*>& m)
 {
 	const int maxRooms = 3; //TODO: FIGURE OUT BETTER WAY TO DECLARE MAX SIZE OF MAP VECTOR

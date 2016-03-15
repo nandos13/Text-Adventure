@@ -32,4 +32,7 @@ public:
 	MyString itemID() {
 		return m_itemID;
 	}
+	MyString itemName() {
+		return m_itemName;
+	}
 };

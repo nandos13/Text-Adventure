@@ -1,5 +1,5 @@
 #include "Room.h"
-
+#include "Player.h"
 Room::~Room()
 {
 }
@@ -122,11 +122,15 @@ MyString Room::roomType()
 void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	// Default room code goes here
+	unsigned int maxRooms = 3;
 	if (str == "north" || str == "east" || str == "south" || str == "west") {
 		p->move(str, m);
 	}
 	else if (str == "look" || str == "surroundings" || str == "explore") {
-		//cout << (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
+		std::cout << (m.at(p->findCurrentRoom(m, maxRooms))->surroundingsText()).stringOutput() << std::endl;
+	}
+	else if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
+		std::cout << "There is nothing to loot!" << std::endl;
 	}
 }
 
@@ -167,12 +171,19 @@ void LootRoom::loot(Item i)
 void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
-		p->addItem(m_loot);
-		m_loot = Item("");
+		//Check if this room has already been looted
+		if ((m_loot.itemID()).stringOutput()=="") { //TODO: FIX THIS
+			//No loot
+			std::cout << "There is nothing to loot!"  << std::endl;
+		}
+		else {
+			p->addItem(m_loot);
+			std::cout << "You picked up: " << (m_loot.itemName()).stringOutput() << std::endl;
+			m_loot = Item("");
+		}
 	}
 	else {
 		// Call superclass methods
 		Room::handleInput(str, m, p);
 	}
-	std::cout << "This is a loot room\n";
 }
