@@ -19,92 +19,32 @@ protected:
 	bool m_locked = false;
 	MapLocation m_coord;
 public:
-	~Room() {
-		//DESTRUCTOR
-	}
-	Room() {
-		//DEFAULT CONSTRUCTOR
-	}
-	Room(MapLocation loc) {
-		m_coord.m_x = loc.m_x;
-		m_coord.m_y = loc.m_y;
-	}
-	Room(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings) {
-		m_coord.m_x = posX;
-		m_coord.m_y = posY;
-		m_areaName = txtName;
-		m_discoverText = txtDiscover;
-		m_returnText = txtReturn;
-		m_surroundingsText = txtSurroundings;
-	}
-	void setName(MyString n) {
-		m_areaName = n;
-	}
-	void setDiscoverText(MyString t) {
-		m_discoverText = t;
-	}
-	void setReturnText(MyString t) {
-		m_returnText = t;
-	}
-	void setSurroundingsText(MyString t) {
-		m_surroundingsText = t;
-	}
-	void setDiscovered() {
-		m_discovered = true;
-	}
-	bool discovered() {
-		return m_discovered;
-	}
-	MyString discoverText() {
-		return m_discoverText;
-	}
-	MyString returnText() {
-		return m_returnText;
-	}
-	MyString surroundingsText() {
-		return m_surroundingsText;
-	}
-	int getCoordX() {
-		return m_coord.m_x;
-	}
-	int getCoordY() {
-		return m_coord.m_y;
-	}
-	MapLocation getCoordinate() {
-		return m_coord;
-	}
-	MyString getAreaName() {
-		return m_areaName;
-	}
-	bool canMoveNorth() {
-		return m_canMoveNorth;
-	}
-	bool canMoveEast() {
-		return m_canMoveEast;
-	}
-	bool canMoveSouth() {
-		return m_canMoveSouth;
-	}
-	bool canMoveWest() {
-		return m_canMoveWest;
-	}
-	bool locked() {
-		return m_locked;
-	}
-	MyString roomType() {
-		return m_roomType;
-	}
+	~Room();
+	Room();
+	Room(MapLocation loc);
+	Room(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings);
+	void setName(MyString n);
+	void setDiscoverText(MyString t);
+	void setReturnText(MyString t);
+	void setSurroundingsText(MyString t);
+	void setDiscovered();
+	bool discovered();
+	MyString discoverText();
+	MyString returnText();
+	MyString surroundingsText();
+	int getCoordX();
+	int getCoordY();
+	MapLocation getCoordinate();
+	MyString getAreaName();
+	bool canMoveNorth();
+	bool canMoveEast();
+	bool canMoveSouth();
+	bool canMoveWest();
+	bool locked();
+	MyString roomType();
 	
-	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p)
-	{
-		// Default room code goes here
-		if (str == "north" || str == "east" || str == "south" || str == "west") {
-			p->move(str, m);
-		}
-		else if (str == "look" || str == "surroundings" || str == "explore") {
-			//cout << (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
-		}
-	}
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+	
 };
 
 //SUBCLASSES------------------------------------------------------------------
@@ -115,44 +55,14 @@ private:
 	//ItemCLASS
 public:
 	//loot function
-	~LootRoom() {
+	~LootRoom();
+	LootRoom();
+	LootRoom(MapLocation loc);
+	LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item itemLoot);
+	void loot(Item i);
 
-	}
-	LootRoom() {
-		//DEFAULT CONSTRUCTOR
-		m_roomType = "loot";
-	}
-	LootRoom(MapLocation loc) {
-		m_coord.m_x = loc.m_x;
-		m_coord.m_y = loc.m_y;
-		m_roomType = "loot";
-	}
-	LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item itemLoot) {
-		m_coord.m_x = posX;
-		m_coord.m_y = posY;
-		m_areaName = txtName;
-		m_discoverText = txtDiscover;
-		m_returnText = txtReturn;
-		m_surroundingsText = txtSurroundings;
-		m_loot = itemLoot;
-		m_roomType = "loot";
-	}
-	void loot(Item i) {
-		m_loot = i;
-	}
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 
-	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p)
-	{
-		if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
-			p->addItem(m_loot);
-			m_loot = Item("");
-		}
-		else {
-			// Call superclass methods
-			Room::handleInput(str, m, p);
-		}
-		std::cout << "This is a loot room\n";
-	}
 };
 class DoorRoom : public Room {
 private:
