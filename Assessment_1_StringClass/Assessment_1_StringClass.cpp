@@ -107,6 +107,7 @@ void initializeMap(vector<Room*> &m) {
 		txtSurroundings = "A small water well lies to your North. The garden sits to your West. Your South is covered by a steep rocky hill which looks too hard to climb. To your East is a large, bare paddock which stretches for a few kilometers at least. You don’t have the energy to walk that far.";
 		DoorRoom *tempShedRoom = new DoorRoom(2, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(20, 20));
 		tempShedRoom->canMoveEast(false);
+		tempShedRoom->canMoveSouth(false);
 		tempShedRoom->interior(false);
 		m.push_back(tempShedRoom);
 	}
