@@ -126,6 +126,7 @@ void initializeMap(vector<Room*> &m) {
 	txtReturn = "You return to the old shed.";
 	txtSurroundings = "A small water well lies to your North. The garden sits to your West. Your South is covered by a steep rocky hill which looks too hard to climb. To your East is a large, bare paddock which stretches for a few kilometers at least. You don’t have the energy to walk that far.";
 	m.push_back(new Room(2, 0, txtName, txtDiscover, txtReturn, txtSurroundings));
+
 }
 MyString getUserInput() {
 	cout << "> ";
@@ -138,7 +139,7 @@ MyString getUserInput() {
 void lootRoomAt(int roomNumber, vector<Room*> m, Player* p) {
 	
 }
-void handleInput(MyString str, vector<Room*> m, Player* p) {
+/*void handleInput(MyString str, vector<Room*> m, Player* p) {
 	MyString temp = str;
 	int spaceLocation = 0;
 	spaceLocation = temp.find(" ");
@@ -157,13 +158,13 @@ void handleInput(MyString str, vector<Room*> m, Player* p) {
 			(*p_movePlayer)("west", m, p);
 		}
 		else if (str == "look" || str == "surroundings" || str == "explore") {
-			cout << (m.at((*p_findRoomAt)(p[0].getPlayerLocX(), p[0].getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
+			cout << (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
 		}
 		else if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
 			//Check if room is loot room subclass
-			if (m.at((*p_findRoomAt)(p[0].getPlayerLocX(), p[0].getPlayerLocY(), m))->roomType() == "loot") {
+			if (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->roomType() == "loot") {
 				cout << "looting" << endl;
-				lootRoomAt((*p_findRoomAt)(p[0].getPlayerLocX(), p[0].getPlayerLocY(), m), m, p);
+				lootRoomAt((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m), m, p);
 				//TODO: Finish loot function
 				//IF: check loot has not already been picked up
 				//ADD PLAYER CLASS INVENTORY USING <VECTOR>
@@ -198,7 +199,7 @@ void handleInput(MyString str, vector<Room*> m, Player* p) {
 			cout << "Try that again!" << endl;
 		}
 	}
-}
+}*/
 unsigned int findRoomAt(int posX, int posY, vector<Room*> m) {
 	//Using posX and posY, find which room exists with those coordinates
 	unsigned int i = 0, resultRoom = 0;
@@ -214,7 +215,7 @@ unsigned int findRoomAt(int posX, int posY, vector<Room*> m) {
 void visitRoom(int posX, int posY, vector<Room*> m, Player* p) {
 	unsigned int roomToVisit = 0;
 	roomToVisit = findRoomAt(posX, posY, m);
-	p[0].setPlayerLocation(m.at(roomToVisit)->getCoordinate());
+	p->setPlayerLocation(m.at(roomToVisit)->getCoordinate());
 	//Print name of current room in a different text colour
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hColor, 12);
@@ -232,11 +233,11 @@ void visitRoom(int posX, int posY, vector<Room*> m, Player* p) {
 }
 void movePlayer(char* direction, vector<Room*> m, Player* p) {
 	int currentRoom = 0;
-	currentRoom = findRoomAt(p[0].getPlayerLocX(), p[0].getPlayerLocY(), m);
+	currentRoom = findRoomAt(p->getPlayerLocX(), p->getPlayerLocY(), m);
 	if (direction == "north") {
 		if (m.at(currentRoom)->canMoveNorth() == true) {
-			if (m.at(findRoomAt(p[0].getPlayerLocX(), (p[0].getPlayerLocY() + 1), m))->locked() == false) {
-				visitRoom(p[0].getPlayerLocX(), (p[0].getPlayerLocY() + 1), m, p);
+			if (m.at(findRoomAt(p->getPlayerLocX(), (p->getPlayerLocY() + 1), m))->locked() == false) {
+				visitRoom(p->getPlayerLocX(), (p->getPlayerLocY() + 1), m, p);
 			}
 			else {
 				cout << "Locked!" << endl;
@@ -248,8 +249,8 @@ void movePlayer(char* direction, vector<Room*> m, Player* p) {
 	}
 	else if (direction == "east") {
 		if (m.at(currentRoom)->canMoveEast() == true) {
-			if (m.at(findRoomAt((p[0].getPlayerLocX() + 1), p[0].getPlayerLocY(), m))->locked() == false) {
-				visitRoom((p[0].getPlayerLocX() + 1), p[0].getPlayerLocY(), m, p);
+			if (m.at(findRoomAt((p->getPlayerLocX() + 1), p->getPlayerLocY(), m))->locked() == false) {
+				visitRoom((p->getPlayerLocX() + 1), p->getPlayerLocY(), m, p);
 			}
 			else {
 				cout << "Locked!" << endl;
@@ -261,8 +262,8 @@ void movePlayer(char* direction, vector<Room*> m, Player* p) {
 	}
 	else if (direction == "south") {
 		if (m.at(currentRoom)->canMoveSouth() == true) {
-			if (m.at(findRoomAt(p[0].getPlayerLocX(), (p[0].getPlayerLocY() - 1), m))->locked() == false) {
-				visitRoom(p[0].getPlayerLocX(), (p[0].getPlayerLocY() - 1), m, p);
+			if (m.at(findRoomAt(p->getPlayerLocX(), (p->getPlayerLocY() - 1), m))->locked() == false) {
+				visitRoom(p->getPlayerLocX(), (p->getPlayerLocY() - 1), m, p);
 			}
 			else {
 				cout << "Locked!" << endl;
@@ -274,8 +275,8 @@ void movePlayer(char* direction, vector<Room*> m, Player* p) {
 	}
 	else if (direction == "west") {
 		if (m.at(currentRoom)->canMoveWest() == true) {
-			if (m.at(findRoomAt((p[0].getPlayerLocX() - 1), p[0].getPlayerLocY(), m))->locked() == false) {
-				visitRoom((p[0].getPlayerLocX() - 1), p[0].getPlayerLocY(), m, p);
+			if (m.at(findRoomAt((p->getPlayerLocX() - 1), p->getPlayerLocY(), m))->locked() == false) {
+				visitRoom((p->getPlayerLocX() - 1), p->getPlayerLocY(), m, p);
 			}
 			else {
 				cout << "Locked!" << endl;
@@ -295,17 +296,18 @@ void startGame() {
 	//-----
 	//-----
 	initializeMap(map);
-	Player* player = new Player[1];
+	Player* player = new Player();
 	gamePlaying = true;
 	visitRoom(0, 0, map, player); // Spawns the player in Room at 0, 0 (The spawn room)
 	p_movePlayer = &movePlayer;
 	p_findRoomAt = &findRoomAt;
 	//---------------------------------------------------------------------------------
-
+	
 
 	while (gamePlaying == true) {
 		//TODO: **************************************************************************************************
-		handleInput(getUserInput(), map, player); //FINISH FUNCTION
+		map[(*p_findRoomAt)(player->getPlayerLocX(), player->getPlayerLocY(), map)]->handleInput(getUserInput(), map, player);
+		//handleInput(getUserInput(), map, player); //FINISH FUNCTION
 		//interprit first word, up to space (eg move)
 		// pass rest into appropriate function (eg Move West will take move and pass West into move specific function)
 	}

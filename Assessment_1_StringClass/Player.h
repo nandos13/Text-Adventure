@@ -1,5 +1,6 @@
 #pragma once
 #include "MapLocation.h"
+#include "Room.h"
 #include <vector>
 class Player {
 private:
@@ -33,5 +34,8 @@ public:
 	}
 	void addItem(Item i) {
 		m_inventory.push_back(new Item(i.itemID()));
+	}
+	void move(MyString direction) {
+		
 	}
 };

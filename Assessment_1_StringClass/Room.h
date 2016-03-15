@@ -93,6 +93,18 @@ public:
 	MyString roomType() {
 		return m_roomType;
 	}
+	
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p)
+	{
+		// Default room code goes here
+		if (str == "north" || str == "east" || str == "south" || str == "west") {
+			//p->move(str, m);
+		}
+		else if (str == "look" || str == "surroundings" || str == "explore") {
+			//cout << (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
+		}
+		std::cout << "This is a room\n";
+	}
 };
 
 //SUBCLASSES------------------------------------------------------------------
@@ -127,6 +139,19 @@ public:
 	}
 	void loot(Item i) {
 		m_loot = i;
+	}
+
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p)
+	{
+		if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
+			p->addItem(m_loot);
+			m_loot = Item("");
+		}
+		else {
+			// Call superclass methods
+			Room::handleInput(str, m, p);
+		}
+		std::cout << "This is a loot room\n";
 	}
 };
 class DoorRoom : public Room {
