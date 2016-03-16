@@ -105,7 +105,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "The shed is decrepit and covered in spider webs. Left ajar, the tin door creaks in the wind. The interior is dark and you struggle to see what is inside. As you decide whether or not to enter, you survey your surroundings; Your South side is covered by a rocky hill which seems impossible to cross, and to your North you can see a small water well. The garden lies to your West.";
 		txtReturn = "You return to the old shed.";
 		txtSurroundings = "A small water well lies to your North. The garden sits to your West. Your South is covered by a steep rocky hill which looks too hard to climb. To your East is a large, bare paddock which stretches for a few kilometers at least. You don’t have the energy to walk that far.";
-		DoorRoom *tempShedRoom = new DoorRoom(2, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(20, 20));
+		DoorRoom *tempShedRoom = new DoorRoom(2, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(3, 0));
 		tempShedRoom->canMoveEast(false);
 		tempShedRoom->canMoveSouth(false);
 		tempShedRoom->interior(false);
@@ -116,13 +116,20 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: inside shed";
 		txtReturn = "TODO: return to inside shed";
 		txtSurroundings = "TODO: look out window?";
-		DoorRoom *tempShedInteriorRoom = new DoorRoom(20, 20, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0));
+		DoorRoom *tempShedInteriorRoom = new DoorRoom(3, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0));
 		tempShedInteriorRoom->canMoveNorth(false);
 		tempShedInteriorRoom->canMoveEast(false);
 		tempShedInteriorRoom->canMoveSouth(false);
 		tempShedInteriorRoom->canMoveWest(false);
 		tempShedInteriorRoom->interior(true);
 		m.push_back(tempShedInteriorRoom); //TODO: FINISH THIS SO IT ACTUALLY SPAWNS AS PROPER DOOR ROOM
+	}
+	{
+		txtName = "Signpost";
+		txtDiscover = "TODO: signpost";
+		txtReturn = "TODO: return to signpost";
+		txtSurroundings = "TODO: surroundings signpost";
+		m.push_back(new Room(1, 1, txtName, txtDiscover, txtReturn, txtSurroundings));
 	}
 }
 MyString getUserInput() {

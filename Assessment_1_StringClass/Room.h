@@ -19,7 +19,7 @@ protected:
 	bool m_locked = false;
 	MapLocation m_coord;
 public:
-	~Room();
+	virtual ~Room();
 	Room();
 	Room(MapLocation loc);
 	Room(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings);
@@ -59,7 +59,7 @@ private:
 	//ItemCLASS
 public:
 	//loot function
-	~LootRoom();
+	virtual ~LootRoom();
 	LootRoom();
 	LootRoom(MapLocation loc);
 	LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item itemLoot);
@@ -75,7 +75,7 @@ private:
 public:
 	bool interior();
 	void interior(bool b);
-	~DoorRoom();
+	virtual ~DoorRoom();
 	DoorRoom();
 	DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
