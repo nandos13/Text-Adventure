@@ -7,6 +7,7 @@
 //#include "Room.h"						//<--------^
 //#include "MapLocation.h"				//<------^
 //#include "Inventory.h"				//<----^
+#include "Globals.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -15,7 +16,6 @@ using namespace std;
 
 //GLOBAL VARIABLES
 fstream file;
-const unsigned int numberOfMapRooms = 3; // USED FOR ITERATING THROUGH ALL ROOMS ON THE MAP
 bool gamePlaying;
 
 
@@ -113,16 +113,24 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{
 		txtName = "INSIDE SHED";
-		txtDiscover = "TODO: inside shed";
-		txtReturn = "TODO: return to inside shed";
-		txtSurroundings = "TODO: look out window?";
-		DoorRoom *tempShedInteriorRoom = new DoorRoom(3, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0));
+		txtDiscover = "As you open the door and step inside, sunlight shines through and reveals a dusty old raft propped up against the far wall of the shed. This might be useful.";
+		txtReturn = "You again step inside the old shed.";
+		txtSurroundings = "You peek out the window. Outside the shed, the small garden lies to the East. You can't see much else.";
+		itemLoot = "raft";
+		LootDoorRoom *tempShedInteriorRoom = new LootDoorRoom(3, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0), Item(itemLoot));
 		tempShedInteriorRoom->canMoveNorth(false);
 		tempShedInteriorRoom->canMoveEast(false);
 		tempShedInteriorRoom->canMoveSouth(false);
 		tempShedInteriorRoom->canMoveWest(false);
 		tempShedInteriorRoom->interior(true);
 		m.push_back(tempShedInteriorRoom); //TODO: FINISH THIS SO IT ACTUALLY SPAWNS AS PROPER DOOR ROOM
+	}
+	{
+		txtName = "Lake"; //Lake 1, under Spawn
+		txtDiscover = "TODO: Lake1";
+		txtReturn = "TODO: return to Lake1";
+		txtSurroundings = "TODO: surroundings";
+
 	}
 	{
 		txtName = "Signpost";
@@ -133,9 +141,12 @@ void initializeMap(vector<Room*> &m) {
 	}
 }
 MyString getUserInput() {
+	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hColor, 2);
 	cout << "> ";
 	char input[128];
 	cin.getline(input,sizeof(input));
+	SetConsoleTextAttribute(hColor, 7);
 	MyString strInput = input;
 	strInput = strInput.toLowercase();
 	return strInput.stringOutput();
@@ -154,7 +165,7 @@ void startGame() {
 	
 	while (gamePlaying == true) {
 		//TODO: *******************
-		map[player->findRoomAt(player->getPlayerLocX(), player->getPlayerLocY(), map, numberOfMapRooms)]->handleInput(getUserInput(), map, player);
+		map.at(player->findCurrentRoom(map, maxRooms))->handleInput(getUserInput(), map, player);
 		//FINISH FUNCTION
 		//interprit first word, up to space (eg move)
 		// pass rest into appropriate function (eg Move West will take move and pass West into move specific function)

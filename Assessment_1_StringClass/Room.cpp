@@ -253,7 +253,6 @@ DoorRoom::DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, M
 	m_toRoom = toRoom;
 	m_interior = false;
 	m_roomType = "door";
-
 }
 
 void DoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
@@ -263,5 +262,38 @@ void DoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	}
 	else {
 		Room::handleInput(str, m, p);
+	}
+}
+
+LootDoorRoom::~LootDoorRoom()
+{
+}
+
+LootDoorRoom::LootDoorRoom()
+{
+	m_roomType = "lootdoor";
+}
+
+LootDoorRoom::LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item itemLoot)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_toRoom = toRoom;
+	m_interior = false;
+	m_loot = itemLoot;
+	m_roomType = "lootdoor";
+}
+
+void LootDoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
+		LootRoom::handleInput(str, m, p);
+	}
+	else if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
+		DoorRoom::handleInput(str, m, p);
 	}
 }

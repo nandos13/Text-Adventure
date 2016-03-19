@@ -53,8 +53,8 @@ public:
 
 //SUBCLASSES------------------------------------------------------------------
 
-class LootRoom : public Room {
-private:
+class LootRoom : public virtual Room {
+protected:
 	Item m_loot;
 	//ItemCLASS
 public:
@@ -68,8 +68,8 @@ public:
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 
 };
-class DoorRoom : public Room {
-private:
+class DoorRoom : public virtual Room {
+protected:
 	MapLocation m_toRoom;
 	bool m_interior;
 public:
@@ -79,4 +79,13 @@ public:
 	DoorRoom();
 	DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+};
+class LootDoorRoom : public LootRoom, public DoorRoom {
+protected:
+
+public:
+	virtual ~LootDoorRoom();
+	LootDoorRoom();
+	LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item itemLoot);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player *p);
 };
