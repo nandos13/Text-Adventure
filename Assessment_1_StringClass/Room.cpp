@@ -199,7 +199,7 @@ LootRoom::LootRoom(MapLocation loc)
 	m_roomType = "loot";
 }
 
-LootRoom::LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item itemLoot)
+LootRoom::LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item* itemLoot)
 {
 	m_coord.m_x = posX;
 	m_coord.m_y = posY;
@@ -211,7 +211,7 @@ LootRoom::LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, M
 	m_roomType = "loot";
 }
 
-void LootRoom::loot(Item i)
+void LootRoom::loot(Item* i)
 {
 	m_loot = i;
 }
@@ -220,19 +220,19 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
 		//Check if this room has already been looted
-		if (m_loot.itemID() == "empty") {
+		if (m_loot->itemID() == "empty") {
 			//No loot
 			std::cout << "There is nothing to loot!"  << std::endl;
 		}
 		else {
 			//Add loot to player inventory and despawn loot in the room
 			p->addItem(m_loot);
-			if (m_loot.itemID() == "raft") { //Unlock Lake for sailing with boat
+			if (m_loot->itemID() == "raft") { //Unlock Lake for sailing with boat
 				m.at(4)->locked(false);
 				m.at(5)->locked(false);
 			}
-			std::cout << "You picked up: " << (m_loot.itemName()).stringOutput() << std::endl;
-			m_loot = Item("empty");
+			std::cout << "You picked up: " << (m_loot->itemName()).stringOutput() << std::endl;
+			//m_loot = new Item("empty");
 		}
 	}
 	else {
@@ -302,7 +302,7 @@ LootDoorRoom::LootDoorRoom()
 	m_roomType = "lootdoor";
 }
 
-LootDoorRoom::LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item itemLoot)
+LootDoorRoom::LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item* itemLoot)
 {
 	m_coord.m_x = posX;
 	m_coord.m_y = posY;
@@ -360,6 +360,9 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 			if (enemyIsAlive() == true) {
 				m_enemy.at(0)->attack(p);
 			}
+		}
+		else {
+			Room::handleInput(str, m, p);
 		}
 	}
 	else {

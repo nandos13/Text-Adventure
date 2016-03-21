@@ -21,7 +21,7 @@ public:
 
 	int getPlayerLocX();
 	int getPlayerLocY();
-	void addItem(Item i);
+	void addItem(Item* i);
 	void equip(MyString itemName);
 	int searchInventory(MyString itemName);
 	float getHealth();

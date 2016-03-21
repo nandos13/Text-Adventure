@@ -45,7 +45,7 @@ void Enemy::setDefense(float def)
 void Enemy::killEnemy()
 {
 	m_alive = false;
-	std::cout << "You died!" << std::endl;
+	std::cout << "Enemy died!" << std::endl;
 }
 
 bool Enemy::alive()

@@ -98,7 +98,8 @@ void initializeMap(vector<Room*> &m) {
 		txtReturn = "You make your way back to the quaint garden.";
 		txtSurroundings = "You can see a sign post to your North, an old shed to your East, and to your West lies the field where you woke up.";
 		itemLoot = "shovel";
-		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, Weapon(itemLoot)));
+		Weapon *item = new Weapon(itemLoot);
+		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, item));
 	}
 	{
 		txtName = "SHED";
@@ -117,7 +118,8 @@ void initializeMap(vector<Room*> &m) {
 		txtReturn = "You again step inside the old shed.";
 		txtSurroundings = "You peek out the window. Outside the shed, the small garden lies to the East. You can't see much else.";
 		itemLoot = "raft";
-		LootDoorRoom *tempShedInteriorRoom = new LootDoorRoom(3, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0), Item(itemLoot));
+		Item *item = new Item(itemLoot);
+		LootDoorRoom *tempShedInteriorRoom = new LootDoorRoom(3, 0, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, 0), item);
 		tempShedInteriorRoom->canMoveNorth(false);
 		tempShedInteriorRoom->canMoveEast(false);
 		tempShedInteriorRoom->canMoveSouth(false);
@@ -201,7 +203,9 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: water field";
 		txtReturn = "TODO: return to field";
 		txtSurroundings = "TODO: surroundings";
-		LootRoom *tempFieldRoom = new LootRoom(2, 1, txtName, txtDiscover, txtReturn, txtSurroundings, Item("water"));
+		itemLoot = "water";
+		Item *item = new Item(itemLoot);
+		LootRoom *tempFieldRoom = new LootRoom(2, 1, txtName, txtDiscover, txtReturn, txtSurroundings, item);
 		tempFieldRoom->canMoveEast(false);
 		m.push_back(tempFieldRoom);
 	}

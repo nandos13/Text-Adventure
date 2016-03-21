@@ -58,15 +58,15 @@ public:
 
 class LootRoom : public virtual Room {
 protected:
-	Item m_loot;
+	Item* m_loot;
 	//ItemCLASS
 public:
 	//loot function
 	virtual ~LootRoom();
 	LootRoom();
 	LootRoom(MapLocation loc);
-	LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item itemLoot);
-	void loot(Item i);
+	LootRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Item* itemLoot);
+	void loot(Item* i);
 
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 
@@ -89,7 +89,7 @@ protected:
 public:
 	virtual ~LootDoorRoom();
 	LootDoorRoom();
-	LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item itemLoot);
+	LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item* itemLoot);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player *p);
 };
 class CombatRoom : public virtual Room {

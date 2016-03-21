@@ -20,6 +20,7 @@ Player::Player()
 	m_playerLoc->m_y = 0;
 	m_health = 25.0f;
 	m_defense = 12.0f;
+	m_attack = 5.0f;
 	m_alive = true;
 	m_inventory.push_back(new Weapon("fists"));
 }
@@ -30,6 +31,7 @@ void Player::setPlayerLocation(MapLocation loc)
 	m_playerLoc->m_y = loc.m_y;
 	m_health = 25.0f;
 	m_defense = 12.0f;
+	m_attack = 5.0f;
 	m_alive = true;
 	m_inventory.push_back(new Weapon("fists"));
 }
@@ -44,9 +46,9 @@ int Player::getPlayerLocY()
 	return m_playerLoc->m_y;
 }
 
-void Player::addItem(Item i)
+void Player::addItem(Item* i)
 {
-	m_inventory.push_back(new Item(i.itemID()));
+	m_inventory.push_back(i);
 }
 
 void Player::equip(MyString itemName)
@@ -59,6 +61,7 @@ void Player::equip(MyString itemName)
 	else {
 		if ((m_inventory.at(itemAtIndex))->itemType() == "weapon") {
 			m_equippedItem = itemAtIndex;
+			std::cout << "You equipped: " << ((m_inventory.at(m_equippedItem))->itemName()).stringOutput() << std::endl;
 		}
 		else {
 			std::cout << "You can't equip this item." << std::endl;
@@ -70,7 +73,7 @@ int Player::searchInventory(MyString itemName)
 {
 	int itemAtIndex = -1;
 	for (unsigned int i = 0; i < m_inventory.size(); i++) {
-		if (m_inventory.at(i)->itemID() == itemName) {
+		if ((m_inventory.at(i))->itemID() == itemName) {
 			itemAtIndex = i;
 			break;
 		}

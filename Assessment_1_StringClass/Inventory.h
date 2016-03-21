@@ -68,7 +68,7 @@ public:
 			m_damage = 0;
 		}
 		else if (m_itemID == "fists") {
-			m_itemName = "Your hands";
+			m_itemName = "Your Hands";
 			m_description = "You were born with these";
 			m_ammo = -1;
 			m_damage = 3;
