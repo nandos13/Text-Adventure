@@ -173,6 +173,11 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	}
 }
 
+void Room::attackEnemy(std::vector<Room*>& m, Player * p)
+{
+	std::cout << "Nothing to attack here!" << std::endl;
+}
+
 LootRoom::~LootRoom()
 {
 }

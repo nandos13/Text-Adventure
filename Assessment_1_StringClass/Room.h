@@ -49,6 +49,7 @@ public:
 	MyString roomType();
 	
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+	virtual void attackEnemy(std::vector<Room*>& m, Player* p);
 	
 };
 
@@ -89,4 +90,10 @@ public:
 	LootDoorRoom();
 	LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item itemLoot);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player *p);
+};
+class CombatRoom : public virtual Room {
+protected:
+
+private:
+
 };

@@ -196,6 +196,21 @@ void initializeMap(vector<Room*> &m) {
 		txtSurroundings = "TODO: surroundings signpost";
 		m.push_back(new Room(1, 1, txtName, txtDiscover, txtReturn, txtSurroundings));
 	}
+	{
+		txtName = "Field";
+		txtDiscover = "TODO: water field";
+		txtReturn = "TODO: return to field";
+		txtSurroundings = "TODO: surroundings";
+		LootRoom *tempFieldRoom = new LootRoom(2, 1, txtName, txtDiscover, txtReturn, txtSurroundings, Item("water"));
+		tempFieldRoom->canMoveEast(false);
+		m.push_back(tempFieldRoom);
+	}
+	{
+		txtName = "Spider Hill"; //Change name?
+		txtDiscover = "TODO: combat room";
+		txtReturn = "TODO: return to combat room";
+		txtSurroundings = "TODO: surroundings";
+	}
 }
 MyString getUserInput() {
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);

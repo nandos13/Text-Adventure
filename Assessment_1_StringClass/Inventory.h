@@ -28,6 +28,10 @@ public:
 			m_itemName = "Key";
 			m_description = "A small, old fashioned key";
 		}
+		else if (m_itemID =="water") {
+			m_itemName = "Water Bottle";
+			m_description = "A half empty bottle of water";
+		}
 		else if (m_itemID =="") {
 			
 		}
