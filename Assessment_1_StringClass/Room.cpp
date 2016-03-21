@@ -136,6 +136,11 @@ bool Room::locked()
 	return m_locked;
 }
 
+void Room::locked(bool b)
+{
+	m_locked = b;
+}
+
 MyString Room::roomType()
 {
 	return m_roomType;
@@ -213,6 +218,10 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 		else {
 			//Add loot to player inventory and despawn loot in the room
 			p->addItem(m_loot);
+			if (m_loot.itemID() == "raft") { //Unlock Lake for sailing with boat
+				m.at(4)->locked(false);
+				m.at(5)->locked(false);
+			}
 			std::cout << "You picked up: " << (m_loot.itemName()).stringOutput() << std::endl;
 			m_loot = Item("empty");
 		}
@@ -257,11 +266,21 @@ DoorRoom::DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, M
 
 void DoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
-	if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
-		p->move(m_toRoom, m);
+	if ((m.at(p->findCurrentRoom(m, maxRooms))->getAreaName()).toLowercase() == "lake") {
+		if (str == "south" || str == "enter" || str == "dock") {
+			p->move(m_toRoom, m);
+		}
+		else {
+			Room::handleInput(str, m, p);
+		}
 	}
 	else {
-		Room::handleInput(str, m, p);
+		if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
+			p->move(m_toRoom, m);
+		}
+		else {
+			Room::handleInput(str, m, p);
+		}
 	}
 }
 

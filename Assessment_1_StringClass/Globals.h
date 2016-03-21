@@ -1,3 +1,3 @@
 #pragma once
 
-const unsigned int maxRooms = 5;
+const unsigned int maxRooms = 8;

@@ -123,14 +123,71 @@ void initializeMap(vector<Room*> &m) {
 		tempShedInteriorRoom->canMoveSouth(false);
 		tempShedInteriorRoom->canMoveWest(false);
 		tempShedInteriorRoom->interior(true);
-		m.push_back(tempShedInteriorRoom); //TODO: FINISH THIS SO IT ACTUALLY SPAWNS AS PROPER DOOR ROOM
+		m.push_back(tempShedInteriorRoom);
 	}
 	{
 		txtName = "Lake"; //Lake 1, under Spawn
 		txtDiscover = "TODO: Lake1";
 		txtReturn = "TODO: return to Lake1";
 		txtSurroundings = "TODO: surroundings";
-
+		DoorRoom *tempLakeRoom = new DoorRoom(0, -1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(15, 15));
+		tempLakeRoom->canMoveEast(false);
+		tempLakeRoom->canMoveSouth(false);
+		tempLakeRoom->canMoveWest(false);
+		tempLakeRoom->interior(false);
+		tempLakeRoom->locked(true);
+		m.push_back(tempLakeRoom);
+	}
+	{
+		txtName = "Lake"; //Lake 2, under Garden
+		txtDiscover = "TODO: Same as Lake1";
+		txtReturn = "TODO: Same as return to Lake1";
+		txtSurroundings = "TODO: surroundings";
+		DoorRoom *tempLakeRoom = new DoorRoom(1, -1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(15, 15));
+		tempLakeRoom->canMoveEast(false);
+		tempLakeRoom->canMoveSouth(false);
+		tempLakeRoom->canMoveWest(false);
+		tempLakeRoom->interior(false);
+		tempLakeRoom->locked(true);
+		m.push_back(tempLakeRoom);
+	}
+	{
+		//TODO: Make something happen on this island (maybe a button that does something in the barn?)
+		txtName = "Island"; 
+		txtDiscover = "TODO: Island";
+		txtReturn = "TODO: return to Island";
+		txtSurroundings = "TODO: surroundings";
+		DoorRoom *tempIslandRoom = new DoorRoom(15, 15, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 0));
+		tempIslandRoom->canMoveNorth(false);
+		tempIslandRoom->canMoveEast(false);
+		tempIslandRoom->canMoveSouth(false);
+		tempIslandRoom->canMoveWest(false);
+		tempIslandRoom->interior(true);
+		m.push_back(tempIslandRoom);
+	}
+	{
+		txtName = "Barn";
+		txtDiscover = "TODO: Barn";
+		txtReturn = "TODO: return to Barn";
+		txtSurroundings = "TODO: surroundings";
+		DoorRoom *tempBarnRoom = new DoorRoom(0, 1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 15));
+		tempBarnRoom->canMoveWest(false);
+		tempBarnRoom->interior(false);
+		m.push_back(tempBarnRoom);
+	}
+	{
+		txtName = "Inside Barn";
+		txtDiscover = "TODO: Inside Barn";
+		txtReturn = "TODO: return to Inside Barn";
+		txtSurroundings = "TODO: surroundings";
+		DoorRoom *tempInsideBarnRoom = new DoorRoom(0, 15, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 1));
+		tempInsideBarnRoom->canMoveNorth(false);
+		tempInsideBarnRoom->canMoveEast(false);
+		tempInsideBarnRoom->canMoveSouth(false);
+		tempInsideBarnRoom->canMoveWest(false);
+		tempInsideBarnRoom->interior(true);
+		tempInsideBarnRoom->locked(true);
+		m.push_back(tempInsideBarnRoom);
 	}
 	{
 		txtName = "Signpost";

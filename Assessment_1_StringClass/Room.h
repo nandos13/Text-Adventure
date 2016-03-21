@@ -45,6 +45,7 @@ public:
 	bool canMoveWest();
 	void canMoveWest(bool b);
 	bool locked();
+	void locked(bool b);
 	MyString roomType();
 	
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
