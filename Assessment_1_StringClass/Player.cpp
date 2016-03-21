@@ -9,18 +9,24 @@ Player::Player(int posX, int posY)
 {
 	m_playerLoc->m_x = posX;
 	m_playerLoc->m_y = posY;
+	health = 25.0f;
+	defense = 12.0f;
 }
 
 Player::Player()
 {
 	m_playerLoc->m_x = 0;
 	m_playerLoc->m_y = 0;
+	health = 25.0f;
+	defense = 12.0f;
+	alive = true;
 }
 
 void Player::setPlayerLocation(MapLocation loc)
 {
 	m_playerLoc->m_x = loc.m_x;
 	m_playerLoc->m_y = loc.m_y;
+	alive = true;
 }
 
 int Player::getPlayerLocX()
@@ -36,6 +42,40 @@ int Player::getPlayerLocY()
 void Player::addItem(Item i)
 {
 	m_inventory.push_back(new Item(i.itemID()));
+}
+
+float Player::getHealth()
+{
+	return health;
+}
+
+void Player::setHealth(float hp)
+{
+	health = hp;
+	if (health <= 0) {
+		killPlayer();
+	}
+}
+
+float Player::getDefense()
+{
+	return defense;
+}
+
+void Player::setDefense(float def)
+{
+	if (def >= 0) {
+		defense = def;
+	}
+	else {
+		defense = 0;
+	}
+}
+
+void Player::killPlayer()
+{
+	alive = false;
+	std::cout << "You died!" << std::endl;
 }
 
 void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)
