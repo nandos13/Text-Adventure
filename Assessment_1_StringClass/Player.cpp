@@ -113,6 +113,8 @@ void Player::killPlayer()
 {
 	m_alive = false;
 	std::cout << "You died!" << std::endl;
+	gamePlaying = false;
+	Sleep(2000);
 }
 
 void Player::attack(Enemy * p)

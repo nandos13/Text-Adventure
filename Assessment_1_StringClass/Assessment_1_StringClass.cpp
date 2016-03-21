@@ -3,10 +3,6 @@
 
 #include "stdafx.h"
 #include "Player.h"
-//#include "MyString.h"					//	Included in Room.h through Player.h, probably don't need these anymore
-//#include "Room.h"						//<--------^
-//#include "MapLocation.h"				//<------^
-//#include "Inventory.h"				//<----^
 #include "Globals.h"
 #include <iostream>
 #include <fstream>
@@ -16,7 +12,7 @@ using namespace std;
 
 //GLOBAL VARIABLES
 fstream file;
-bool gamePlaying;
+bool gamePlaying = true;
 
 
 //STRING CLASS VALIDATION
@@ -240,13 +236,28 @@ void startGame() {
 	//-----
 	initializeMap(map);
 	Player* player = new Player();
-	gamePlaying = true;
 	player->visitRoom(0, 0, map); // Spawns the player in Room at 0, 0 (The spawn room)
 	//---------------------------------------------------------------------------------
 	
 	while (gamePlaying == true) {
-		//TODO: make gamePlaying a global variable in global.h so killing the player can make it false
 		map.at(player->findCurrentRoom(map, maxRooms))->handleInput(getUserInput(), map, player);
+	}
+	// Game over
+	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE); //Change text colour
+	SetConsoleTextAttribute(hColor, 12);
+	cout << "Would you like to play again?" << endl;
+	SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+	//TODO: CLEAR MEMORY (GET DESTRUCTORS WORKING)
+	{
+		MyString input = getUserInput();
+		if (input == "yes") {
+			gamePlaying = true;
+			startGame();
+		}
+		else {
+			cout << "Thanks for playing!" << endl;
+			Sleep(2000);
+		}
 	}
 }
 
@@ -254,72 +265,7 @@ int main()
 {
 	validateClass();
 	startGame();
-
-	cin.get();
     return 0;
 }
 
 /* http://stackoverflow.com/questions/625799/resolve-circular-dependencies-in-c */
-
-//FUNCTION HANDLE INPUT (USING SPACES)
-/*void handleInput(MyString str, vector<Room*> m, Player* p) {
-MyString temp = str;
-int spaceLocation = 0;
-spaceLocation = temp.find(" ");
-if (spaceLocation == -1) {
-//No space found, treat as single word input
-if (str == "north") {
-(*p_movePlayer)("north", m, p);
-}
-else if (str == "east") {
-(*p_movePlayer)("east", m, p);
-}
-else if (str == "south") {
-(*p_movePlayer)("south", m, p);
-}
-else if (str == "west") {
-(*p_movePlayer)("west", m, p);
-}
-else if (str == "look" || str == "surroundings" || str == "explore") {
-cout << (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->surroundingsText()).stringOutput() << endl;
-}
-else if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
-//Check if room is loot room subclass
-if (m.at((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m))->roomType() == "loot") {
-cout << "looting" << endl;
-lootRoomAt((*p_findRoomAt)(p->getPlayerLocX(), p->getPlayerLocY(), m), m, p);
-//TODO: Finish loot function
-//IF: check loot has not already been picked up
-//ADD PLAYER CLASS INVENTORY USING <VECTOR>
-}
-else {
-cout << "Nothing to loot" << endl;
-}
-}
-}
-else {
-//Find the first command word, eg "move"
-//TODO: Finish this
-if (str.subString(0, spaceLocation)=="move") {
-str = str.subString(spaceLocation+1);
-if (str == "north") {
-(*p_movePlayer)("north", m, p);
-}
-else if (str == "east") {
-(*p_movePlayer)("east", m, p);
-}
-else if (str == "south") {
-(*p_movePlayer)("south", m, p);
-}
-else if (str == "west") {
-(*p_movePlayer)("west", m, p);
-}
-else {
-cout << "Try that again!" << endl;
-}
-}
-else {
-cout << "Try that again!" << endl;
-}
-}
-}*/
