@@ -214,7 +214,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: combat room";
 		txtReturn = "TODO: return to combat room";
 		txtSurroundings = "TODO: surroundings";
-		Enemy *ptrEnemy = new Enemy(75, 10, 21);
+		Enemy *ptrEnemy = new Enemy(75, 5, 21);
 		CombatRoom *tempCombatRoom = new CombatRoom(2, 2, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveNorth(false);
 		tempCombatRoom->canMoveEast(false);
@@ -245,11 +245,8 @@ void startGame() {
 	//---------------------------------------------------------------------------------
 	
 	while (gamePlaying == true) {
-		//TODO: *******************
+		//TODO: make gamePlaying a global variable in global.h so killing the player can make it false
 		map.at(player->findCurrentRoom(map, maxRooms))->handleInput(getUserInput(), map, player);
-		//FINISH FUNCTION
-		//interprit first word, up to space (eg move)
-		// pass rest into appropriate function (eg Move West will take move and pass West into move specific function)
 	}
 }
 

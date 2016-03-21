@@ -121,7 +121,9 @@ void Player::attack(Enemy * p)
 	float dmg;
 	dmg = (1)*(m_attack / p->getDefense())*((m_inventory.at(m_equippedItem))->damage() + 2);
 	p->setHealth(p->getHealth() - dmg);
-	std::cout << "Enemy has " << p->getHealth() << " health left." << std::endl;
+	if ((p->getHealth() > 0)) {
+		std::cout << "Enemy has " << p->getHealth() << " health left." << std::endl;
+	}
 }
 
 void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)

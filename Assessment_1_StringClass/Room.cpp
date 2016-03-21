@@ -220,9 +220,9 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
 		//Check if this room has already been looted
-		if (m_loot->itemID() == "empty") {
+		if (m_looted == true) {
 			//No loot
-			std::cout << "There is nothing to loot!"  << std::endl;
+			std::cout << "There is nothing to loot!" << std::endl;
 		}
 		else {
 			//Add loot to player inventory and despawn loot in the room
@@ -233,6 +233,7 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 			}
 			std::cout << "You picked up: " << (m_loot->itemName()).stringOutput() << std::endl;
 			//m_loot = new Item("empty");
+			m_looted = true;
 		}
 	}
 	else {
@@ -358,7 +359,7 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 		if (str == "attack" || str == "hit") {
 			p->attack(m_enemy.at(0));
 			if (enemyIsAlive() == true) {
-				m_enemy.at(0)->attack(p);
+				(m_enemy.at(0))->attack(p);
 			}
 		}
 		else {

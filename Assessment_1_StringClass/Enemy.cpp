@@ -57,5 +57,9 @@ void Enemy::attack(Player * p)
 {
 	srand(time(NULL));
 	float dmg;
-	dmg = (30 / 250)*(m_attack / p->getDefense())*(2);
+	dmg = (1)*(m_attack / p->getDefense())*(2);
+	p->setHealth(p->getHealth() - dmg);
+	if ((p->getHealth() > 0)) {
+		std::cout << "You have " << p->getHealth() << " health left." << std::endl;
+	}
 }

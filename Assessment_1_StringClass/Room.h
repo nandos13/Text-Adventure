@@ -59,6 +59,7 @@ public:
 class LootRoom : public virtual Room {
 protected:
 	Item* m_loot;
+	bool m_looted = false;
 	//ItemCLASS
 public:
 	//loot function
