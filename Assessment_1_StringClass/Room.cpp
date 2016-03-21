@@ -166,6 +166,10 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 				MyString direction = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
 				p->move(direction, m);
 			}
+			else if (str.subString(0, spaceLocation) == "equip") {
+				MyString selectedWeapon = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
+				p->equip(selectedWeapon);
+			}
 		}
 		else {
 			std::cout << "Try that again!" << std::endl;
@@ -319,5 +323,46 @@ void LootDoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	}
 	else if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
 		DoorRoom::handleInput(str, m, p);
+	}
+}
+
+CombatRoom::~CombatRoom()
+{
+}
+
+CombatRoom::CombatRoom()
+{
+	m_roomType = "combat";
+}
+
+CombatRoom::CombatRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Enemy * enemy)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_roomType = "lootdoor";
+	m_enemy.push_back(enemy);
+}
+
+bool CombatRoom::enemyIsAlive()
+{
+	return m_enemy.at(0)->alive();
+}
+
+void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (enemyIsAlive() == true) {
+		if (str == "attack" || str == "hit") {
+			p->attack(m_enemy.at(0));
+			if (enemyIsAlive() == true) {
+				m_enemy.at(0)->attack(p);
+			}
+		}
+	}
+	else {
+		Room::handleInput(str, m, p);
 	}
 }

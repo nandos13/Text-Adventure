@@ -2,6 +2,7 @@
 #include "MyString.h"
 #include "MapLocation.h"
 #include "Inventory.h"
+#include "Enemy.h"
 #include <vector>
 class Player;		//Forward-Declaration of class Room, prevents circular dependency issue
 class Room {
@@ -93,7 +94,11 @@ public:
 };
 class CombatRoom : public virtual Room {
 protected:
-
-private:
-
+	std::vector<Enemy*> m_enemy;
+public:
+	virtual ~CombatRoom();
+	CombatRoom();
+	CombatRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Enemy* enemy);
+	bool enemyIsAlive();
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 };

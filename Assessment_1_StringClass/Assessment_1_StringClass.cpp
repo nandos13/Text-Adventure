@@ -98,7 +98,7 @@ void initializeMap(vector<Room*> &m) {
 		txtReturn = "You make your way back to the quaint garden.";
 		txtSurroundings = "You can see a sign post to your North, an old shed to your East, and to your West lies the field where you woke up.";
 		itemLoot = "shovel";
-		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, Item(itemLoot)));
+		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, Weapon(itemLoot)));
 	}
 	{
 		txtName = "SHED";
@@ -210,6 +210,11 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: combat room";
 		txtReturn = "TODO: return to combat room";
 		txtSurroundings = "TODO: surroundings";
+		Enemy *ptrEnemy = new Enemy(75, 10, 21);
+		CombatRoom *tempCombatRoom = new CombatRoom(2, 2, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
+		tempCombatRoom->canMoveNorth(false);
+		tempCombatRoom->canMoveEast(false);
+		m.push_back(tempCombatRoom);
 	}
 }
 MyString getUserInput() {

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Globals.h"
+#include <time.h>
 
 Player::~Player()
 {
@@ -9,24 +10,28 @@ Player::Player(int posX, int posY)
 {
 	m_playerLoc->m_x = posX;
 	m_playerLoc->m_y = posY;
-	health = 25.0f;
-	defense = 12.0f;
+	m_health = 25.0f;
+	m_defense = 12.0f;
 }
 
 Player::Player()
 {
 	m_playerLoc->m_x = 0;
 	m_playerLoc->m_y = 0;
-	health = 25.0f;
-	defense = 12.0f;
-	alive = true;
+	m_health = 25.0f;
+	m_defense = 12.0f;
+	m_alive = true;
+	m_inventory.push_back(new Weapon("fists"));
 }
 
 void Player::setPlayerLocation(MapLocation loc)
 {
 	m_playerLoc->m_x = loc.m_x;
 	m_playerLoc->m_y = loc.m_y;
-	alive = true;
+	m_health = 25.0f;
+	m_defense = 12.0f;
+	m_alive = true;
+	m_inventory.push_back(new Weapon("fists"));
 }
 
 int Player::getPlayerLocX()
@@ -44,38 +49,76 @@ void Player::addItem(Item i)
 	m_inventory.push_back(new Item(i.itemID()));
 }
 
+void Player::equip(MyString itemName)
+{
+	// Search inventory for this item
+	int itemAtIndex = searchInventory(itemName);
+	if (itemAtIndex == -1) { //Do not have this item
+		std::cout << "You aren't currently holding this item." << std::endl;
+	}
+	else {
+		if ((m_inventory.at(itemAtIndex))->itemType() == "weapon") {
+			m_equippedItem = itemAtIndex;
+		}
+		else {
+			std::cout << "You can't equip this item." << std::endl;
+		}
+	}
+}
+
+int Player::searchInventory(MyString itemName)
+{
+	int itemAtIndex = -1;
+	for (unsigned int i = 0; i < m_inventory.size(); i++) {
+		if (m_inventory.at(i)->itemID() == itemName) {
+			itemAtIndex = i;
+			break;
+		}
+	}
+	return itemAtIndex;
+}
+
 float Player::getHealth()
 {
-	return health;
+	return m_health;
 }
 
 void Player::setHealth(float hp)
 {
-	health = hp;
-	if (health <= 0) {
+	m_health = hp;
+	if (m_health <= 0) {
 		killPlayer();
 	}
 }
 
 float Player::getDefense()
 {
-	return defense;
+	return m_defense;
 }
 
 void Player::setDefense(float def)
 {
 	if (def >= 0) {
-		defense = def;
+		m_defense = def;
 	}
 	else {
-		defense = 0;
+		m_defense = 0;
 	}
 }
 
 void Player::killPlayer()
 {
-	alive = false;
+	m_alive = false;
 	std::cout << "You died!" << std::endl;
+}
+
+void Player::attack(Enemy * p)
+{
+	srand(time(NULL));
+	float dmg;
+	dmg = (1)*(m_attack / p->getDefense())*((m_inventory.at(m_equippedItem))->damage() + 2);
+	p->setHealth(p->getHealth() - dmg);
+	std::cout << "Enemy has " << p->getHealth() << " health left." << std::endl;
 }
 
 void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)
