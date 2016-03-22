@@ -387,3 +387,54 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 		Room::handleInput(str, m, p);
 	}
 }
+
+DoorCodeRoom::~DoorCodeRoom()
+{
+}
+
+DoorCodeRoom::DoorCodeRoom()
+{
+	m_roomType = "doorcode";
+	m_solution = "code";
+	m_solution = randomizeCode(6);
+}
+
+DoorCodeRoom::DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_toRoom = toRoom;
+	m_interior = false;
+	m_solution = randomizeCode(6);
+	m_roomType = "doorcode";
+}
+
+MyString DoorCodeRoom::randomizeCode(unsigned int digits)
+{
+	unsigned int i = digits;
+	char c = 'a';
+	MyString newSolution(digits + 1);
+	while (i > 0) {
+		int temp = (rand() % 43 + 48);
+		if ((temp < 65) && (temp > 57)) { //Lies between ascii values for numerals and uppercase letters
+			//Do nothing, repeat loop to generate new random character
+		}
+		else {
+			//Use generated character
+			c = temp;
+			newSolution.setCharAtIndex((digits - i), c);
+			newSolution.setCharAtIndex((digits - i) + 1, '\0');
+			i--;
+		}
+	}
+	return newSolution;
+}
+
+MyString DoorCodeRoom::code()
+{
+	return m_solution;
+}

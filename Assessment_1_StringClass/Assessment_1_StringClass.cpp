@@ -167,7 +167,7 @@ void initializeMap(vector<Room*> &m) {
 		m.push_back(tempIslandRoom);
 	}
 	{
-		txtName = "Barn";
+		txtName = "Barn Entrance";
 		txtDiscover = "TODO: Barn";
 		txtReturn = "TODO: return to Barn";
 		txtSurroundings = "TODO: surroundings";
@@ -178,8 +178,8 @@ void initializeMap(vector<Room*> &m) {
 		m.push_back(tempBarnRoom);
 	}
 	{
-		txtName = "Inside Barn";
-		txtDiscover = "TODO: Inside Barn";
+		txtName = "Barn South";
+		txtDiscover = "TODO: Inside Barn \ Humming is louder";
 		txtReturn = "TODO: return to Inside Barn";
 		txtSurroundings = "TODO: surroundings";
 		DoorRoom *tempInsideBarnRoom = new DoorRoom(0, 2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 1));
@@ -292,16 +292,28 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{
 		txtName = "Cellar";
-		txtDiscover = "TODO";
+		txtDiscover = "TODO: Etched into wall";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO: Give code";
+		DoorRoom *tempCellar = new DoorRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2));
+		tempCellar->canMoveNorth(false);
+		tempCellar->canMoveSouth(false);
+		tempCellar->canMoveEast(false);
+		tempCellar->canMoveWest(false);
+		tempCellar->interior(true);
+		m.push_back(tempCellar);
+	}
+	{
+		txtName = "Barn North";
+		txtDiscover = "TODO: Do you have the code?";
 		txtReturn = "TODO";
 		txtSurroundings = "TODO";
-		DoorRoom *tempCryptExterior = new DoorRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2));
-		tempCryptExterior->canMoveNorth(false);
-		tempCryptExterior->canMoveSouth(false);
-		tempCryptExterior->canMoveEast(false);
-		tempCryptExterior->canMoveWest(false);
-		tempCryptExterior->interior(true);
-		m.push_back(tempCryptExterior);
+		DoorCodeRoom *tempBarnNorth = new DoorCodeRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2));
+		tempBarnNorth->canMoveNorth(false);
+		tempBarnNorth->canMoveEast(false);
+		tempBarnNorth->canMoveWest(false);
+		tempBarnNorth->interior(false);
+		m.push_back(tempBarnNorth);
 	}
 }
 MyString getUserInput() {

@@ -72,6 +72,7 @@ public:
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 
 };
+
 class DoorRoom : public virtual Room {
 protected:
 	MapLocation m_toRoom;
@@ -84,6 +85,7 @@ public:
 	DoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 };
+
 class LootDoorRoom : public LootRoom, public DoorRoom {
 protected:
 
@@ -93,6 +95,7 @@ public:
 	LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, Item* itemLoot);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player *p);
 };
+
 class CombatRoom : public virtual Room {
 protected:
 	std::vector<Enemy*> m_enemy;
@@ -102,4 +105,15 @@ public:
 	CombatRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, Enemy* enemy);
 	bool enemyIsAlive();
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+};
+
+class DoorCodeRoom : public DoorRoom {
+protected:
+	MyString m_solution;
+public:
+	virtual ~DoorCodeRoom();
+	DoorCodeRoom();
+	DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
+	MyString randomizeCode(unsigned int digits);
+	MyString code();
 };
