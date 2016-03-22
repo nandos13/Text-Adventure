@@ -89,6 +89,22 @@ void Player::useItem(MyString itemName)
 		if ((m_inventory.at(itemAtIndex))->action() == "heal") {
 			setHealth(getHealth() + ((m_inventory.at(itemAtIndex))->value()));
 			std::cout << "You now have " << int(getHealth() + 1) << " health." << std::endl;
+			m_inventory.erase((m_inventory.begin()+itemAtIndex));
+		}
+		else if ((m_inventory.at(itemAtIndex))->action() == "item") {
+			if ((m_inventory.at(itemAtIndex))->itemID() == "water") {
+				int keyAtIndex = searchInventory("webbedkey");
+				if (keyAtIndex == -1) { //Do not have correct item
+					std::cout << "You don't have anything to use this with." << std::endl;
+				}
+				else {
+					m_inventory.erase((m_inventory.begin() + keyAtIndex)); //Removes web key from inventory
+					m_inventory.erase((m_inventory.begin() + itemAtIndex)); //Removes water from inventory
+					Item *tempKeyItem = new Item("key");
+					m_inventory.push_back(tempKeyItem);
+					std::cout << "You cleaned the web covered key!" << std::endl;
+				}
+			}
 		}
 		else {
 			std::cout << "You can't use this item right now." << std::endl;
@@ -178,7 +194,7 @@ void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)
 	//Print name of current room in a different text colour
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hColor, 12);
-	std::cout << (m.at(roomToVisit)->getAreaName()).stringOutput() << std::endl;
+	std::cout << ((m.at(roomToVisit)->getAreaName()).toUppercase()).stringOutput() << std::endl;
 	SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
 										//Check if previously visited and display appropriate message
 	if (m.at(roomToVisit)->discovered() == false) {

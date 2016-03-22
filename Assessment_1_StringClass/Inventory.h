@@ -24,9 +24,13 @@ public:
 			m_itemName = "Old Raft";
 			m_description = "An old wooden raft";
 		}
-		else if (m_itemID =="key") {
-			m_itemName = "Key";
-			m_description = "A small, old fashioned key";
+		else if (m_itemID =="webbedkey") {
+			m_itemName = "Web Covered Key";
+			m_description = "An old fashioned key, covered in web";
+		}
+		else if (m_itemID == "key") {
+			m_itemName = "Clean Key";
+			m_description = "An old fashioned key";
 		}
 	}
 
@@ -129,18 +133,20 @@ public:
 		if (m_itemID == "empty") {
 			m_itemName = "";
 			m_description = "";
+			m_action = "default";
+			m_value = 0;
 		}
 		else if (m_itemID == "potion") {
 			m_itemName = "Health Potion";
 			m_description = "Instantly replenishes all your health";
 			m_action = "heal";
-			m_value = 70;
+			m_value = 65;
 		}
 		else if (m_itemID == "water") {
 			m_itemName = "Water Bottle";
 			m_description = "A half empty bottle of water";
-			m_action = "heal";
-			m_value = 16;
+			m_action = "item";
+			m_value = 0;
 		}
 	}
 	virtual MyString action() {

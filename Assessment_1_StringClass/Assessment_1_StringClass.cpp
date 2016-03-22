@@ -83,14 +83,14 @@ void initializeMap(vector<Room*> &m) {
 	MyString txtSurroundings;
 	MyString itemLoot;
 	{
-		txtName = "OLD TREE";
+		txtName = "Old Tree";
 		txtDiscover = "You awake under the shade of a large tree, head pounding and body weak. The air is still, almost silent. Concentrating, you notice a faint humming sound resonating from a nearby barn that sits just a few short paces North down an old stony path. To the East lay a small and peaceful looking garden abundant with vibrant flowers. To your West is a dense, dark forest which wraps around to meet a lake to your South. \nGripping a low branch to support yourself with your left hand, you painfully summon the strength to stand. ";
 		txtReturn = "You return to the large tree. It casts shade over a lush patch of grass, and you feel at rest as you approach. It's not hard to see how you fell asleep in this comfortable spot.";
 		txtSurroundings = "An old barn lies to your North. To the East is a vibrant garden, and to the West, a dense forest.";
 		m.push_back(new Room(0, 0, txtName, txtDiscover, txtReturn, txtSurroundings));
 	}
 	{
-		txtName = "GARDEN";
+		txtName = "Garden";
 		txtDiscover = "A pleasant aroma overwhelms your senses as you approach the small garden. Between rows of assorted flowers lay a narrow gravel path lined with old bricks. Towards the East end of the garden, a heavy, rusted looking shovel is sticking out of the dirt. Beyond the shovel lies a shed, which you think might be worth exploring. The lake to your south still seems difficult to cross. Several meters to your North stands a sign post.";
 		txtReturn = "You make your way back to the quaint garden.";
 		txtSurroundings = "You can see a sign post to your North, an old shed to your East, and to your West lies the field where you woke up.";
@@ -99,7 +99,7 @@ void initializeMap(vector<Room*> &m) {
 		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, item));
 	}
 	{
-		txtName = "SHED";
+		txtName = "Shed";
 		txtDiscover = "The shed is decrepit and covered in spider webs. Left ajar, the tin door creaks in the wind. The interior is dark and you struggle to see what is inside. As you decide whether or not to enter, you survey your surroundings; Your South side is covered by a rocky hill which seems impossible to cross, and to your North you can see a small water well. The garden lies to your West.";
 		txtReturn = "You return to the old shed.";
 		txtSurroundings = "A small water well lies to your North. The garden sits to your West. Your South is covered by a steep rocky hill which looks too hard to climb. To your East is a large, bare paddock which stretches for a few kilometers at least. You don’t have the energy to walk that far.";
@@ -110,7 +110,7 @@ void initializeMap(vector<Room*> &m) {
 		m.push_back(tempShedRoom);
 	}
 	{
-		txtName = "INSIDE SHED";
+		txtName = "Inside Shed";
 		txtDiscover = "As you open the door and step inside, sunlight shines through and reveals a dusty old raft propped up against the far wall of the shed. This might be useful.";
 		txtReturn = "You again step inside the old shed.";
 		txtSurroundings = "You peek out the window. Outside the shed, the small garden lies to the East. You can't see much else.";
@@ -203,7 +203,7 @@ void initializeMap(vector<Room*> &m) {
 		txtReturn = "TODO: return to field";
 		txtSurroundings = "TODO: surroundings";
 		itemLoot = "water";
-		Item *item = new Item(itemLoot);
+		UseableItem *item = new UseableItem(itemLoot);
 		LootRoom *tempFieldRoom = new LootRoom(2, 1, txtName, txtDiscover, txtReturn, txtSurroundings, item);
 		tempFieldRoom->canMoveEast(false);
 		m.push_back(tempFieldRoom);
@@ -238,7 +238,6 @@ void initializeMap(vector<Room*> &m) {
 		txtSurroundings = "TODO";
 		Spider *ptrEnemy = new Spider();
 		CombatRoom *tempCombatRoom = new CombatRoom(-1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
-		tempCombatRoom->canMoveWest(false);
 		tempCombatRoom->canMoveNorth(false);
 		m.push_back(tempCombatRoom);
 	}
@@ -252,6 +251,32 @@ void initializeMap(vector<Room*> &m) {
 		tempCombatRoom->canMoveEast(false);
 		tempCombatRoom->canMoveWest(false);
 		m.push_back(tempCombatRoom);
+	}
+	{
+		txtName = "Spider Lair";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		itemLoot = "webbedkey";
+		Item *item = new Item(itemLoot);
+		LootRoom *tempLootRoom = new LootRoom(-1, -2, txtName, txtDiscover, txtReturn, txtSurroundings, item);
+		tempLootRoom->canMoveEast(false);
+		tempLootRoom->canMoveWest(false);
+		tempLootRoom->canMoveSouth(false);
+		m.push_back(tempLootRoom);
+	}
+	{
+		txtName = "Mysterious Rock";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		itemLoot = "potion";
+		UseableItem *item = new UseableItem(itemLoot);
+		LootRoom *tempLootRoom = new LootRoom(-2, 0, txtName, txtDiscover, txtReturn, txtSurroundings, item);
+		tempLootRoom->canMoveNorth(false);
+		tempLootRoom->canMoveWest(false);
+		tempLootRoom->canMoveSouth(false);
+		m.push_back(tempLootRoom);
 	}
 }
 MyString getUserInput() {

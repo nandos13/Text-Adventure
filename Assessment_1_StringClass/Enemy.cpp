@@ -193,8 +193,8 @@ void MotherSpider::attack(Actor * p)
 {
 	if ((rand() % 100 + 1) <= m_chanceToHeal) {
 		//Heal Self
-		int healAmount = getHealth() + (m_health / 8) + 1;
-		setHealth(healAmount);
+		int healAmount = (m_health / 8) + 1;
+		setHealth(getHealth() + healAmount);
 
 		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
