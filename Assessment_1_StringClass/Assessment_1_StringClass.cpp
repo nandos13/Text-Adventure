@@ -129,7 +129,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: Lake1";
 		txtReturn = "TODO: return to Lake1";
 		txtSurroundings = "TODO: surroundings";
-		DoorRoom *tempLakeRoom = new DoorRoom(0, -1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(15, 15));
+		DoorRoom *tempLakeRoom = new DoorRoom(0, -1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, -2));
 		tempLakeRoom->canMoveEast(false);
 		tempLakeRoom->canMoveSouth(false);
 		tempLakeRoom->canMoveWest(false);
@@ -142,7 +142,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: Same as Lake1";
 		txtReturn = "TODO: Same as return to Lake1";
 		txtSurroundings = "TODO: surroundings";
-		DoorRoom *tempLakeRoom = new DoorRoom(1, -1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(15, 15));
+		DoorRoom *tempLakeRoom = new DoorRoom(1, -1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(2, -2));
 		tempLakeRoom->canMoveEast(false);
 		tempLakeRoom->canMoveSouth(false);
 		tempLakeRoom->canMoveWest(false);
@@ -158,7 +158,7 @@ void initializeMap(vector<Room*> &m) {
 		txtSurroundings = "TODO: surroundings";
 		itemLoot = "potion";
 		UseableItem *item = new UseableItem(itemLoot);
-		LootDoorRoom *tempIslandRoom = new LootDoorRoom(15, 15, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 0), item);
+		LootDoorRoom *tempIslandRoom = new LootDoorRoom(2, -2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 0), item);
 		tempIslandRoom->canMoveNorth(false);
 		tempIslandRoom->canMoveEast(false);
 		tempIslandRoom->canMoveSouth(false);
@@ -171,7 +171,8 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: Barn";
 		txtReturn = "TODO: return to Barn";
 		txtSurroundings = "TODO: surroundings";
-		DoorRoom *tempBarnRoom = new DoorRoom(0, 1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 15));
+		DoorRoom *tempBarnRoom = new DoorRoom(0, 1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 2));
+		tempBarnRoom->canMoveNorth(false);
 		tempBarnRoom->canMoveWest(false);
 		tempBarnRoom->interior(false);
 		m.push_back(tempBarnRoom);
@@ -181,7 +182,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: Inside Barn";
 		txtReturn = "TODO: return to Inside Barn";
 		txtSurroundings = "TODO: surroundings";
-		DoorRoom *tempInsideBarnRoom = new DoorRoom(0, 15, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 1));
+		DoorRoom *tempInsideBarnRoom = new DoorRoom(0, 2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 1));
 		tempInsideBarnRoom->canMoveNorth(false);
 		tempInsideBarnRoom->canMoveEast(false);
 		tempInsideBarnRoom->canMoveSouth(false);
@@ -278,6 +279,30 @@ void initializeMap(vector<Room*> &m) {
 		tempLootRoom->canMoveSouth(false);
 		m.push_back(tempLootRoom);
 	}
+	{
+		txtName = "Cellar Entrance";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		DoorRoom *tempCryptExterior = new DoorRoom(1, 2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 3));
+		tempCryptExterior->canMoveNorth(false);
+		tempCryptExterior->canMoveWest(false);
+		tempCryptExterior->interior(false);
+		m.push_back(tempCryptExterior);
+	}
+	{
+		txtName = "Cellar";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		DoorRoom *tempCryptExterior = new DoorRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2));
+		tempCryptExterior->canMoveNorth(false);
+		tempCryptExterior->canMoveSouth(false);
+		tempCryptExterior->canMoveEast(false);
+		tempCryptExterior->canMoveWest(false);
+		tempCryptExterior->interior(true);
+		m.push_back(tempCryptExterior);
+	}
 }
 MyString getUserInput() {
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -295,6 +320,10 @@ void checkLockedRooms(vector<Room*> &m, Player* p) {
 	for (unsigned int i = 0; i < (p->inventorySize()); i++) {
 		if ((p->searchInventory("key")) != -1) { //Unlocks Barn if player is holding key
 			m.at(8)->locked(false);
+		}
+		if ((p->searchInventory("raft")) != -1) { //Unlocks Lake if player is holding raft
+			m.at(4)->locked(false);
+			m.at(5)->locked(false);
 		}
 	}
 }

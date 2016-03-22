@@ -231,10 +231,6 @@ void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 		else {
 			//Add loot to player inventory and despawn loot in the room
 			p->addItem(m_loot);
-			if (m_loot->itemID() == "raft") { //Unlock Lake for sailing with boat
-				m.at(4)->locked(false);
-				m.at(5)->locked(false);
-			}
 			std::cout << "You picked up: " << (m_loot->itemName()).stringOutput() << std::endl;
 			//m_loot = new Item("empty");
 			m_looted = true;
