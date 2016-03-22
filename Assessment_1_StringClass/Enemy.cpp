@@ -114,9 +114,9 @@ Spider::~Spider()
 Spider::Spider()
 {
 	m_alive = true;
-	m_health = 65;
+	m_health = 80;
 	m_defense = 3;
-	m_attack = 33;
+	m_attack = 37;
 	m_hitChance = 80;
 	m_chanceToDoubleHit = 10;
 	m_type = "spider";

@@ -170,6 +170,10 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 				MyString selectedWeapon = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
 				p->equip(selectedWeapon);
 			}
+			else if (str.subString(0, spaceLocation) == "use") {
+				MyString selectedItem = str.subString((spaceLocation + 1), (str.getLength() - (spaceLocation + 1)));
+				p->useItem(selectedItem);
+			}
 		}
 		else {
 			std::cout << "Try that again!" << std::endl;
@@ -357,19 +361,20 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
 	if (enemyIsAlive() == true) {
 		if (str == "attack" || str == "hit") {
-			p->attack(m_enemy.at(0));
 			if (enemyIsAlive() == true) {
-				if ((p->equippedAmmo()) != 0) { //TODO: FIX
-					(m_enemy.at(0))->attack(p);
+				if ((p->equippedAmmo()) != 0) {
+					p->attack(m_enemy.at(0));
 					if ((p->equippedWeapon()) == true) {
 						if ((p->equippedAmmo()) > 0) {
 							p->useAmmo(1);
 						}
 					}
+					(m_enemy.at(0))->attack(p);
 				}
 				else {
-					std::cout << "Out of ammo! Switch to another weapon, or use your fists." << std::endl;
+					std::cout << "*click* Out of ammo! Switch to another weapon, or use your fists." << std::endl;
 				}
+				//(m_enemy.at(0))->attack(p);
 			}
 		}
 		else if (str == "run" || str == "flee") {

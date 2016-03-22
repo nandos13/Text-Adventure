@@ -7,6 +7,7 @@ protected:
 	MyString m_itemName = "";
 	MyString m_description = "";
 	MyString m_itemType = "item";
+	void(*funcToCallOnUse)() = nullptr;
 public:
 	virtual ~Item() {
 
@@ -32,6 +33,15 @@ public:
 			m_itemName = "Water Bottle";
 			m_description = "A half empty bottle of water";
 		}
+		else if (m_itemID == "potion") {
+			m_itemName = "Health Potion";
+			m_description = "Instantly replenishes all your health";
+			funcToCallOnUse = &(setHealth()); // TODO: Finish this
+		}
+	}
+
+	void useItem() {
+
 	}
 
 	MyString itemID() {
@@ -54,6 +64,7 @@ public:
 		//Do Nothing
 	}
 };
+
 class Weapon : public Item {
 protected:
 	int m_ammo;

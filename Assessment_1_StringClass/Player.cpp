@@ -76,6 +76,18 @@ void Player::equip(MyString itemName)
 	}
 }
 
+void Player::useItem(MyString itemName)
+{
+	// Search inventory for this item
+	int itemAtIndex = searchInventory(itemName);
+	if (itemAtIndex == -1) { //Do not have this item
+		std::cout << "You aren't currently holding this item." << std::endl;
+	}
+	else {
+
+	}
+}
+
 int Player::equipped()
 {
 	return m_equippedItem;

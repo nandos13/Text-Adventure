@@ -22,6 +22,7 @@ public:
 	MapLocation getPreviousRoom();
 	void addItem(Item* i);
 	void equip(MyString itemName);
+	void useItem(MyString itemName);
 	int equipped();
 	bool equippedWeapon();
 	void useAmmo(unsigned int i);

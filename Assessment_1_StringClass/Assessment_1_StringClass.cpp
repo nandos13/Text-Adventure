@@ -156,7 +156,9 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: Island";
 		txtReturn = "TODO: return to Island";
 		txtSurroundings = "TODO: surroundings";
-		DoorRoom *tempIslandRoom = new DoorRoom(15, 15, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 0));
+		itemLoot = "potion";
+		Item *item = new Item(itemLoot);
+		LootDoorRoom *tempIslandRoom = new LootDoorRoom(15, 15, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 0), item);
 		tempIslandRoom->canMoveNorth(false);
 		tempIslandRoom->canMoveEast(false);
 		tempIslandRoom->canMoveSouth(false);
