@@ -99,7 +99,6 @@ void Player::useItem(MyString itemName)
 				}
 				else {
 					m_inventory.erase((m_inventory.begin() + keyAtIndex)); //Removes web key from inventory
-					m_inventory.erase((m_inventory.begin() + itemAtIndex)); //Removes water from inventory
 					Item *tempKeyItem = new Item("key");
 					m_inventory.push_back(tempKeyItem);
 					std::cout << "You cleaned the web covered key!" << std::endl;
@@ -110,6 +109,11 @@ void Player::useItem(MyString itemName)
 			std::cout << "You can't use this item right now." << std::endl;
 		}
 	}
+}
+
+unsigned int Player::inventorySize()
+{
+	return m_inventory.size();
 }
 
 int Player::equipped()
@@ -291,5 +295,8 @@ void Player::move(MapLocation mLoc, std::vector<Room*>& m)
 	int destinationRoom = findRoomAt(mLoc.m_x, mLoc.m_y, m, maxRooms);
 	if (m.at(destinationRoom)->locked() == false) {
 		visitRoom(mLoc.m_x, mLoc.m_y, m);
+	}
+	else {
+		std::cout << "Locked!" << std::endl;
 	}
 }

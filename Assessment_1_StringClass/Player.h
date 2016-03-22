@@ -23,6 +23,7 @@ public:
 	void addItem(Item* i);
 	void equip(MyString itemName);
 	void useItem(MyString itemName);
+	unsigned int inventorySize();
 	int equipped();
 	bool equippedWeapon();
 	void useAmmo(unsigned int i);

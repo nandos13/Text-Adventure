@@ -148,7 +148,7 @@ MyString Room::roomType()
 
 void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
-	// Default room code goes here
+	//Handle Input
 	if (str == "north" || str == "east" || str == "south" || str == "west") {
 		p->move(str, m);
 	}

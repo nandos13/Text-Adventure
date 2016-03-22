@@ -291,6 +291,14 @@ MyString getUserInput() {
 	return strInput.stringOutput();
 }
 
+void checkLockedRooms(vector<Room*> &m, Player* p) {
+	for (unsigned int i = 0; i < (p->inventorySize()); i++) {
+		if ((p->searchInventory("key")) != -1) { //Unlocks Barn if player is holding key
+			m.at(8)->locked(false);
+		}
+	}
+}
+
 void startGame() {
 	//Initialize all (restart the game)
 	srand(time(NULL));
@@ -303,14 +311,19 @@ void startGame() {
 	//---------------------------------------------------------------------------------
 	
 	while (gamePlaying == true) {
+		checkLockedRooms(map, player);		//Unlock rooms if criteria met
 		map.at(player->findCurrentRoom(map, maxRooms))->handleInput(getUserInput(), map, player);
 	}
+
 	// Game over
+
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE); //Change text colour
 	SetConsoleTextAttribute(hColor, 12);
 	cout << "Would you like to play again?" << endl;
 	SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+
 	//TODO: CLEAR MEMORY (GET DESTRUCTORS WORKING)
+
 	{
 		MyString input = getUserInput();
 		if (input == "yes") {
