@@ -362,6 +362,9 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 				(m_enemy.at(0))->attack(p);
 			}
 		}
+		else if (str == "run" || str == "flee") {
+			p->move(p->getPreviousRoom(), m);
+		}
 		else {
 			Room::handleInput(str, m, p);
 		}

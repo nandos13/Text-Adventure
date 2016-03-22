@@ -71,7 +71,7 @@ public:
 			m_itemName = "Your Hands";
 			m_description = "You were born with these";
 			m_ammo = -1;
-			m_damage = 3;
+			m_damage = 2;
 		}
 		else if (m_itemID == "shovel") {
 			m_itemName = "Garden Shovel";
@@ -83,10 +83,13 @@ public:
 			m_itemName = "Shotgun";
 			m_description = "A double-barrel shotgun";
 			m_ammo = 2;
-			m_damage = 45;
+			m_damage = 27;
 		}
 	}
 	virtual float damage() {
 		return m_damage;
+	}
+	void useAmmo(unsigned int i) {
+		m_ammo = m_ammo - i;
 	}
 };

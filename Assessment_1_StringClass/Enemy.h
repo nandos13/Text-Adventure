@@ -1,19 +1,34 @@
 #pragma once
+#include "Actor.h"
 class Player;
-class Enemy {
+class Enemy : public Actor {
 protected:
-	float m_health;
-	float m_defense;
-	int m_attack;
-	bool m_alive;
+
+	
 public:
-	~Enemy();
+	virtual  ~Enemy();
+	Enemy();
 	Enemy(float hp, float def, int dmg);
-	float getHealth();
-	void setHealth(float hp);
-	float getDefense();
-	void setDefense(float def);
-	void killEnemy();
-	bool alive();
-	virtual void attack(Player* p);
+	virtual void kill();
+	virtual void attack(Actor* p);
+};
+
+class Zombie : public Enemy {
+protected:
+	unsigned int m_chanceToHitSelf;
+public:
+	virtual ~Zombie();
+	Zombie();
+	Zombie(float hp, float def, int dmg);
+	virtual void attack(Actor* p);
+};
+
+class Spider : public Enemy {
+protected:
+	unsigned int m_chanceToDoubleHit;
+public:
+	virtual ~Spider();
+	Spider();
+	Spider(float hp, float def, int dmg);
+	virtual void attack(Actor* p);
 };

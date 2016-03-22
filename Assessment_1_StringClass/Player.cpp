@@ -12,6 +12,10 @@ Player::Player(int posX, int posY)
 	m_playerLoc->m_y = posY;
 	m_health = 25.0f;
 	m_defense = 12.0f;
+	m_hitChance = 94;
+	m_previousRoom = MapLocation(0, 0);
+	m_type = "player";
+	m_inventory.push_back(new Weapon("fists"));
 }
 
 Player::Player()
@@ -22,6 +26,9 @@ Player::Player()
 	m_defense = 12.0f;
 	m_attack = 5.0f;
 	m_alive = true;
+	m_hitChance = 94;
+	m_previousRoom = MapLocation(0, 0);
+	m_type = "player";
 	m_inventory.push_back(new Weapon("fists"));
 }
 
@@ -29,11 +36,6 @@ void Player::setPlayerLocation(MapLocation loc)
 {
 	m_playerLoc->m_x = loc.m_x;
 	m_playerLoc->m_y = loc.m_y;
-	m_health = 25.0f;
-	m_defense = 12.0f;
-	m_attack = 5.0f;
-	m_alive = true;
-	m_inventory.push_back(new Weapon("fists"));
 }
 
 int Player::getPlayerLocX()
@@ -44,6 +46,11 @@ int Player::getPlayerLocX()
 int Player::getPlayerLocY()
 {
 	return m_playerLoc->m_y;
+}
+
+MapLocation Player::getPreviousRoom()
+{
+	return m_previousRoom;
 }
 
 void Player::addItem(Item* i)
@@ -81,35 +88,7 @@ int Player::searchInventory(MyString itemName)
 	return itemAtIndex;
 }
 
-float Player::getHealth()
-{
-	return m_health;
-}
-
-void Player::setHealth(float hp)
-{
-	m_health = hp;
-	if (m_health <= 0) {
-		killPlayer();
-	}
-}
-
-float Player::getDefense()
-{
-	return m_defense;
-}
-
-void Player::setDefense(float def)
-{
-	if (def >= 0) {
-		m_defense = def;
-	}
-	else {
-		m_defense = 0;
-	}
-}
-
-void Player::killPlayer()
+void Player::kill()
 {
 	m_alive = false;
 	std::cout << "You died!" << std::endl;
@@ -117,19 +96,37 @@ void Player::killPlayer()
 	Sleep(2000);
 }
 
-void Player::attack(Enemy * p)
+void Player::attack(Actor * p)
 {
-	srand(time(NULL));
 	float dmg;
-	dmg = (1)*(m_attack / p->getDefense())*((m_inventory.at(m_equippedItem))->damage() + 2);
-	p->setHealth(p->getHealth() - dmg);
-	if ((p->getHealth() > 0)) {
-		std::cout << "Enemy has " << p->getHealth() << " health left." << std::endl;
+	float modifier = 1;
+	modifier = (rand() % 36 + 95);
+	modifier = float(modifier) / 100;
+	dmg = (m_attack / p->getDefense())*((m_inventory.at(m_equippedItem))->damage() + 2) * modifier;
+	if ((rand() % 100 + 1) <= m_hitChance) {
+		//Hit Attack
+		p->setHealth(p->getHealth() - dmg);
+		if ((p->getHealth() > 0)) {
+			std::cout << "Enemy has " << int((p->getHealth()) + 1) << " health left." << std::endl;
+		}
+	}
+	else {
+		//Miss Attack
+
+		//Print name of current room in a different text colour
+		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hColor, 2);
+		std::cout << "You missed!" << std::endl;
+		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
 	}
 }
 
 void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)
 {
+	//Store the room the player came from for when the user wishes to run from combat
+	m_previousRoom.m_x = m_playerLoc->m_x;
+	m_previousRoom.m_y = m_playerLoc->m_y;
+	
 	unsigned int roomToVisit = 0;
 	roomToVisit = findRoomAt(posX, posY, m, maxRooms);
 	setPlayerLocation(m.at(roomToVisit)->getCoordinate());

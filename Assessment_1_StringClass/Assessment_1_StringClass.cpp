@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 
@@ -206,20 +207,44 @@ void initializeMap(vector<Room*> &m) {
 		m.push_back(tempFieldRoom);
 	}
 	{
-		txtName = "Spider Hill"; //Change name?
+		txtName = "Corpse Hill";
 		txtDiscover = "TODO: combat room";
 		txtReturn = "TODO: return to combat room";
 		txtSurroundings = "TODO: surroundings";
-		Enemy *ptrEnemy = new Enemy(75, 5, 21);
+		Zombie *ptrEnemy = new Zombie();
 		CombatRoom *tempCombatRoom = new CombatRoom(2, 2, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
-		tempCombatRoom->canMoveNorth(false);
 		tempCombatRoom->canMoveEast(false);
+		m.push_back(tempCombatRoom);
+	}
+	{
+		txtName = "Behind Corpse Hill";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		itemLoot = "shotgun";
+		Weapon *item = new Weapon(itemLoot);
+		LootRoom *tempLootRoom = new LootRoom(2, 3, txtName, txtDiscover, txtReturn, txtSurroundings, item);
+		tempLootRoom->canMoveNorth(false);
+		tempLootRoom->canMoveEast(false);
+		tempLootRoom->canMoveWest(false);
+		m.push_back(tempLootRoom);
+	}
+	{
+		txtName = "Spider Forest";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		Spider *ptrEnemy = new Spider();
+		CombatRoom *tempCombatRoom = new CombatRoom(-1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
+		tempCombatRoom->canMoveWest(false);
+		tempCombatRoom->canMoveNorth(false);
+		tempCombatRoom->canMoveSouth(false);
 		m.push_back(tempCombatRoom);
 	}
 }
 MyString getUserInput() {
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hColor, 2);
+	SetConsoleTextAttribute(hColor, 10);
 	cout << "> ";
 	char input[128];
 	cin.getline(input,sizeof(input));
@@ -231,6 +256,7 @@ MyString getUserInput() {
 
 void startGame() {
 	//Initialize all (restart the game)
+	srand(time(NULL));
 	vector<Room*> map;
 	//-----
 	//-----
@@ -267,5 +293,3 @@ int main()
 	startGame();
     return 0;
 }
-
-/* http://stackoverflow.com/questions/625799/resolve-circular-dependencies-in-c */
