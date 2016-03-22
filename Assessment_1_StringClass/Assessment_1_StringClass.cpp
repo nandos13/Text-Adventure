@@ -240,7 +240,17 @@ void initializeMap(vector<Room*> &m) {
 		CombatRoom *tempCombatRoom = new CombatRoom(-1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveWest(false);
 		tempCombatRoom->canMoveNorth(false);
-		tempCombatRoom->canMoveSouth(false);
+		m.push_back(tempCombatRoom);
+	}
+	{
+		txtName = "Webbed Thicket";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		MotherSpider *ptrEnemy = new MotherSpider();
+		CombatRoom *tempCombatRoom = new CombatRoom(-1, -1, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
+		tempCombatRoom->canMoveEast(false);
+		tempCombatRoom->canMoveWest(false);
 		m.push_back(tempCombatRoom);
 	}
 }

@@ -88,13 +88,13 @@ public:
 			m_itemName = "Garden Shovel";
 			m_description = "A sturdy garden shovel";
 			m_ammo = -1;
-			m_damage = 15;
+			m_damage = 11;
 		}
 		else if (m_itemID == "shotgun") {
 			m_itemName = "Shotgun";
 			m_description = "A double-barrel shotgun";
 			m_ammo = 2;
-			m_damage = 10;
+			m_damage = 27;
 		}
 	}
 	virtual float damage() {

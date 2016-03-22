@@ -1,4 +1,4 @@
 #pragma once
 
 extern bool gamePlaying;
-const unsigned int maxRooms = 14;
+const unsigned int maxRooms = 15;

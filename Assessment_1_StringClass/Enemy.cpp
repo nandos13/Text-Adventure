@@ -8,6 +8,7 @@ Enemy::~Enemy()
 
 Enemy::Enemy()
 {
+	m_name = "Enemy";
 	m_alive = true;
 	m_health = 100;
 	m_defense = 10;
@@ -16,8 +17,9 @@ Enemy::Enemy()
 	m_type = "enemy";
 }
 
-Enemy::Enemy(float hp, float def, int dmg)
+Enemy::Enemy(MyString name, float hp, float def, int dmg)
 {
+	m_name = name;
 	m_alive = true;
 	m_health = hp;
 	m_defense = def;
@@ -29,7 +31,7 @@ Enemy::Enemy(float hp, float def, int dmg)
 void Enemy::kill()
 {
 	m_alive = false;
-	std::cout << "Enemy died!" << std::endl;
+	std::cout << m_name.stringOutput() << " died!" << std::endl;
 }
 
 void Enemy::attack(Actor * p)
@@ -47,7 +49,7 @@ void Enemy::attack(Actor * p)
 				std::cout << "You have " << int((p->getHealth()) + 1) << " health left." << std::endl;
 			}
 			else {
-				std::cout << "Enemy has " << int((p->getHealth()) + 1) << " health left." << std::endl;
+				std::cout << m_name.stringOutput() << " has " << int((p->getHealth()) + 1) << " health left." << std::endl;
 			}
 			
 		}
@@ -58,7 +60,7 @@ void Enemy::attack(Actor * p)
 		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 2);
-		std::cout << "Enemy's attack missed!" << std::endl;
+		std::cout << m_name.stringOutput() << "'s attack missed!" << std::endl;
 		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
 	}
 }
@@ -69,17 +71,19 @@ Zombie::~Zombie()
 
 Zombie::Zombie()
 {
+	m_name = "Zombie";
 	m_alive = true;
 	m_health = 45;
-	m_defense = 5;
+	m_defense = 8;
 	m_attack = 21;
 	m_hitChance = 80;
 	m_chanceToHitSelf = 10;
 	m_type = "zombie";
 }
 
-Zombie::Zombie(float hp, float def, int dmg)
+Zombie::Zombie(MyString name, float hp, float def, int dmg)
 {
+	m_name = name;
 	m_alive = true;
 	m_health = hp;
 	m_defense = def;
@@ -97,7 +101,7 @@ void Zombie::attack(Actor * p)
 		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
-		std::cout << "Enemy is hitting itself." << std::endl;
+		std::cout << m_name.stringOutput() << " is hitting itself." << std::endl;
 		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
 		
 		Enemy::attack(this);
@@ -113,17 +117,19 @@ Spider::~Spider()
 
 Spider::Spider()
 {
+	m_name = "Spider";
 	m_alive = true;
-	m_health = 80;
-	m_defense = 3;
-	m_attack = 37;
+	m_health = 90;
+	m_defense = 6;
+	m_attack = 29;
 	m_hitChance = 80;
 	m_chanceToDoubleHit = 10;
 	m_type = "spider";
 }
 
-Spider::Spider(float hp, float def, int dmg)
+Spider::Spider(MyString name, float hp, float def, int dmg)
 {
+	m_name = name;
 	m_alive = true;
 	m_health = hp;
 	m_defense = def;
@@ -141,7 +147,7 @@ void Spider::attack(Actor * p)
 		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
-		std::cout << "Enemy hits you twice." << std::endl;
+		std::cout << m_name.stringOutput() << " hits you twice." << std::endl;
 		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
 
 		Enemy::attack(p);
@@ -150,5 +156,54 @@ void Spider::attack(Actor * p)
 	else {
 		//Only Attack Once
 		Enemy::attack(p);
+	}
+}
+
+MotherSpider::~MotherSpider()
+{
+}
+
+MotherSpider::MotherSpider()
+{
+	m_name = "Mother Spider";
+	m_alive = true;
+	m_health = 120;
+	m_defense = 10;
+	m_attack = 37;
+	m_hitChance = 82;
+	m_chanceToDoubleHit = 16;
+	m_chanceToHeal = 12;
+	m_type = "motherspider";
+}
+
+MotherSpider::MotherSpider(MyString name, float hp, float def, int dmg)
+{
+	m_name = name;
+	m_alive = true;
+	m_health = hp;
+	m_defense = def;
+	m_attack = dmg;
+	m_hitChance = 65;
+	m_chanceToDoubleHit = 10;
+	m_chanceToHeal = 12;
+	m_type = "motherspider";
+}
+
+void MotherSpider::attack(Actor * p)
+{
+	if ((rand() % 100 + 1) <= m_chanceToHeal) {
+		//Heal Self
+		int healAmount = getHealth() + (m_health / 8) + 1;
+		setHealth(healAmount);
+
+		//Print name of current room in a different text colour
+		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hColor, 13);
+		std::cout << m_name.stringOutput() << " healed itself for " << healAmount << " health." << std::endl;
+		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+	}
+	else {
+		//Standard Attack
+		Spider::attack(p);
 	}
 }

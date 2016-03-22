@@ -14,6 +14,7 @@ Player::Player(int posX, int posY)
 	m_defense = 12.0f;
 	m_hitChance = 94;
 	m_previousRoom = MapLocation(0, 0);
+	m_name = "Player";
 	m_type = "player";
 	m_inventory.push_back(new Weapon("fists"));
 }
@@ -28,6 +29,7 @@ Player::Player()
 	m_alive = true;
 	m_hitChance = 94;
 	m_previousRoom = MapLocation(0, 0);
+	m_name = "Player";
 	m_type = "player";
 	m_inventory.push_back(new Weapon("fists"));
 }
@@ -150,7 +152,7 @@ void Player::attack(Actor * p)
 		//Hit Attack
 		p->setHealth(p->getHealth() - dmg);
 		if ((p->getHealth() > 0)) {
-			std::cout << "Enemy has " << int((p->getHealth()) + 1) << " health left." << std::endl;
+			std::cout << (p->name()).stringOutput() << " has " << int((p->getHealth()) + 1) << " health left." << std::endl;
 		}
 	}
 	else {

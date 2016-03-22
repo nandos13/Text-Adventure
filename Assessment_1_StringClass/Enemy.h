@@ -3,12 +3,12 @@
 class Player;
 class Enemy : public Actor {
 protected:
-
 	
 public:
 	virtual  ~Enemy();
 	Enemy();
-	Enemy(float hp, float def, int dmg);
+	Enemy(MyString name, float hp, float def, int dmg);
+	
 	virtual void kill();
 	virtual void attack(Actor* p);
 };
@@ -19,7 +19,7 @@ protected:
 public:
 	virtual ~Zombie();
 	Zombie();
-	Zombie(float hp, float def, int dmg);
+	Zombie(MyString name, float hp, float def, int dmg);
 	virtual void attack(Actor* p);
 };
 
@@ -29,6 +29,16 @@ protected:
 public:
 	virtual ~Spider();
 	Spider();
-	Spider(float hp, float def, int dmg);
+	Spider(MyString name, float hp, float def, int dmg);
+	virtual void attack(Actor* p);
+};
+
+class MotherSpider : public Spider {
+protected:
+	unsigned int m_chanceToHeal;
+public:
+	virtual ~MotherSpider();
+	MotherSpider();
+	MotherSpider(MyString name, float hp, float def, int dmg);
 	virtual void attack(Actor* p);
 };

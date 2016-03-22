@@ -29,6 +29,11 @@ MyString Actor::getType()
 	return m_type;
 }
 
+MyString Actor::name()
+{
+	return m_name;
+}
+
 void Actor::setHealth(float hp)
 {
 	m_health = hp;
