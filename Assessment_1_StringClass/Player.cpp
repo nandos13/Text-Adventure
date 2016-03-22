@@ -76,6 +76,31 @@ void Player::equip(MyString itemName)
 	}
 }
 
+int Player::equipped()
+{
+	return m_equippedItem;
+}
+
+bool Player::equippedWeapon()
+{
+	if ((m_inventory.at(m_equippedItem))->itemType() == "weapon") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Player::useAmmo(unsigned int i)
+{
+	(m_inventory.at(m_equippedItem))->useAmmo(i);
+}
+
+int Player::equippedAmmo()
+{
+	return ((m_inventory.at(m_equippedItem))->currentAmmo());
+}
+
 int Player::searchInventory(MyString itemName)
 {
 	int itemAtIndex = -1;

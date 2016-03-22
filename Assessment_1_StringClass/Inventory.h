@@ -46,6 +46,13 @@ public:
 	virtual float damage() {
 		return 0.0f;
 	}
+	virtual int currentAmmo() {
+		//Do Nothing
+		return -1;
+	}
+	virtual void useAmmo(unsigned int i) {
+		//Do Nothing
+	}
 };
 class Weapon : public Item {
 protected:
@@ -83,13 +90,18 @@ public:
 			m_itemName = "Shotgun";
 			m_description = "A double-barrel shotgun";
 			m_ammo = 2;
-			m_damage = 27;
+			m_damage = 10;
 		}
 	}
 	virtual float damage() {
 		return m_damage;
 	}
-	void useAmmo(unsigned int i) {
-		m_ammo = m_ammo - i;
+	virtual int currentAmmo() {
+		return m_ammo;
+	}
+	virtual void useAmmo(unsigned int i) {
+		if (m_ammo > 0) {
+			m_ammo = m_ammo - i;
+		}
 	}
 };

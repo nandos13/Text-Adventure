@@ -22,6 +22,10 @@ public:
 	MapLocation getPreviousRoom();
 	void addItem(Item* i);
 	void equip(MyString itemName);
+	int equipped();
+	bool equippedWeapon();
+	void useAmmo(unsigned int i);
+	int equippedAmmo();
 	int searchInventory(MyString itemName);
 	virtual void kill();
 	virtual void attack(Actor* p);

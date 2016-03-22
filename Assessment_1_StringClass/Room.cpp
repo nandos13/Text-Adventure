@@ -359,7 +359,17 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 		if (str == "attack" || str == "hit") {
 			p->attack(m_enemy.at(0));
 			if (enemyIsAlive() == true) {
-				(m_enemy.at(0))->attack(p);
+				if ((p->equippedAmmo()) != 0) { //TODO: FIX
+					(m_enemy.at(0))->attack(p);
+					if ((p->equippedWeapon()) == true) {
+						if ((p->equippedAmmo()) > 0) {
+							p->useAmmo(1);
+						}
+					}
+				}
+				else {
+					std::cout << "Out of ammo! Switch to another weapon, or use your fists." << std::endl;
+				}
 			}
 		}
 		else if (str == "run" || str == "flee") {
