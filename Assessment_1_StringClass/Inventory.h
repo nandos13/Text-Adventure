@@ -7,7 +7,6 @@ protected:
 	MyString m_itemName = "";
 	MyString m_description = "";
 	MyString m_itemType = "item";
-	void(*funcToCallOnUse)() = nullptr;
 public:
 	virtual ~Item() {
 
@@ -29,19 +28,13 @@ public:
 			m_itemName = "Key";
 			m_description = "A small, old fashioned key";
 		}
-		else if (m_itemID =="water") {
-			m_itemName = "Water Bottle";
-			m_description = "A half empty bottle of water";
-		}
-		else if (m_itemID == "potion") {
-			m_itemName = "Health Potion";
-			m_description = "Instantly replenishes all your health";
-			funcToCallOnUse = &(setHealth()); // TODO: Finish this
-		}
 	}
 
-	void useItem() {
-
+	virtual MyString action() {
+		return MyString();
+	}
+	virtual int value() {
+		return 0;
 	}
 
 	MyString itemID() {
@@ -114,5 +107,46 @@ public:
 		if (m_ammo > 0) {
 			m_ammo = m_ammo - i;
 		}
+	}
+};
+
+class UseableItem : public Item {
+protected:
+	MyString m_action;
+	int m_value;
+public:
+	virtual ~UseableItem() {
+
+	}
+	UseableItem() {
+		m_itemType = "useable";
+		m_action = "none";
+		m_value = 0;
+	}
+	UseableItem(MyString c) {
+		m_itemType = "useable";
+		m_itemID = c.toLowercase();
+		if (m_itemID == "empty") {
+			m_itemName = "";
+			m_description = "";
+		}
+		else if (m_itemID == "potion") {
+			m_itemName = "Health Potion";
+			m_description = "Instantly replenishes all your health";
+			m_action = "heal";
+			m_value = 70;
+		}
+		else if (m_itemID == "water") {
+			m_itemName = "Water Bottle";
+			m_description = "A half empty bottle of water";
+			m_action = "heal";
+			m_value = 16;
+		}
+	}
+	virtual MyString action() {
+		return m_action;
+	}
+	virtual int value() {
+		return m_value;
 	}
 };

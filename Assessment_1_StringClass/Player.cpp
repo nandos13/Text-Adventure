@@ -84,7 +84,13 @@ void Player::useItem(MyString itemName)
 		std::cout << "You aren't currently holding this item." << std::endl;
 	}
 	else {
-
+		if ((m_inventory.at(itemAtIndex))->action() == "heal") {
+			setHealth(getHealth() + ((m_inventory.at(itemAtIndex))->value()));
+			std::cout << "You now have " << int(getHealth() + 1) << " health." << std::endl;
+		}
+		else {
+			std::cout << "You can't use this item right now." << std::endl;
+		}
 	}
 }
 

@@ -329,6 +329,9 @@ void LootDoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	else if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
 		DoorRoom::handleInput(str, m, p);
 	}
+	else {
+		Room::handleInput(str, m, p);
+	}
 }
 
 CombatRoom::~CombatRoom()
