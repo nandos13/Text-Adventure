@@ -68,7 +68,7 @@ const bool MyString::operator==(const char * rhs)
 {
 	bool answer = false;
 	MyString newString = rhs;
-	if (stringCompare(newString) == 0) {
+	if ((stringCompare(newString)) == 0) {
 		answer = true;
 	}
 	return answer;
@@ -94,7 +94,7 @@ void MyString::setString(const char * str)
 
 void MyString::setString(MyString str)
 {
-	m_MyString = new char[strlen(str.stringOutput())];
+	m_MyString = new char[strlen(str.stringOutput()) + 1];
 	for (int i = 0; i <= strlen(m_MyString); i++) {
 		m_MyString[i] = str.getCharAtIndex(i);
 	}
@@ -132,7 +132,7 @@ void MyString::setCharAtIndex(unsigned int i, char c) const
 	m_MyString[i] = c;
 }
 
-int MyString::stringCompare(MyString strB) const
+int MyString::stringCompare(MyString& strB) const
 {
 	int answer = 2;
 	MyString string1 = m_MyString;
@@ -171,7 +171,7 @@ int MyString::stringCompare(MyString strB) const
 	return answer;
 }
 
-int MyString::stringCompare(const char * strB) const
+int MyString::stringCompare(const char *& strB) const
 {
 	int answer = 2;
 	MyString string1 = m_MyString;

@@ -23,8 +23,8 @@ public:
 	unsigned int getLength() const;
 	char getCharAtIndex(unsigned int i) const;
 	void setCharAtIndex(unsigned int i, char c) const;
-	int stringCompare(MyString strB) const;
-	int stringCompare(const char* strB) const;
+	int stringCompare(MyString& strB) const;
+	int stringCompare(const char*& strB) const;
 
 	MyString toLowercase();
 	MyString toUppercase();

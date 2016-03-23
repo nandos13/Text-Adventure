@@ -12,6 +12,7 @@ Actor::Actor()
 	m_attack = 0;
 	m_hitChance = 100;
 	m_type = "actor";
+	m_name = "defaultActor";
 }
 
 float Actor::getDefense()
