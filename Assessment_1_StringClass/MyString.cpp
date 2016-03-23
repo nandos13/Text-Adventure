@@ -16,7 +16,7 @@ MyString::MyString(const char * str)
 	m_MyString[strlen(m_MyString)] = '\0';
 }
 
-MyString::MyString(const int i)
+MyString::MyString(const unsigned int i)
 {
 	m_MyString = new char[i];
 	setCharAtIndex(0, '\0');
@@ -46,7 +46,7 @@ MyString & MyString::operator=(const MyString & rhs)
 		delete[] m_MyString;
 	}
 	m_MyString = new char[rhs.getLength() + 1];
-	for (int i = 0; i < rhs.getLength() + 1; i++) {
+	for (unsigned int i = 0; i < rhs.getLength() + 1; i++) {
 		m_MyString[i] = rhs.getCharAtIndex(i);
 	}
 	return *this;
@@ -64,17 +64,17 @@ MyString & MyString::operator=(const char *& rhs)
 	return *this;
 }
 
-const bool & MyString::operator==(const char * rhs)
+const bool MyString::operator==(const char * rhs)
 {
 	bool answer = false;
 	MyString newString = rhs;
 	if (stringCompare(newString) == 0) {
 		answer = true;
 	}
-	return answer; //TODO : FIX THESE OPERATORS TO WORK
+	return answer;
 }
 
-const bool & MyString::operator==(MyString & rhs)
+const bool MyString::operator==(MyString & rhs)
 {
 	bool answer = false;
 	if (stringCompare(rhs) == 0) {
@@ -214,7 +214,7 @@ MyString MyString::toLowercase()
 {
 	MyString result(getLength() + 1);
 	result = m_MyString;
-	for (int i = 0; i < getLength(); i++) {
+	for (unsigned int i = 0; i < getLength(); i++) {
 		if (m_MyString[i] == '\0') {
 			//end of array
 		}
@@ -230,7 +230,7 @@ MyString MyString::toUppercase()
 {
 	MyString result(getLength() + 1);
 	result = m_MyString;
-	for (int i = 0; i < getLength(); i++) {
+	for (unsigned int i = 0; i < getLength(); i++) {
 		if (m_MyString[i] == '\0') {
 			//end of array
 		}
@@ -308,7 +308,7 @@ int MyString::find(const char * c) const
 {
 	int result = -1; //If character not found, returns -1 as error
 	bool same = false;
-	for (int i = 0; i < (getLength() + 1); i++) {
+	for (unsigned int i = 0; i < (getLength() + 1); i++) {
 		if (getCharAtIndex(i) == c[0]) {
 			same = true;
 			for (int k = 1; k < (strlen(c)); k++) {
@@ -333,7 +333,7 @@ int MyString::find(const char * c, int startPosition) const
 {
 	int result = -1; //If character not found, returns -1 as error
 	bool same = false;
-	for (int i = startPosition; i < (getLength() + 1); i++) {
+	for (unsigned int i = startPosition; i < (getLength() + 1); i++) {
 		if (getCharAtIndex(i) == c[0]) {
 			same = true;
 			for (int k = 1; k < (strlen(c)); k++) {
@@ -380,7 +380,7 @@ MyString MyString::subString(const unsigned int position) const
 
 MyString MyString::subReplace(const unsigned int position, const unsigned int replaceAmount, char * replacementSubString)
 {
-	MyString result((getLength() - replaceAmount) + (strlen(replacementSubString)) + 1);
+	MyString result((getLength() - replaceAmount) + (const int(strlen(replacementSubString))) + 1);
 	result = subString(0, position);
 	result = result.stringAppend(replacementSubString);
 	result = result.stringAppend(subString(position + replaceAmount));

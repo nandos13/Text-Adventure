@@ -17,7 +17,7 @@ Enemy::Enemy()
 	m_type = "enemy";
 }
 
-Enemy::Enemy(MyString name, float hp, float def, int dmg)
+Enemy::Enemy(MyString name, float hp, float def, float dmg)
 {
 	m_name = name;
 	m_alive = true;
@@ -38,10 +38,10 @@ void Enemy::attack(Actor * p)
 {
 	float dmg;
 	float modifier = 1;
-	modifier = (rand() % 45 + 80);
+	modifier = float(rand() % 45 + 80);
 	modifier = float(modifier) / 100;
 	dmg = (m_attack / p->getDefense())*(2) * modifier;
-	if ((rand () % 100 + 1) <= m_hitChance) {
+	if ((unsigned int(rand () % 100 + 1)) <= m_hitChance) {
 		//Hit Attack
 		p->setHealth(p->getHealth() - dmg);
 		if ((p->getHealth() > 0)) {
@@ -81,7 +81,7 @@ Zombie::Zombie()
 	m_type = "zombie";
 }
 
-Zombie::Zombie(MyString name, float hp, float def, int dmg)
+Zombie::Zombie(MyString name, float hp, float def, float dmg)
 {
 	m_name = name;
 	m_alive = true;
@@ -95,7 +95,7 @@ Zombie::Zombie(MyString name, float hp, float def, int dmg)
 
 void Zombie::attack(Actor * p)
 {
-	if ((rand() % 100 + 1) <= m_chanceToHitSelf) {
+	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToHitSelf) {
 		//Hit Self
 
 		//Print name of current room in a different text colour
@@ -127,7 +127,7 @@ Spider::Spider()
 	m_type = "spider";
 }
 
-Spider::Spider(MyString name, float hp, float def, int dmg)
+Spider::Spider(MyString name, float hp, float def, float dmg)
 {
 	m_name = name;
 	m_alive = true;
@@ -141,7 +141,7 @@ Spider::Spider(MyString name, float hp, float def, int dmg)
 
 void Spider::attack(Actor * p)
 {
-	if ((rand() % 100 + 1) <= m_chanceToDoubleHit) {
+	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToDoubleHit) {
 		//Double Hit
 
 		//Print name of current room in a different text colour
@@ -176,7 +176,7 @@ MotherSpider::MotherSpider()
 	m_type = "motherspider";
 }
 
-MotherSpider::MotherSpider(MyString name, float hp, float def, int dmg)
+MotherSpider::MotherSpider(MyString name, float hp, float def, float dmg)
 {
 	m_name = name;
 	m_alive = true;
@@ -191,9 +191,9 @@ MotherSpider::MotherSpider(MyString name, float hp, float def, int dmg)
 
 void MotherSpider::attack(Actor * p)
 {
-	if ((rand() % 100 + 1) <= m_chanceToHeal) {
+	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToHeal) {
 		//Heal Self
-		int healAmount = (m_health / 8) + 1;
+		int healAmount = ((int(m_health)) / 8) + 1;
 		setHealth(getHealth() + healAmount);
 
 		//Print name of current room in a different text colour

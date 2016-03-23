@@ -7,7 +7,7 @@ protected:
 public:
 	virtual  ~Enemy();
 	Enemy();
-	Enemy(MyString name, float hp, float def, int dmg);
+	Enemy(MyString name, float hp, float def, float dmg);
 	
 	virtual void kill();
 	virtual void attack(Actor* p);
@@ -19,7 +19,7 @@ protected:
 public:
 	virtual ~Zombie();
 	Zombie();
-	Zombie(MyString name, float hp, float def, int dmg);
+	Zombie(MyString name, float hp, float def, float dmg);
 	virtual void attack(Actor* p);
 };
 
@@ -29,7 +29,7 @@ protected:
 public:
 	virtual ~Spider();
 	Spider();
-	Spider(MyString name, float hp, float def, int dmg);
+	Spider(MyString name, float hp, float def, float dmg);
 	virtual void attack(Actor* p);
 };
 
@@ -39,6 +39,6 @@ protected:
 public:
 	virtual ~MotherSpider();
 	MotherSpider();
-	MotherSpider(MyString name, float hp, float def, int dmg);
+	MotherSpider(MyString name, float hp, float def, float dmg);
 	virtual void attack(Actor* p);
 };

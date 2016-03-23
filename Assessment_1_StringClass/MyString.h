@@ -6,15 +6,15 @@ private:
 public:
 	~MyString();
 	MyString(const char* str);
-	MyString(const int i);
+	MyString(const unsigned int i);
 	MyString();
 
 	MyString(MyString& str);
 
 	MyString& operator=(const MyString& rhs);
 	MyString& operator=(const char*& rhs);
-	const bool& operator== (const char* rhs);
-	const bool& operator== (MyString& rhs);
+	const bool operator== (const char* rhs);
+	const bool operator== (MyString& rhs);
 
 	void setString(const char* str);
 	void setString(MyString str);

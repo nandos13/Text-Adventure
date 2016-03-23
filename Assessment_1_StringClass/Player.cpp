@@ -113,7 +113,7 @@ void Player::useItem(MyString itemName)
 
 unsigned int Player::inventorySize()
 {
-	return m_inventory.size();
+	return unsigned int(m_inventory.size());
 }
 
 int Player::equipped()
@@ -165,10 +165,10 @@ void Player::attack(Actor * p)
 {
 	float dmg;
 	float modifier = 1;
-	modifier = (rand() % 36 + 95);
+	modifier = float(rand() % 36 + 95);
 	modifier = float(modifier) / 100;
 	dmg = (m_attack / p->getDefense())*((m_inventory.at(m_equippedItem))->damage() + 2) * modifier;
-	if ((rand() % 100 + 1) <= m_hitChance) {
+	if (unsigned int(rand() % 100 + 1) <= m_hitChance) {
 		//Hit Attack
 		p->setHealth(p->getHealth() - dmg);
 		if ((p->getHealth() > 0)) {

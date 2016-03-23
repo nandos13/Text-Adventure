@@ -57,7 +57,7 @@ void validateClass() {
 		MyString s4 = s1.stringPrepend("Did you know: ");
 		classTest((s4 == "Did you know: This is a test"), "Prepend one string with another", countPass, countFail, file);
 		const char* c1 = s1.stringOutput();
-		classTest((c1 = "This is a test"), "Return as basic constant C-style string", countPass, countFail, file);
+		classTest((c1 == s1.stringOutput()), "Return as basic constant C-style string", countPass, countFail, file);
 		classTest((s1.toLowercase() == "this is a test"), "Converting string to lowercase", countPass, countFail, file);
 		classTest((s1.toUppercase() == "THIS IS A TEST"), "Converting string to uppercase", countPass, countFail, file);
 		classTest((s1.find("est") == 11), "Find the position of a substring within a string", countPass, countFail, file);
@@ -67,7 +67,7 @@ void validateClass() {
 		classTest((s4 == "This is not a test"), "Replace a substring at a given position with another string", countPass, countFail, file);
 		
 		file << endl;
-		file << countPass << " of " << countPass + countFail << " tests passed. Pass rate: " << percentage(countPass, countPass + countFail) << "%" << endl;
+		file << countPass << " of " << countPass + countFail << " tests passed. Pass rate: " << percentage(float(countPass), float(countPass + countFail)) << "%" << endl;
 		file.close();
 	}
 	else {
@@ -179,7 +179,7 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{
 		txtName = "Barn South";
-		txtDiscover = "TODO: Inside Barn \ Humming is louder";
+		txtDiscover = "TODO: Inside Barn / Humming is louder";
 		txtReturn = "TODO: return to Inside Barn";
 		txtSurroundings = "TODO: surroundings";
 		DoorRoom *tempInsideBarnRoom = new DoorRoom(0, 2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 1));
@@ -307,7 +307,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO: Do you have the code?";
 		txtReturn = "TODO";
 		txtSurroundings = "TODO";
-		DoorCodeRoom *tempBarnNorth = new DoorCodeRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2));
+		DoorCodeRoom *tempBarnNorth = new DoorCodeRoom(0, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 4));
 		tempBarnNorth->canMoveNorth(false);
 		tempBarnNorth->canMoveEast(false);
 		tempBarnNorth->canMoveWest(false);
@@ -341,7 +341,7 @@ void checkLockedRooms(vector<Room*> &m, Player* p) {
 
 void startGame() {
 	//Initialize all (restart the game)
-	srand(time(NULL));
+	srand(unsigned int(time(NULL)));
 	vector<Room*> map;
 	//-----
 	//-----
