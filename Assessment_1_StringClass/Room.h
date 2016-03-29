@@ -157,11 +157,13 @@ class TrapRoom : public virtual Room {
 protected:
 	MyString m_action;
 	MyString m_correctSolution;
+	MyString m_actionMessage;
+	MyString m_solutionMessage;
 	bool m_neutralized;
 	void action(Player * p);
 public:
 	virtual ~TrapRoom();
 	TrapRoom();
-	TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction);
+	TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction, MyString txtActionMessage, MyString txtSolutionMessage);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 };

@@ -42,3 +42,23 @@ public:
 	MotherSpider(MyString name, float hp, float def, float dmg);
 	virtual void attack(Actor* p);
 };
+
+class Alien : public Enemy {
+protected:
+	unsigned int m_chanceToShoot;
+public:
+	virtual ~Alien();
+	Alien();
+	Alien(MyString name, float hp, float def, float dmg);
+	virtual void attack(Actor* p);
+};
+
+class AlienBroodmother : public Alien {
+protected:
+	unsigned int m_chanceToImpale;
+public:
+	virtual ~AlienBroodmother();
+	AlienBroodmother();
+	AlienBroodmother(MyString name, float hp, float def, float dmg);
+	virtual void attack(Actor* p);
+};

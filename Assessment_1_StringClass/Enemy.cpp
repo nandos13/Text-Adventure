@@ -207,3 +207,102 @@ void MotherSpider::attack(Actor * p)
 		Spider::attack(p);
 	}
 }
+
+Alien::~Alien()
+{
+}
+
+Alien::Alien()
+{
+	m_name = "Sectoid";
+	m_alive = true;
+	m_health = 100;
+	m_defense = 12;
+	m_attack = 35;
+	m_hitChance = 87;
+	m_chanceToShoot = 16;
+	m_type = "alien";
+}
+
+Alien::Alien(MyString name, float hp, float def, float dmg)
+{
+	m_name = name;
+	m_alive = true;
+	m_health = hp;
+	m_defense = def;
+	m_attack = dmg;
+	m_hitChance = 87;
+	m_chanceToShoot = 16;
+	m_type = "alien";
+}
+
+void Alien::attack(Actor * p)
+{
+	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToShoot) {
+		//Shoot gun
+
+		//Print name of current room in a different text colour
+		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hColor, 13);
+		std::cout << m_name.stringOutput() << " shoots a blast of plasma at you." << std::endl;
+		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+
+		//Set higher damage, attack, and reset damage
+		float temp = m_attack;
+		m_attack = (m_attack * 1.34f);
+		Enemy::attack(p);
+		m_attack = temp;
+	}
+	else {
+		Enemy::attack(p);
+	}
+}
+
+AlienBroodmother::~AlienBroodmother()
+{
+}
+
+AlienBroodmother::AlienBroodmother()
+{
+	m_name = "Broodmother";
+	m_alive = true;
+	m_health = 175;
+	m_defense = 14;
+	m_attack = 46;
+	m_hitChance = 90;
+	m_chanceToShoot = 16;
+	m_chanceToImpale = 9;
+	m_type = "alienbroodmother";
+}
+
+AlienBroodmother::AlienBroodmother(MyString name, float hp, float def, float dmg)
+{
+	m_name = name;
+	m_alive = true;
+	m_health = hp;
+	m_defense = def;
+	m_attack = dmg;
+	m_hitChance = 90;
+	m_chanceToShoot = 16;
+	m_chanceToImpale = 9;
+	m_type = "alienbroodmother";
+}
+
+void AlienBroodmother::attack(Actor * p)
+{
+	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToImpale) {
+		//Impale target
+
+		//Print name of current room in a different text colour
+		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hColor, 13);
+		std::cout << m_name.stringOutput() << " lunges toward you and impales you through the chest!" << std::endl;
+		SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+
+		//Instantly kill target
+		p->setHealth(0);
+	}
+	else {
+		Alien::attack(p);
+	}
+}

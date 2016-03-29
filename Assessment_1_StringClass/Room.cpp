@@ -155,10 +155,10 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	else if (str == "look" || str == "surroundings" || str == "explore") {
 		std::cout << (m.at(p->findCurrentRoom(m, maxRooms))->surroundingsText()).stringOutput() << std::endl;
 	}
-	else if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
+	else if (str == "loot" || str == "pickup" || str == "pick up") {
 		std::cout << "There is nothing to loot!" << std::endl;
 	}
-	else if (str == "devMode") {
+	else if (str == "devmode") {
 		if (devMode == false) {
 			devMode = true;
 		}
@@ -166,8 +166,14 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 			devMode = false;
 		}
 	}
-	else if (str == "giveKey" && devMode == true) {
+	else if (str == "givekey" && devMode == true) {
 		p->addItem(new Item("key"));
+	}
+	else if (str == "givepotion" && devMode == true) {
+		p->addItem(new UseableItem("potion"));
+	}
+	else if (str == "gotocave" && devMode == true) {
+		p->visitRoom(0, 4, m);
 	}
 	else {
 		//Check for two-word commands (Eg. Move North)
@@ -242,7 +248,7 @@ void LootRoom::loot(Item* i)
 
 void LootRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
-	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
+	if (str == "loot" || str == "pickup" || str == "pick up") {
 		//Check if this room has already been looted
 		if (m_looted == true) {
 			//No loot
@@ -339,7 +345,7 @@ LootDoorRoom::LootDoorRoom(int posX, int posY, MyString txtName, MyString txtDis
 
 void LootDoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 {
-	if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
+	if (str == "loot" || str == "pickup" || str == "pick up") {
 		LootRoom::handleInput(str, m, p);
 	}
 	else if ((m_interior == true && str == "leave") || (m_interior == false && str == "enter")) {
@@ -619,10 +625,12 @@ TrapRoom::TrapRoom()
 	m_roomType = "action";
 	m_action = "donothing";
 	m_correctSolution = "survive";
+	m_actionMessage = "";
+	m_solutionMessage = "";
 	m_neutralized = false;
 }
 
-TrapRoom::TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction)
+TrapRoom::TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction, MyString txtActionMessage, MyString txtSolutionMessage)
 {
 	m_coord.m_x = posX;
 	m_coord.m_y = posY;
@@ -633,6 +641,8 @@ TrapRoom::TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, M
 	m_action = txtAction;
 	m_roomType = "action";
 	m_correctSolution = txtCorrectSolution;
+	m_actionMessage = txtActionMessage;
+	m_solutionMessage = txtSolutionMessage;
 	m_neutralized = false;
 }
 
@@ -641,10 +651,12 @@ void TrapRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	if (m_neutralized == false) {
 		if (str == m_correctSolution) {
 			//Survive trap
-
+			std::cout << m_solutionMessage.stringOutput() << std::endl;
+			m_neutralized = true;
 		}
 		else {
 			//Do action, probably cause death
+			std::cout << m_actionMessage.stringOutput() << std::endl;
 			action(p);
 		}
 	}

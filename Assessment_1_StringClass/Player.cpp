@@ -170,9 +170,29 @@ void Player::attack(Actor * p)
 	dmg = (m_attack / p->getDefense())*((m_inventory.at(m_equippedItem))->damage() + 2) * modifier;
 	if (unsigned int(rand() % 100 + 1) <= m_hitChance) {
 		//Hit Attack
-		p->setHealth(p->getHealth() - dmg);
-		if ((p->getHealth() > 0)) {
-			std::cout << (p->name()).stringOutput() << " has " << int((p->getHealth()) + 1) << " health left." << std::endl;
+
+		//Check if fighting final boss
+		if ((p->getType()) == "alienbroodmother") {
+			//Check if weilding relic sword
+			if ((m_inventory.at(m_equippedItem))->itemID() == "glowingsword") {
+				//Instant Kill
+				p->setHealth(0);
+				std::cout << "Gripping the alien sword, you charge at the " << (p->name()).stringOutput() << ", piercing it's heart with great force. The " << (p->name()).stringOutput() << " shrieks in pain before collapsing on the cavern floor. It's body lay lifeless." << std::endl;
+			}
+			else {
+				//Normal Attack
+				p->setHealth(p->getHealth() - dmg);
+				if ((p->getHealth() > 0)) {
+					std::cout << (p->name()).stringOutput() << " has " << int((p->getHealth()) + 1) << " health left." << std::endl;
+				}
+			}
+		}
+		else {
+			//Normal Attack
+			p->setHealth(p->getHealth() - dmg);
+			if ((p->getHealth() > 0)) {
+				std::cout << (p->name()).stringOutput() << " has " << int((p->getHealth()) + 1) << " health left." << std::endl;
+			}
 		}
 	}
 	else {

@@ -336,28 +336,80 @@ void initializeMap(vector<Room*> &m) {
 		txtSurroundings = "TODO";
 		Room *tempCaveEntrance = new Room(5, 8, txtName, txtDiscover, txtReturn, txtSurroundings);
 		tempCaveEntrance->canMoveNorth(false);
+		tempCaveEntrance->canMoveWest(false);
 		m.push_back(tempCaveEntrance);
 	}
 	{ //23
-		txtName = "Jagged Rocks";
-		txtDiscover = "TODO";
-		txtReturn = "TODO";
+		txtName = "Crawlspace";
+		txtDiscover = "As you crawl through to the opening, you lose your footing and kick a loose rock as you slip. The wall infront of you gives way and a large boulder begins to crash down towards you.";
+		txtReturn = "You crawl back to the claustrophobic clearing. After the boulder fell, there's even less room to move around.";
 		txtSurroundings = "TODO";
 		MyString txtCorrectSolution = "dodge";
 		MyString txtAction = "killplayer";
-		TrapRoom *tempTrapRoom = new TrapRoom(6, 8, txtName, txtDiscover, txtReturn, txtSurroundings, txtCorrectSolution, txtAction);
+		MyString txtActionMessage = "The boulder hits you, crushing you against the wall. The dim cave fades to complete darkness as you lose all feeling below your neck. You take one last sharp, painful breath in as you lose all consciousness.";
+		MyString txtSolutionMessage = "You manage to hug up against the wall just in time, barely avoiding certain death. The boulder collides with the wall with a deafening crash. The opening now feels even more cramped than before.";
+		TrapRoom *tempTrapRoom = new TrapRoom(6, 8, txtName, txtDiscover, txtReturn, txtSurroundings, txtCorrectSolution, txtAction, txtActionMessage, txtSolutionMessage);
+		tempTrapRoom->canMoveEast(false);
+		tempTrapRoom->canMoveNorth(false);
 		m.push_back(tempTrapRoom);
+	}
+	{ //24
+		txtName = "Iridescent Cavern"; // loot room, relic to win boss fight
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "";
+		itemLoot = "glowingsword";
+		Weapon *item = new Weapon(itemLoot);
+		LootRoom *tempLootRoom = new LootRoom(6, 7, txtName, txtDiscover, txtReturn, txtSurroundings, item);
+		tempLootRoom->canMoveEast(false);
+		tempLootRoom->canMoveWest(false);
+		tempLootRoom->canMoveSouth(false);
+		m.push_back(tempLootRoom);
+	}
+	{ //25
+		txtName = "Alien Tunnel"; 
+		txtDiscover = "TODO: alien attacks";
+		txtReturn = "TODO";
+		txtSurroundings = "";
+		Alien *ptrEnemy = new Alien();
+		CombatRoom *tempCombatRoom = new CombatRoom(5, 7, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
+		tempCombatRoom->canMoveEast(false);
+		tempCombatRoom->canMoveWest(false);
+		m.push_back(tempCombatRoom);
+	}
+	{ //26
+		txtName = "Mothership Wreck";
+		txtDiscover = "TODO: mother alien, oo scary";
+		txtReturn = "TODO";
+		txtSurroundings = "";
+		AlienBroodmother *ptrEnemy = new AlienBroodmother();
+		CombatRoom *tempCombatRoom = new CombatRoom(5, 6, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
+		tempCombatRoom->canMoveEast(false);
+		tempCombatRoom->canMoveSouth(false);
+		m.push_back(tempCombatRoom);
+	}
+	{ //27
+		txtName = "Engine Room";
+		txtDiscover = "TODO: game end";
+		txtReturn = "TODO";
+		txtSurroundings = "";
+		Room *tempRoom = new Room(4, 6, txtName, txtDiscover, txtReturn, txtSurroundings);
+		tempRoom->canMoveNorth(false);
+		tempRoom->canMoveWest(false);
+		tempRoom->canMoveSouth(false);
+		m.push_back(tempRoom);
 	}
 }
 MyString getUserInput() {
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hColor, 10);
-	cout << "> ";
+	cout << "\n> ";
 	char input[128];
 	cin.getline(input,sizeof(input));
 	SetConsoleTextAttribute(hColor, 7);
 	MyString strInput = input;
 	strInput = strInput.toLowercase();
+	cout << "\n";
 	return strInput.stringOutput();
 }
 
