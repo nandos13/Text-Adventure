@@ -209,6 +209,7 @@ void Player::visitRoom(int posX, int posY, std::vector<Room*>& m)
 	else {
 		std::cout << (m.at(roomToVisit)->returnText()).stringOutput() << std::endl;
 	}
+	m.at(findCurrentRoom(m, maxRooms))->doOnEnter(m, this);
 }
 
 unsigned int Player::findRoomAt(int posX, int posY, std::vector<Room*>& m, unsigned int maxRooms)

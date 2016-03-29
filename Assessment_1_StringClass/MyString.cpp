@@ -7,13 +7,14 @@ MyString::~MyString()
 	}
 }
 
-MyString::MyString(const char * str)
+MyString::MyString(char * str)
 {
 	m_MyString = new char[strlen(str) + 1];
-	for (int i = 0; i <= strlen(m_MyString); i++) {
+	strcpy(m_MyString, str);
+	/*for (int i = 0; i <= strlen(m_MyString); i++) {
 		m_MyString[i] = str[i];
 	}
-	m_MyString[strlen(m_MyString)] = '\0';
+	m_MyString[strlen(m_MyString)] = '\0';*/
 }
 
 MyString::MyString(const unsigned int i)
@@ -30,31 +31,28 @@ MyString::MyString()
 
 MyString::MyString(MyString & str)
 {
-	if (m_MyString == '\0') {
-		delete[] m_MyString;
-	}
 	m_MyString = new char[str.getLength() + 1];
-	for (int i = 0; i < strlen(m_MyString); i++) {
+	for (int i = 0; i < str.getLength(); i++) {
 		m_MyString[i] = str.getCharAtIndex(i);
 	}
-	m_MyString[strlen(m_MyString)] = '\0';
+	m_MyString[str.getLength()] = '\0';
 }
 
 MyString & MyString::operator=(const MyString & rhs)
 {
-	if (m_MyString == '\0') {
+	if (m_MyString == nullptr) {
 		delete[] m_MyString;
 	}
 	m_MyString = new char[rhs.getLength() + 1];
 	for (unsigned int i = 0; i < rhs.getLength() + 1; i++) {
-		m_MyString[i] = rhs.getCharAtIndex(i);
+		m_MyString[i] = (rhs.getCharAtIndex(i));
 	}
 	return *this;
 }
 
-MyString & MyString::operator=(const char *& rhs)
+MyString & MyString::operator=(char * rhs)
 {
-	if (m_MyString == '\0') {
+	if (m_MyString == nullptr) {
 		delete[] m_MyString;
 	}
 	m_MyString = new char[strlen(rhs) + 1];
@@ -64,11 +62,10 @@ MyString & MyString::operator=(const char *& rhs)
 	return *this;
 }
 
-const bool MyString::operator==(const char * rhs)
+const bool MyString::operator==(char * rhs)
 {
 	bool answer = false;
-	MyString newString = rhs;
-	if ((stringCompare(newString)) == 0) {
+	if ((stringCompare(rhs)) == 0) {
 		answer = true;
 	}
 	return answer;
@@ -77,7 +74,25 @@ const bool MyString::operator==(const char * rhs)
 const bool MyString::operator==(MyString & rhs)
 {
 	bool answer = false;
-	if (stringCompare(rhs) == 0) {
+	if ((stringCompare(rhs)) == 0) {
+		answer = true;
+	}
+	return answer;
+}
+
+const bool MyString::operator!=(char * rhs)
+{
+	bool answer = false;
+	if ((stringCompare(rhs)) != 0) {
+		answer = true;
+	}
+	return answer;
+}
+
+const bool MyString::operator!=(MyString & rhs)
+{
+	bool answer = false;
+	if ((stringCompare(rhs)) != 0) {
 		answer = true;
 	}
 	return answer;
@@ -101,7 +116,7 @@ void MyString::setString(MyString str)
 	m_MyString[strlen(m_MyString)] = '\0';
 }
 
-const char * MyString::stringOutput()
+char * MyString::stringOutput()
 {
 	return m_MyString;
 }
@@ -134,44 +149,11 @@ void MyString::setCharAtIndex(unsigned int i, char c) const
 
 int MyString::stringCompare(MyString& strB) const
 {
-	int answer = 2;
-	MyString string1 = m_MyString;
-	MyString string2 = strB;
-	//convert to lower case for accurate comparison
-	string1 = string1.toLowercase();
-	string2 = string2.toLowercase();
-	for (unsigned int i = 0; i < string1.getLength(); i++) {
-		/*Check if second string ends at index, before first string.
-		If it does, string 1 comes after, lexographically*/
-		if (string2.getCharAtIndex(i) == '\0') {
-			answer = 1;
-			break;
-		}
-		else {
-			if (string1.getCharAtIndex(i) == string2.getCharAtIndex(i)) {
-				answer = 0;
-				/*If all is same up until index, check that string2 doesnt carry on
-				after the null terminator.
-				If it does, string 2 comes after, lexographically*/
-				if (i == string1.getLength() - 1 && string2.getCharAtIndex(i + 1) != '\0') {
-					answer = -1;
-					break;
-				}
-			}
-			else if (string1.getCharAtIndex(i) > string2.getCharAtIndex(i)) {
-				answer = 1;
-				break;
-			}
-			else {
-				answer = -1;
-				break;
-			}
-		}
-	}
-	return answer;
+	char* temp = strB.stringOutput();
+	return (stringCompare(temp));
 }
 
-int MyString::stringCompare(const char *& strB) const
+int MyString::stringCompare(char *& strB) const
 {
 	int answer = 2;
 	MyString string1 = m_MyString;
@@ -179,15 +161,15 @@ int MyString::stringCompare(const char *& strB) const
 	//convert to lower case for accurate comparison
 	string1 = string1.toLowercase();
 	string2 = string2.toLowercase();
-	for (unsigned int i = 0; i < string1.getLength(); i++) {
+	for (unsigned int i = 0; i < (string1.getLength()); i++) {
 		/*Check if second string ends at index, before first string.
 		If it does, string 1 comes after, lexographically*/
-		if (string2.getCharAtIndex(i) == '\0') {
+		if ((string2.getCharAtIndex(i)) == '\0') {
 			answer = 1;
 			break;
 		}
 		else {
-			if (string1.getCharAtIndex(i) == string2.getCharAtIndex(i)) {
+			if ((string1.getCharAtIndex(i)) == (string2.getCharAtIndex(i))) {
 				answer = 0;
 				/*If all is same up until index, check that string2 doesnt carry on
 				after the null terminator.
@@ -197,7 +179,7 @@ int MyString::stringCompare(const char *& strB) const
 					break;
 				}
 			}
-			else if (string1.getCharAtIndex(i) > string2.getCharAtIndex(i)) {
+			else if ((string1.getCharAtIndex(i)) > (string2.getCharAtIndex(i))) {
 				answer = 1;
 				break;
 			}
@@ -304,40 +286,20 @@ MyString MyString::stringPrepend(MyString strB)
 	return result;
 }
 
-int MyString::find(const char * c) const
+int MyString::find(char * c) const
 {
-	int result = -1; //If character not found, returns -1 as error
-	bool same = false;
-	for (unsigned int i = 0; i < (getLength() + 1); i++) {
-		if (getCharAtIndex(i) == c[0]) {
-			same = true;
-			for (int k = 1; k < (strlen(c)); k++) {
-				if (getCharAtIndex(i + k) == c[k]) {
-					same = true;
-				}
-				else {
-					same = false;
-					break;
-				}
-			}
-		}
-		if (same == true) {
-			result = i;
-			break;
-		}
-	}
-	return result;
+	return (find(c, 0));
 }
 
-int MyString::find(const char * c, int startPosition) const
+int MyString::find(char * c, int startPosition) const
 {
 	int result = -1; //If character not found, returns -1 as error
 	bool same = false;
 	for (unsigned int i = startPosition; i < (getLength() + 1); i++) {
-		if (getCharAtIndex(i) == c[0]) {
+		if ((getCharAtIndex(i)) == (c[0])) {
 			same = true;
 			for (int k = 1; k < (strlen(c)); k++) {
-				if (getCharAtIndex(i + k) == c[k]) {
+				if ((getCharAtIndex(i + k)) == (c[k])) {
 					same = true;
 				}
 				else {

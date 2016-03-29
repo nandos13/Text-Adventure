@@ -158,6 +158,17 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	else if (str == "loot" || str == "pickup" || str == "pick up" || str == "equip") {
 		std::cout << "There is nothing to loot!" << std::endl;
 	}
+	else if (str == "devMode") {
+		if (devMode == false) {
+			devMode = true;
+		}
+		else {
+			devMode = false;
+		}
+	}
+	else if (str == "giveKey" && devMode == true) {
+		p->addItem(new Item("key"));
+	}
 	else {
 		//Check for two-word commands (Eg. Move North)
 		int spaceLocation = str.find(" "); //Locates the first space between words
@@ -184,6 +195,15 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 void Room::attackEnemy(std::vector<Room*>& m, Player * p)
 {
 	std::cout << "Nothing to attack here!" << std::endl;
+}
+
+MyString Room::code()
+{
+	return MyString("Code");
+}
+
+void Room::doOnEnter(std::vector<Room*>& m, Player * p)
+{
 }
 
 LootRoom::~LootRoom()
@@ -368,7 +388,9 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 							p->useAmmo(1);
 						}
 					}
-					(m_enemy.at(0))->attack(p);
+					if (enemyIsAlive() == true) {
+						(m_enemy.at(0))->attack(p);
+					}
 				}
 				else {
 					std::cout << "*click* Out of ammo! Switch to another weapon, or use your fists." << std::endl;
@@ -379,8 +401,29 @@ void CombatRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 		else if (str == "run" || str == "flee") {
 			p->move(p->getPreviousRoom(), m);
 		}
-		else {
-			Room::handleInput(str, m, p);
+		else { //Not combat specific input
+			//Do not allow movement
+			if (str != "north" && str != "east" && str != "south" && str != "west") {
+				int spaceLocation = str.find(" "); //Locates the first space between words
+				if (spaceLocation >= 0) {
+					if (str.subString(0, spaceLocation) == "move" || str.subString(0, spaceLocation) == "walk") {
+						//Player tried to move while the enemy was still alive
+						std::cout << "You must kill " << (m_enemy.at(0)->name()).stringOutput() << " first." << std::endl;
+					}
+					else {
+						//Player isnt attempting to move
+						Room::handleInput(str, m, p);
+					}
+				}
+				else {
+					//Player isnt attempting to move
+					Room::handleInput(str, m, p);
+				}
+			}
+			else {
+				//Player tried to move while the enemy was still alive
+				std::cout << "You must kill " << (m_enemy.at(0)->name()).stringOutput() << " first." << std::endl;
+			}
 		}
 	}
 	else {
@@ -397,9 +440,10 @@ DoorCodeRoom::DoorCodeRoom()
 	m_roomType = "doorcode";
 	m_solution = "code";
 	m_solution = randomizeCode(6);
+	m_unlockMessage = "Unlocked!";
 }
 
-DoorCodeRoom::DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom)
+DoorCodeRoom::DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, MyString txtUnlockMessage)
 {
 	m_coord.m_x = posX;
 	m_coord.m_y = posY;
@@ -411,6 +455,24 @@ DoorCodeRoom::DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDis
 	m_interior = false;
 	m_solution = randomizeCode(6);
 	m_roomType = "doorcode";
+	m_unlockMessage = txtUnlockMessage;
+}
+
+void DoorCodeRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (str == (m_solution.stringOutput())) {
+		//Unlock door
+		if (m.at(p->findRoomAt(m_toRoom.m_x, m_toRoom.m_y, m, maxRooms))->locked() == true) {
+			m.at(p->findRoomAt(m_toRoom.m_x, m_toRoom.m_y, m, maxRooms))->locked(false);
+			std::cout << (m_unlockMessage.stringOutput()) << std::endl;
+		}
+		else {
+			std::cout << "You have already used the code." << std::endl;
+		}
+	}
+	else {
+		DoorRoom::handleInput(str, m, p);
+	}
 }
 
 MyString DoorCodeRoom::randomizeCode(unsigned int digits)
@@ -437,4 +499,103 @@ MyString DoorCodeRoom::randomizeCode(unsigned int digits)
 MyString DoorCodeRoom::code()
 {
 	return m_solution;
+}
+
+InfoRoom::~InfoRoom()
+{
+}
+
+InfoRoom::InfoRoom()
+{
+	m_roomType = "info";
+	m_infoToDisplay = "Message";
+}
+
+InfoRoom::InfoRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtInfoToDisplay)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_roomType = "info";
+	m_infoToDisplay = txtInfoToDisplay;
+}
+
+void InfoRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (str == "read" || str == "examine") {
+		std::cout << (m_infoToDisplay.stringOutput()) << std::endl;
+	}
+	else {
+		Room::handleInput(str, m, p);
+	}
+}
+
+InfoDoorRoom::~InfoDoorRoom()
+{
+}
+
+InfoDoorRoom::InfoDoorRoom()
+{
+	m_roomType = "infodoor";
+	m_infoToDisplay = "Message";
+}
+
+InfoDoorRoom::InfoDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, MyString txtInfoToDisplay)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_toRoom = toRoom;
+	m_interior = false;
+	m_roomType = "infodoor";
+	m_infoToDisplay = txtInfoToDisplay;
+}
+
+void InfoDoorRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (str == "read" || str == "examine") {
+		InfoRoom::handleInput(str, m, p);
+	}
+	else {
+		DoorRoom::handleInput(str, m, p);
+	}
+}
+
+TeleportRoom::~TeleportRoom()
+{
+}
+
+TeleportRoom::TeleportRoom()
+{
+	m_roomType = "teleport";
+	m_toRoom = MapLocation(0, 0);
+}
+
+TeleportRoom::TeleportRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_toRoom = toRoom;
+	m_roomType = "teleport";
+}
+
+void TeleportRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	p->visitRoom(m_toRoom.m_x, m_toRoom.m_y, m);
+}
+
+void TeleportRoom::doOnEnter(std::vector<Room*>& m, Player * p)
+{
+	//Teleport to room
+	p->visitRoom(m_toRoom.m_x, m_toRoom.m_y, m);
 }

@@ -51,6 +51,8 @@ public:
 	
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 	virtual void attackEnemy(std::vector<Room*>& m, Player* p);
+	virtual MyString code();
+	virtual void doOnEnter(std::vector<Room*>& m, Player * p);
 	
 };
 
@@ -110,10 +112,43 @@ public:
 class DoorCodeRoom : public DoorRoom {
 protected:
 	MyString m_solution;
+	MyString m_unlockMessage;
 public:
 	virtual ~DoorCodeRoom();
 	DoorCodeRoom();
-	DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
+	DoorCodeRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, MyString txtUnlockMessage);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 	MyString randomizeCode(unsigned int digits);
-	MyString code();
+	virtual MyString code();
+};
+
+class InfoRoom : public virtual Room {
+protected:
+	MyString m_infoToDisplay;
+public:
+	virtual ~InfoRoom();
+	InfoRoom();
+	InfoRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtInfoToDisplay);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+};
+
+class InfoDoorRoom : public InfoRoom, public DoorRoom {
+protected:
+
+public:
+	virtual ~InfoDoorRoom();
+	InfoDoorRoom();
+	InfoDoorRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom, MyString txtInfoToDisplay);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+};
+
+class TeleportRoom : public virtual Room {
+protected:
+	MapLocation m_toRoom;
+public:
+	virtual ~TeleportRoom();
+	TeleportRoom();
+	TeleportRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MapLocation toRoom);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+	virtual void doOnEnter(std::vector<Room*>& m, Player * p);
 };

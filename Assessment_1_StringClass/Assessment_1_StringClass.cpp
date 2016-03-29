@@ -14,6 +14,7 @@ using namespace std;
 //GLOBAL VARIABLES
 fstream file;
 bool gamePlaying = true;
+bool devMode = false;
 
 
 //STRING CLASS VALIDATION
@@ -27,7 +28,7 @@ void classTest(bool test, const char* description, unsigned int& passes, unsigne
 		passes++;
 	}
 	else {
-		output << description << "\nFAILED!" << endl;
+		output << description << "\n** FAILED!" << endl;
 		fails++;
 	}
 }
@@ -46,7 +47,7 @@ void validateClass() {
 		//ALL TESTS GO HERE
 		//classTest((true), "description", countPass, countFail, file);
 		MyString s1("This is a test");
-		classTest((s1.getLength()==14), "Member function getLength returns number of characters in string", countPass, countFail, file);
+		classTest((s1.getLength() == 14), "Member function getLength returns number of characters in string", countPass, countFail, file);
 		classTest((s1 == "This is a test"), "Constructor with const char* parameter test", countPass, countFail, file);
 		MyString s2 = s1;
 		classTest((s2 == s1), "Equal operator overloader", countPass, countFail, file);
@@ -82,14 +83,14 @@ void initializeMap(vector<Room*> &m) {
 	MyString txtReturn;
 	MyString txtSurroundings;
 	MyString itemLoot;
-	{
+	{ //1
 		txtName = "Old Tree";
 		txtDiscover = "You awake under the shade of a large tree, head pounding and body weak. The air is still, almost silent. Concentrating, you notice a faint humming sound resonating from a nearby barn that sits just a few short paces North down an old stony path. To the East lay a small and peaceful looking garden abundant with vibrant flowers. To your West is a dense, dark forest which wraps around to meet a lake to your South. \nGripping a low branch to support yourself with your left hand, you painfully summon the strength to stand. ";
 		txtReturn = "You return to the large tree. It casts shade over a lush patch of grass, and you feel at rest as you approach. It's not hard to see how you fell asleep in this comfortable spot.";
 		txtSurroundings = "An old barn lies to your North. To the East is a vibrant garden, and to the West, a dense forest. There is a large lake to your South.";
 		m.push_back(new Room(0, 0, txtName, txtDiscover, txtReturn, txtSurroundings));
 	}
-	{
+	{ //2
 		txtName = "Garden";
 		txtDiscover = "A pleasant aroma overwhelms your senses as you approach the small garden. Between rows of assorted flowers lay a narrow gravel path lined with old bricks. Towards the East end of the garden, a heavy, rusted looking shovel is sticking out of the dirt. Beyond the shovel lies a shed, which you think might be worth exploring. The lake to your south still seems difficult to cross. Several meters to your North stands a sign post.";
 		txtReturn = "You make your way back to the quaint garden.";
@@ -98,7 +99,7 @@ void initializeMap(vector<Room*> &m) {
 		Weapon *item = new Weapon(itemLoot);
 		m.push_back(new LootRoom(1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, item));
 	}
-	{
+	{ //3
 		txtName = "Shed";
 		txtDiscover = "The shed is decrepit and covered in spider webs. Left ajar, the tin door creaks in the wind. The interior is dark and you struggle to see what is inside. As you decide whether or not to enter, you survey your surroundings; Your South side is covered by a rocky hill which seems impossible to cross, and to your North you can see a small water well. The garden lies to your West.";
 		txtReturn = "You return to the old shed.";
@@ -109,7 +110,7 @@ void initializeMap(vector<Room*> &m) {
 		tempShedRoom->interior(false);
 		m.push_back(tempShedRoom);
 	}
-	{
+	{ //4
 		txtName = "Inside Shed";
 		txtDiscover = "As you open the door and step inside, sunlight shines through and reveals a dusty old raft propped up against the far wall of the shed. This might be useful.";
 		txtReturn = "You again step inside the old shed.";
@@ -124,7 +125,7 @@ void initializeMap(vector<Room*> &m) {
 		tempShedInteriorRoom->interior(true);
 		m.push_back(tempShedInteriorRoom);
 	}
-	{
+	{ //5
 		txtName = "Lake"; //Lake 1, under Spawn
 		txtDiscover = "You sail out on to the lake. There's a small island in the center, which you could probably dock your raft at.";
 		txtReturn = "You return to the lake.";
@@ -137,7 +138,7 @@ void initializeMap(vector<Room*> &m) {
 		tempLakeRoom->locked(true);
 		m.push_back(tempLakeRoom);
 	}
-	{
+	{ //6
 		txtName = "Lake"; //Lake 2, under Garden
 		txtDiscover = "You sail out on to the lake. There's a small island in the center, which you could probably dock your raft at.";
 		txtReturn = "You return to the lake.";
@@ -150,8 +151,7 @@ void initializeMap(vector<Room*> &m) {
 		tempLakeRoom->locked(true);
 		m.push_back(tempLakeRoom);
 	}
-	{
-		//TODO: Make something happen on this island (maybe a button that does something in the barn?)
+	{ //7
 		txtName = "Island"; 
 		txtDiscover = "The island is small and barren. A lonely timber table sits in the middle by some rocks. On the table is a bottle of strange glowing liquid, and a label that reads 'Health Potion'.";
 		txtReturn = "You return to the Island.";
@@ -166,7 +166,7 @@ void initializeMap(vector<Room*> &m) {
 		tempIslandRoom->interior(true);
 		m.push_back(tempIslandRoom);
 	}
-	{
+	{ //8
 		txtName = "Barn Entrance";
 		txtDiscover = "The barn stands tall and is very weathered. You try the front door: Locked! But there is a key hole in the front. You can still hear the humming coming from inside.";
 		txtReturn = "TODO: return to Barn";
@@ -177,7 +177,7 @@ void initializeMap(vector<Room*> &m) {
 		tempBarnRoom->interior(false);
 		m.push_back(tempBarnRoom);
 	}
-	{
+	{ //9
 		txtName = "Barn South";
 		txtDiscover = "TODO: Inside Barn / Humming is louder";
 		txtReturn = "TODO: return to Inside Barn";
@@ -190,14 +190,14 @@ void initializeMap(vector<Room*> &m) {
 		tempInsideBarnRoom->locked(true);
 		m.push_back(tempInsideBarnRoom);
 	}
-	{
+	{ //10
 		txtName = "Signpost";
 		txtDiscover = "TODO: signpost";
 		txtReturn = "TODO: return to signpost";
 		txtSurroundings = "TODO: surroundings signpost";
 		m.push_back(new Room(1, 1, txtName, txtDiscover, txtReturn, txtSurroundings));
 	}
-	{
+	{ //11
 		txtName = "Field";
 		txtDiscover = "A broken old water well stands in this field. As you approach, you see a plastic bottle of water sitting in the well's bucket. \nThe shed is to your South, the Signpost to your West, and there lies a very ominous looking hill to your North. A long and bare paddock stretches to your East. It's not worth going that way.";
 		txtReturn = "TODO: return to field";
@@ -208,7 +208,7 @@ void initializeMap(vector<Room*> &m) {
 		tempFieldRoom->canMoveEast(false);
 		m.push_back(tempFieldRoom);
 	}
-	{
+	{ //12
 		txtName = "Corpse Hill";
 		txtDiscover = "As you approach the hill, you notice a body slumped against an old barrel. Getting closer, the corpse's head jolts up, and the thing looks you in the eyes. Suddenly it is standing upright and shambling towards you. You prepare yourself for a fight.";
 		txtReturn = "You return to the hill. Your first encounter with a zombie.";
@@ -218,7 +218,7 @@ void initializeMap(vector<Room*> &m) {
 		tempCombatRoom->canMoveEast(false);
 		m.push_back(tempCombatRoom);
 	}
-	{
+	{ //13
 		txtName = "Behind Corpse Hill";
 		txtDiscover = "TODO: Theres a shotgun here";
 		txtReturn = "TODO";
@@ -231,7 +231,7 @@ void initializeMap(vector<Room*> &m) {
 		tempLootRoom->canMoveWest(false);
 		m.push_back(tempLootRoom);
 	}
-	{
+	{ //14
 		txtName = "Spider Forest";
 		txtDiscover = "TODO: Spider enemy approaches you. Fight.";
 		txtReturn = "TODO";
@@ -241,7 +241,7 @@ void initializeMap(vector<Room*> &m) {
 		tempCombatRoom->canMoveNorth(false);
 		m.push_back(tempCombatRoom);
 	}
-	{
+	{ //15
 		txtName = "Webbed Thicket";
 		txtDiscover = "TODO";
 		txtReturn = "TODO";
@@ -252,7 +252,7 @@ void initializeMap(vector<Room*> &m) {
 		tempCombatRoom->canMoveWest(false);
 		m.push_back(tempCombatRoom);
 	}
-	{
+	{ //16
 		txtName = "Spider Lair";
 		txtDiscover = "TODO";
 		txtReturn = "TODO";
@@ -265,7 +265,7 @@ void initializeMap(vector<Room*> &m) {
 		tempLootRoom->canMoveSouth(false);
 		m.push_back(tempLootRoom);
 	}
-	{
+	{ //17
 		txtName = "Mysterious Rock";
 		txtDiscover = "A large, perfectly square boulder sits infront of you. A small seat is carved into the front face, and on it sits a bottle filled with a glowing pink liquid. A nearby tag reads 'Health Potion'";
 		txtReturn = "TODO";
@@ -278,7 +278,7 @@ void initializeMap(vector<Room*> &m) {
 		tempLootRoom->canMoveSouth(false);
 		m.push_back(tempLootRoom);
 	}
-	{
+	{ //18
 		txtName = "Cellar Entrance";
 		txtDiscover = "TODO";
 		txtReturn = "TODO";
@@ -289,12 +289,27 @@ void initializeMap(vector<Room*> &m) {
 		tempCryptExterior->interior(false);
 		m.push_back(tempCryptExterior);
 	}
-	{
+	{ //19
+		txtName = "Barn North";
+		txtDiscover = "TODO: Do you have the code?";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		MyString txtUnlockMessage;
+		txtUnlockMessage = "You hear a rumbling through the North wall. Slowly, rocks begin to fall from the wall, revealing a hidden passageway. ";
+		DoorCodeRoom *tempBarnNorth = new DoorCodeRoom(0, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 4), txtUnlockMessage);
+		tempBarnNorth->canMoveNorth(false);
+		tempBarnNorth->canMoveEast(false);
+		tempBarnNorth->canMoveWest(false);
+		tempBarnNorth->interior(false);
+		m.push_back(tempBarnNorth);
+	}
+	{ //20
 		txtName = "Cellar";
 		txtDiscover = "TODO: Etched into wall: A random 6 digit code is generated here. This will be used to pass the final part of the barn and finish the game";
 		txtReturn = "TODO";
 		txtSurroundings = "TODO: Give code";
-		DoorRoom *tempCellar = new DoorRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2));
+		MyString txtInfoToDisplay = (m.at(18)->code());
+		DoorRoom *tempCellar = new InfoDoorRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2), txtInfoToDisplay);
 		tempCellar->canMoveNorth(false);
 		tempCellar->canMoveSouth(false);
 		tempCellar->canMoveEast(false);
@@ -302,17 +317,28 @@ void initializeMap(vector<Room*> &m) {
 		tempCellar->interior(true);
 		m.push_back(tempCellar);
 	}
+	{ //21
+		txtName = "Tunnel";
+		txtDiscover = "TODO: You fall";
+		txtReturn = "You shouldn't be able to get back here";
+		txtSurroundings = "Nothing";
+		TeleportRoom *tempTunnel = new TeleportRoom(0, 4, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(5, 8));
+		tempTunnel->canMoveNorth(false);
+		tempTunnel->canMoveEast(false);
+		tempTunnel->canMoveWest(false);
+		tempTunnel->locked(true);
+		m.push_back(tempTunnel);
+	}
+	{ //22
+		txtName = "Cave Entrance";
+		txtDiscover = "TODO: no going back";
+		txtReturn = "You shouldn't be able to get back here";
+		txtSurroundings = "Nothing";
+		Room *tempCaveEntrance = new Room(5, 8, txtName, txtDiscover, txtReturn, txtSurroundings);
+		m.push_back(tempCaveEntrance);
+	}
 	{
-		txtName = "Barn North";
-		txtDiscover = "TODO: Do you have the code?";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
-		DoorCodeRoom *tempBarnNorth = new DoorCodeRoom(0, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 4));
-		tempBarnNorth->canMoveNorth(false);
-		tempBarnNorth->canMoveEast(false);
-		tempBarnNorth->canMoveWest(false);
-		tempBarnNorth->interior(false);
-		m.push_back(tempBarnNorth);
+
 	}
 }
 MyString getUserInput() {
@@ -330,11 +356,11 @@ MyString getUserInput() {
 void checkLockedRooms(vector<Room*> &m, Player* p) {
 	for (unsigned int i = 0; i < (p->inventorySize()); i++) {
 		if ((p->searchInventory("key")) != -1) { //Unlocks Barn if player is holding key
-			m.at(8)->locked(false);
+			m.at((p->findRoomAt(0, 2, m, maxRooms)))->locked(false);
 		}
 		if ((p->searchInventory("raft")) != -1) { //Unlocks Lake if player is holding raft
-			m.at(4)->locked(false);
-			m.at(5)->locked(false);
+			m.at((p->findRoomAt(0, -1, m, maxRooms)))->locked(false);
+			m.at((p->findRoomAt(1, -1, m, maxRooms)))->locked(false);
 		}
 	}
 }
@@ -349,11 +375,6 @@ void startGame() {
 	Player* player = new Player();
 	//Print name of current room in a different text colour
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hColor, 13);
-	cout << "This is not quite a finished product, but so far showcases the required skills for the assessment. Inheritance is used for the room classes as well as the player and all enemies inheriting traits from an Actor class." << endl;
-	cout << "Use commands such as 'North' or 'Move North' or 'Walk North' to navigate around the map. Some rooms will only unlock once criteria is met (Eg, you might need a key to open the barn). \nYou can loot any items specifically mentioned in the text using 'Loot' or 'Pick up'. Some items can be equipped using 'Equip <Item>'." << endl;
-	cout << "You can also choose to attack enemies or run from a fight if you don't have enough health. \nGood luck!" << endl;
-	SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
 	player->visitRoom(0, 0, map); // Spawns the player in Room at 0, 0 (The spawn room)
 	//---------------------------------------------------------------------------------
 	
