@@ -152,3 +152,16 @@ public:
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 	virtual void doOnEnter(std::vector<Room*>& m, Player * p);
 };
+
+class TrapRoom : public virtual Room {
+protected:
+	MyString m_action;
+	MyString m_correctSolution;
+	bool m_neutralized;
+	void action(Player * p);
+public:
+	virtual ~TrapRoom();
+	TrapRoom();
+	TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+};

@@ -599,3 +599,56 @@ void TeleportRoom::doOnEnter(std::vector<Room*>& m, Player * p)
 	//Teleport to room
 	p->visitRoom(m_toRoom.m_x, m_toRoom.m_y, m);
 }
+
+void TrapRoom::action(Player * p)
+{
+	if (m_action == "killplayer") {
+		p->setHealth(0);
+	}
+	else if (m_action == "healplayer") {
+		p->setHealth((p->getHealth()) + 25);
+	}
+}
+
+TrapRoom::~TrapRoom()
+{
+}
+
+TrapRoom::TrapRoom()
+{
+	m_roomType = "action";
+	m_action = "donothing";
+	m_correctSolution = "survive";
+	m_neutralized = false;
+}
+
+TrapRoom::TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_action = txtAction;
+	m_roomType = "action";
+	m_correctSolution = txtCorrectSolution;
+	m_neutralized = false;
+}
+
+void TrapRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (m_neutralized == false) {
+		if (str == m_correctSolution) {
+			//Survive trap
+
+		}
+		else {
+			//Do action, probably cause death
+			action(p);
+		}
+	}
+	else {
+		Room::handleInput(str, m, p);
+	}
+}

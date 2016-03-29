@@ -330,15 +330,23 @@ void initializeMap(vector<Room*> &m) {
 		m.push_back(tempTunnel);
 	}
 	{ //22
-		txtName = "Cave Entrance";
-		txtDiscover = "TODO: no going back";
-		txtReturn = "You shouldn't be able to get back here";
-		txtSurroundings = "Nothing";
+		txtName = "Sinkhole";
+		txtDiscover = "TODO: no going back, its dark. humming loud";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
 		Room *tempCaveEntrance = new Room(5, 8, txtName, txtDiscover, txtReturn, txtSurroundings);
+		tempCaveEntrance->canMoveNorth(false);
 		m.push_back(tempCaveEntrance);
 	}
-	{
-
+	{ //23
+		txtName = "Jagged Rocks";
+		txtDiscover = "TODO";
+		txtReturn = "TODO";
+		txtSurroundings = "TODO";
+		MyString txtCorrectSolution = "dodge";
+		MyString txtAction = "killplayer";
+		TrapRoom *tempTrapRoom = new TrapRoom(6, 8, txtName, txtDiscover, txtReturn, txtSurroundings, txtCorrectSolution, txtAction);
+		m.push_back(tempTrapRoom);
 	}
 }
 MyString getUserInput() {
