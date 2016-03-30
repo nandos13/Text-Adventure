@@ -174,10 +174,10 @@ void Player::attack(Actor * p)
 		//Check if fighting final boss
 		if ((p->getType()) == "alienbroodmother") {
 			//Check if weilding relic sword
-			if ((m_inventory.at(m_equippedItem))->itemID() == "glowingsword") {
+			if ((m_inventory.at(m_equippedItem))->itemID() == "sword") {
 				//Instant Kill
-				p->setHealth(0);
 				std::cout << "Gripping the alien sword, you charge at the " << (p->name()).stringOutput() << ", piercing it's heart with great force. The " << (p->name()).stringOutput() << " shrieks in pain before collapsing on the cavern floor. It's body lay lifeless." << std::endl;
+				p->setHealth(0);
 			}
 			else {
 				//Normal Attack

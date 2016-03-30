@@ -100,7 +100,7 @@ public:
 			m_ammo = 2;
 			m_damage = 27;
 		}
-		else if (m_itemID == "glowingsword") {
+		else if (m_itemID == "sword") {
 			m_itemName = "Glowing Sword";
 			m_description = "An ancient glowing sword";
 			m_ammo = -1;
@@ -146,7 +146,7 @@ public:
 			m_itemName = "Health Potion";
 			m_description = "Instantly replenishes all your health";
 			m_action = "heal";
-			m_value = 72;
+			m_value = 78;
 		}
 		else if (m_itemID == "water") {
 			m_itemName = "Water Bottle";

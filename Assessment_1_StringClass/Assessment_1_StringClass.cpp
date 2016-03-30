@@ -169,8 +169,8 @@ void initializeMap(vector<Room*> &m) {
 	{ //8
 		txtName = "Barn Entrance";
 		txtDiscover = "The barn stands tall and is very weathered. You try the front door: Locked! But there is a key hole in the front. You can still hear the humming coming from inside.";
-		txtReturn = "TODO: return to Barn";
-		txtSurroundings = "TODO: surroundings";
+		txtReturn = "You stand outside the barn door.";
+		txtSurroundings = "The old tree sits proudly to your South. There's a sign post to your East.";
 		DoorRoom *tempBarnRoom = new DoorRoom(0, 1, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 2));
 		tempBarnRoom->canMoveNorth(false);
 		tempBarnRoom->canMoveWest(false);
@@ -179,9 +179,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //9
 		txtName = "Barn South";
-		txtDiscover = "TODO: Inside Barn / Humming is louder";
-		txtReturn = "TODO: return to Inside Barn";
-		txtSurroundings = "TODO: surroundings";
+		txtDiscover = "The heavy barn door creaks as you push it open and step inside. The floor is littered with hay, but the rest of the barn is mostly barren. You can see something on the Northern wall of the barn. At the moment, it's too far away to read.";
+		txtReturn = "You stand inside the barn, by the door.";
+		txtSurroundings = "There isn't much to do at this end of the barn. The Northern end has something written on the wall. You can also leave the barn if you wish.";
 		DoorRoom *tempInsideBarnRoom = new DoorRoom(0, 2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 1));
 		tempInsideBarnRoom->canMoveEast(false);
 		tempInsideBarnRoom->canMoveSouth(false);
@@ -192,16 +192,16 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //10
 		txtName = "Signpost";
-		txtDiscover = "TODO: signpost";
-		txtReturn = "TODO: return to signpost";
-		txtSurroundings = "TODO: surroundings signpost";
+		txtDiscover = "A lonely signpost stands on a small patch of grass. One sign points North, down a gravel path to a wine cellar. Another points to the well to your East, and another points you in the direction of the garden to your South.";
+		txtReturn = "You stand beneath the signpost. Take a look to see what is around you.";
+		txtSurroundings = "Theres a cellar to your North, a barn to your West, an old water well to your East, and a garden to your South.";
 		m.push_back(new Room(1, 1, txtName, txtDiscover, txtReturn, txtSurroundings));
 	}
 	{ //11
-		txtName = "Field";
+		txtName = "Water Well";
 		txtDiscover = "A broken old water well stands in this field. As you approach, you see a plastic bottle of water sitting in the well's bucket. \nThe shed is to your South, the Signpost to your West, and there lies a very ominous looking hill to your North. A long and bare paddock stretches to your East. It's not worth going that way.";
-		txtReturn = "TODO: return to field";
-		txtSurroundings = "TODO: surroundings";
+		txtReturn = "You make your way back to the water well.";
+		txtSurroundings = "There is a signpost to your West and an old shed to your South. The paddock to your East seems endless and isn't worth exploring. To your North is a spooky hill.";
 		itemLoot = "water";
 		UseableItem *item = new UseableItem(itemLoot);
 		LootRoom *tempFieldRoom = new LootRoom(2, 1, txtName, txtDiscover, txtReturn, txtSurroundings, item);
@@ -212,7 +212,7 @@ void initializeMap(vector<Room*> &m) {
 		txtName = "Corpse Hill";
 		txtDiscover = "As you approach the hill, you notice a body slumped against an old barrel. Getting closer, the corpse's head jolts up, and the thing looks you in the eyes. Suddenly it is standing upright and shambling towards you. You prepare yourself for a fight.";
 		txtReturn = "You return to the hill. Your first encounter with a zombie.";
-		txtSurroundings = "TODO: Might be something useful behind the hill to the North.";
+		txtSurroundings = "The water well sits to your South, and the cellar is to your West. The hill to your North might also be worth exploring.";
 		Zombie *ptrEnemy = new Zombie();
 		CombatRoom *tempCombatRoom = new CombatRoom(2, 2, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveEast(false);
@@ -220,8 +220,8 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //13
 		txtName = "Behind Corpse Hill";
-		txtDiscover = "TODO: Theres a shotgun here";
-		txtReturn = "TODO";
+		txtDiscover = "Amongst more rotting corpses you find a double-barrel shotgun.";
+		txtReturn = "You return to the pile of corpses.";
 		txtSurroundings = "TODO";
 		itemLoot = "shotgun";
 		Weapon *item = new Weapon(itemLoot);
@@ -358,7 +358,7 @@ void initializeMap(vector<Room*> &m) {
 		txtDiscover = "TODO";
 		txtReturn = "TODO";
 		txtSurroundings = "";
-		itemLoot = "glowingsword";
+		itemLoot = "sword";
 		Weapon *item = new Weapon(itemLoot);
 		LootRoom *tempLootRoom = new LootRoom(6, 7, txtName, txtDiscover, txtReturn, txtSurroundings, item);
 		tempLootRoom->canMoveEast(false);

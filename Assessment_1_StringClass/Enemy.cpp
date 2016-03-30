@@ -218,7 +218,7 @@ Alien::Alien()
 	m_alive = true;
 	m_health = 100;
 	m_defense = 12;
-	m_attack = 35;
+	m_attack = 41;
 	m_hitChance = 87;
 	m_chanceToShoot = 16;
 	m_type = "alien";
@@ -249,7 +249,7 @@ void Alien::attack(Actor * p)
 
 		//Set higher damage, attack, and reset damage
 		float temp = m_attack;
-		m_attack = (m_attack * 1.34f);
+		m_attack = (m_attack * 1.5f);
 		Enemy::attack(p);
 		m_attack = temp;
 	}
@@ -268,7 +268,7 @@ AlienBroodmother::AlienBroodmother()
 	m_alive = true;
 	m_health = 175;
 	m_defense = 14;
-	m_attack = 46;
+	m_attack = 52;
 	m_hitChance = 90;
 	m_chanceToShoot = 16;
 	m_chanceToImpale = 9;
