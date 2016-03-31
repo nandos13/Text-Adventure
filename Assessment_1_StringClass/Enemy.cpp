@@ -57,7 +57,6 @@ void Enemy::attack(Actor * p)
 	else {
 		//Miss Attack
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 2);
 		std::cout << m_name.stringOutput() << "'s attack missed!" << std::endl;
@@ -98,7 +97,6 @@ void Zombie::attack(Actor * p)
 	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToHitSelf) {
 		//Hit Self
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
 		std::cout << m_name.stringOutput() << " is hitting itself." << std::endl;
@@ -144,7 +142,6 @@ void Spider::attack(Actor * p)
 	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToDoubleHit) {
 		//Double Hit
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
 		std::cout << m_name.stringOutput() << " hits you twice." << std::endl;
@@ -196,7 +193,6 @@ void MotherSpider::attack(Actor * p)
 		int healAmount = ((int(m_health)) / 8) + 1;
 		setHealth(getHealth() + healAmount);
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
 		std::cout << m_name.stringOutput() << " healed itself for " << healAmount << " health." << std::endl;
@@ -241,7 +237,6 @@ void Alien::attack(Actor * p)
 	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToShoot) {
 		//Shoot gun
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
 		std::cout << m_name.stringOutput() << " shoots a blast of plasma at you." << std::endl;
@@ -293,7 +288,6 @@ void AlienBroodmother::attack(Actor * p)
 	if ((unsigned int(rand() % 100 + 1)) <= m_chanceToImpale) {
 		//Impale target
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 13);
 		std::cout << m_name.stringOutput() << " lunges toward you and impales you through the chest!" << std::endl;

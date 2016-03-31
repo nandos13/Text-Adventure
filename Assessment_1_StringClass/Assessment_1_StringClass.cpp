@@ -222,7 +222,7 @@ void initializeMap(vector<Room*> &m) {
 		txtName = "Behind Corpse Hill";
 		txtDiscover = "Amongst more rotting corpses you find a double-barrel shotgun.";
 		txtReturn = "You return to the pile of corpses.";
-		txtSurroundings = "TODO";
+		txtSurroundings = "You are surrounded by dense forest. You can only go South from here.";
 		itemLoot = "shotgun";
 		Weapon *item = new Weapon(itemLoot);
 		LootRoom *tempLootRoom = new LootRoom(2, 3, txtName, txtDiscover, txtReturn, txtSurroundings, item);
@@ -233,9 +233,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //14
 		txtName = "Spider Forest";
-		txtDiscover = "TODO: Spider enemy approaches you. Fight.";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtDiscover = "You make your way to a clearing in the forest. You tread carefully, as thick silky webs cover the trees and a majority of the floor you are walking on. A faint cracking of twigs behind you catches your attention and you turn to face the source of the sound. A horrifyingly large, hairy spider stares back at you, it's eyes black as night. It pauses for a moment, as if shocked you were able to hear it's approach, then suddenly lurches toward you with an awful shrill hiss. You ready yourself to fight.";
+		txtReturn = "You return to the forest where a giant spider had taken you by surprise.";
+		txtSurroundings = "Through the dense overgrowth around you, you can make out the farmiliar old tree to your East. A massive boulder to your West looks very out of place, you think. The webs around the trees to your South seem to get even thicker; even more uninviting.";
 		Spider *ptrEnemy = new Spider();
 		CombatRoom *tempCombatRoom = new CombatRoom(-1, 0, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveNorth(false);
@@ -243,9 +243,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //15
 		txtName = "Webbed Thicket";
-		txtDiscover = "TODO";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtDiscover = "You trudge through the thick webs littering the ground. You struggle to move as swiftly as before, as you focus on keeping your feet from becoming stuck. Making your way towards the mouth of a dark cave infront of you, an unnerving feeling of paranoia takes over you. You look up just in time to see another disgusting spider, much larger than the last, lowering itself from the treetops. You ready yourself for combat as the creature starts toward you.";
+		txtReturn = "You make your way back to the web covered thicket.";
+		txtSurroundings = "There's a cave to your South, and the clearing in the forest lies to your North.";
 		MotherSpider *ptrEnemy = new MotherSpider();
 		CombatRoom *tempCombatRoom = new CombatRoom(-1, -1, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveEast(false);
@@ -254,9 +254,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //16
 		txtName = "Spider Lair";
-		txtDiscover = "TODO";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtDiscover = "You hesitantly step into the cave. There isn't much to be found aside from a few disgusting spider egg sacs. Webbed to the wall, you spot something small and metal, but can't quite make out what it is.";
+		txtReturn = "You return to the creepy spider lair. You don't want to stay here for long.";
+		txtSurroundings = "You should leave the cave once you are done here.";
 		itemLoot = "webbedkey";
 		Item *item = new Item(itemLoot);
 		LootRoom *tempLootRoom = new LootRoom(-1, -2, txtName, txtDiscover, txtReturn, txtSurroundings, item);
@@ -268,8 +268,8 @@ void initializeMap(vector<Room*> &m) {
 	{ //17
 		txtName = "Mysterious Rock";
 		txtDiscover = "A large, perfectly square boulder sits infront of you. A small seat is carved into the front face, and on it sits a bottle filled with a glowing pink liquid. A nearby tag reads 'Health Potion'";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtReturn = "You return to the large square boulder.";
+		txtSurroundings = "The forest clearing is to your East. There isn't anywhere else to go.";
 		itemLoot = "potion";
 		UseableItem *item = new UseableItem(itemLoot);
 		LootRoom *tempLootRoom = new LootRoom(-2, 0, txtName, txtDiscover, txtReturn, txtSurroundings, item);
@@ -280,9 +280,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //18
 		txtName = "Cellar Entrance";
-		txtDiscover = "TODO";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtDiscover = "You walk up to the cellar door. A gravel path leads back to a signpost to your South, and there is a hill to your East. Shivers run down your spine as you look at the hill.";
+		txtReturn = "You return to the cellar's entrance.";
+		txtSurroundings = "There is a signpost to your South, and a creepy hill to your East. You can also head inside the cellar.";
 		DoorRoom *tempCryptExterior = new DoorRoom(1, 2, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 3));
 		tempCryptExterior->canMoveNorth(false);
 		tempCryptExterior->canMoveWest(false);
@@ -291,9 +291,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //19
 		txtName = "Barn North";
-		txtDiscover = "TODO: Do you have the code?";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtDiscover = "The humming noise seems even louder at this end of the barn. Engraved into the barn wall there is a message. Strange symbols unlike any language you've seen before. As you concentrate on these symbols, in a way you can't possibly describe, you understand what they mean. In your head, you hear the words \n'You've done well so far \nNow speak the code \nAnd if you're worthy \nYou'll find the road'.";
+		txtReturn = "You return to the strange symbols on the barn wall. You're going to need to say the code if you wish to go any further.";
+		txtSurroundings = "The barn's exit is to your South.";
 		MyString txtUnlockMessage;
 		txtUnlockMessage = "You hear a rumbling through the North wall. Slowly, rocks begin to fall from the wall, revealing a hidden passageway. ";
 		DoorCodeRoom *tempBarnNorth = new DoorCodeRoom(0, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(0, 4), txtUnlockMessage);
@@ -305,9 +305,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //20
 		txtName = "Cellar";
-		txtDiscover = "TODO: Etched into wall: A random 6 digit code is generated here. This will be used to pass the final part of the barn and finish the game";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO: Give code";
+		txtDiscover = "In the center of the room, a strange, glowing stone pillar is sticking out of the floor. There is a code engraved in the top of the pillar.";
+		txtReturn = "You return to the cellar and stand by the pillar, in which a code is engraved.";
+		txtSurroundings = "You should leave the cellar once you're done here.";
 		MyString txtInfoToDisplay = (m.at(18)->code());
 		DoorRoom *tempCellar = new InfoDoorRoom(1, 3, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(1, 2), txtInfoToDisplay);
 		tempCellar->canMoveNorth(false);
@@ -319,7 +319,7 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //21
 		txtName = "Tunnel";
-		txtDiscover = "TODO: You fall";
+		txtDiscover = "Stepping through the collapsed wall, you mistakenly put your weight on a loose rock. The floor beneath you gives way and you tumble down into a tight cavern.";
 		txtReturn = "You shouldn't be able to get back here";
 		txtSurroundings = "Nothing";
 		TeleportRoom *tempTunnel = new TeleportRoom(0, 4, txtName, txtDiscover, txtReturn, txtSurroundings, MapLocation(5, 8));
@@ -331,9 +331,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //22
 		txtName = "Sinkhole";
-		txtDiscover = "TODO: no going back, its dark. humming loud";
-		txtReturn = "TODO";
-		txtSurroundings = "TODO";
+		txtDiscover = "Looking up, you must have fallen a good 15 meters. You rest for a moment, then struggle painfully to sit up. Your sense of direction feels muddled after the fall, but there is a tight entrace in the rock to your East, which you might be able to crawl through. The humming sound echoes through a wider tunnel to your South.";
+		txtReturn = "You return to the sinkhole. There's no getting out, it's too deep.";
+		txtSurroundings = "A tiny crawlspace to your East, and a wider tunnel to your South. The humming seems to be originating from down the larger tunnel.";
 		Room *tempCaveEntrance = new Room(5, 8, txtName, txtDiscover, txtReturn, txtSurroundings);
 		tempCaveEntrance->canMoveNorth(false);
 		tempCaveEntrance->canMoveWest(false);
@@ -343,7 +343,7 @@ void initializeMap(vector<Room*> &m) {
 		txtName = "Crawlspace";
 		txtDiscover = "As you crawl through to the opening, you lose your footing and kick a loose rock as you slip. The wall infront of you gives way and a large boulder begins to crash down towards you.";
 		txtReturn = "You crawl back to the claustrophobic clearing. After the boulder fell, there's even less room to move around.";
-		txtSurroundings = "TODO";
+		txtSurroundings = "Through a man-sized crack in the stone to your South, you can see a strange, unnatural shimmering light shining through. Through the crawlspace and to your West is the sinkhole you previously fell through.";
 		MyString txtCorrectSolution = "dodge";
 		MyString txtAction = "killplayer";
 		MyString txtActionMessage = "The boulder hits you, crushing you against the wall. The dim cave fades to complete darkness as you lose all feeling below your neck. You take one last sharp, painful breath in as you lose all consciousness.";
@@ -355,9 +355,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //24
 		txtName = "Iridescent Cavern"; // loot room, relic to win boss fight
-		txtDiscover = "TODO";
-		txtReturn = "TODO";
-		txtSurroundings = "";
+		txtDiscover = "You manage to crawl through the claustrophobic tunnel and flop out into a small space. Embedded into the far wall is a series of glowing pillars which seem to change colour as you move around them. It's unlike anything you've ever seen! \nBetween these pillars lay a strange artifact, not of this world. The artifact, clearly meant to be a sword or something similar, has glowing symbols etched into the side. Once again, in your head you understand the symbols, and know it reads 'Slayer of Mothers'.";
+		txtReturn = "You return to the glowing cave where you found the strange sword.";
+		txtSurroundings = "You should crawl through the space to the North once you're done here.";
 		itemLoot = "sword";
 		Weapon *item = new Weapon(itemLoot);
 		LootRoom *tempLootRoom = new LootRoom(6, 7, txtName, txtDiscover, txtReturn, txtSurroundings, item);
@@ -368,9 +368,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //25
 		txtName = "Alien Tunnel"; 
-		txtDiscover = "TODO: alien attacks";
-		txtReturn = "TODO";
-		txtSurroundings = "";
+		txtDiscover = "Following the strange humming sound, you follow the tunnel South. As you walk further, you begin to hear a horrible sloshing sound over the humming. The tunnel reaches a ledge and drops infront of you, and as you peek your head to look over the edge, you see a figure hunched over the remains of an old farmer. The figure, no larger than a small child, looks up at you, blood dripping from its mouth. \nThe alien's skin is pale and its eyes take up most of its head. Without breaking eye contact, it reaches to its side and picks up a pulsing purple rifle. With a deafening screech, the alien jumps to its feet.";
+		txtReturn = "You return to the narrow tunnel. The corpse of a farmer, the alien's previous snack, still lays at the base of the ledge.";
+		txtSurroundings = "At the Northern end of the tunnel is the sinkhole you fell into. Further South, the tunnel seems to open up to the wreckage of an alien ship.";
 		Alien *ptrEnemy = new Alien();
 		CombatRoom *tempCombatRoom = new CombatRoom(5, 7, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveEast(false);
@@ -379,9 +379,9 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //26
 		txtName = "Mothership Wreck";
-		txtDiscover = "TODO: mother alien, oo scary";
-		txtReturn = "TODO";
-		txtSurroundings = "";
+		txtDiscover = "You approach a huge opening in the cave. The wreckage of what appears to have been an alien ship is scattered throughout the area. A number of egg sacs are growing around the site. As you walk closer, a deafening roar shakes the ground around you as a huge figure emerges from the wreckage. Much like the previous alien, only thrice the size and seemingly plated in some kind of natural armour, this monster charges towards you on all fours, shaking the whole cave with each step.";
+		txtReturn = "You return to the crash site, where the mother alien had been laying in wait.";
+		txtSurroundings = "The tunnel to the North leads back to the sinkhole. The humming sound seems to be coming from inside the wreckage, to the West.";
 		AlienBroodmother *ptrEnemy = new AlienBroodmother();
 		CombatRoom *tempCombatRoom = new CombatRoom(5, 6, txtName, txtDiscover, txtReturn, txtSurroundings, ptrEnemy);
 		tempCombatRoom->canMoveEast(false);
@@ -390,10 +390,16 @@ void initializeMap(vector<Room*> &m) {
 	}
 	{ //27
 		txtName = "Engine Room";
-		txtDiscover = "TODO: game end";
+		txtDiscover = "You reach the engine room of the alien ship. The humming sound is almost deafening now. You can feel the engine draining your energy and you know you will need to act quickly. The engine seems to be controlled by a complex alien dashboard of buttons and switches to your right. You don't undertstand anything written on the board, but you notice an obvious red button in the center of the console. Next to the button, a red switch is flicked to the top. On the verge of losing consciousness, you need to make a decision fast. Should you use the button or the switch?";
 		txtReturn = "TODO";
 		txtSurroundings = "";
-		Room *tempRoom = new Room(4, 6, txtName, txtDiscover, txtReturn, txtSurroundings);
+		MyString txtCorrectSolution = "switch";
+		MyString txtIncorrectSolution = "button";
+		MyString txtWinAction = "wingame";
+		MyString txtAction = "killplayer";
+		MyString txtActionMessage = "You slam the button down with all the strength left in you. A loud buzzing alarm starts to go off above the engine, and steam begins to be exhausted as hoses to the engine detatch and fall to the floor. The floor shakes violently and you feel the room's temperature drasically rise. The last thing you see is the top of the engine go flying before a devastating explosion rips through your body.";
+		MyString txtSolutionMessage = "You quickly flick the switch to the downwards position. Green lights around the engine turn on, and the humming sound starts to fade. You can already feel yourself regaining some of your strength. As the engine shuts down, you leave the wreckage of the ship and head back to the sinkhole. \nYou manage to work your way up the rubble and return to the old tree. You feel like you are ready for your next adventure, but for now, you decide to lay down in the soft grass and take a well deserved nap...";
+		EndGameRoom *tempRoom = new EndGameRoom(4, 6, txtName, txtDiscover, txtReturn, txtSurroundings, txtCorrectSolution, txtAction, txtActionMessage, txtSolutionMessage, txtIncorrectSolution, txtWinAction);
 		tempRoom->canMoveNorth(false);
 		tempRoom->canMoveWest(false);
 		tempRoom->canMoveSouth(false);
@@ -433,7 +439,6 @@ void startGame() {
 	//-----
 	initializeMap(map);
 	Player* player = new Player();
-	//Print name of current room in a different text colour
 	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 	player->visitRoom(0, 0, map); // Spawns the player in Room at 0, 0 (The spawn room)
 	//---------------------------------------------------------------------------------

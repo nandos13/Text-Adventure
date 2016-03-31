@@ -156,7 +156,12 @@ int Player::searchInventory(MyString itemName)
 void Player::kill()
 {
 	m_alive = false;
+
+	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hColor, 12);
 	std::cout << "You died!" << std::endl;
+	SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+	
 	gamePlaying = false;
 	Sleep(2000);
 }
@@ -198,7 +203,6 @@ void Player::attack(Actor * p)
 	else {
 		//Miss Attack
 
-		//Print name of current room in a different text colour
 		HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hColor, 2);
 		std::cout << "You missed!" << std::endl;
@@ -320,4 +324,13 @@ void Player::move(MapLocation mLoc, std::vector<Room*>& m)
 	else {
 		std::cout << "Locked!" << std::endl;
 	}
+}
+
+void Player::winGame()
+{
+	HANDLE hColor = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hColor, 14);
+	std::cout << "*You won the game!*" << std::endl;
+	SetConsoleTextAttribute(hColor, 7); //Resets text colour to white
+	gamePlaying = false;
 }

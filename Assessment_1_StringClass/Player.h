@@ -36,4 +36,5 @@ public:
 	unsigned int findCurrentRoom(std::vector<Room*>& m, unsigned int maxRooms);
 	void move(MyString direction, std::vector<Room*> &m);
 	void move(MapLocation mLoc, std::vector<Room*> &m);
+	void winGame();
 };

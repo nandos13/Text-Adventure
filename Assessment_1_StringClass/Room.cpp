@@ -175,6 +175,9 @@ void Room::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 	else if (str == "gotocave" && devMode == true) {
 		p->visitRoom(0, 4, m);
 	}
+	else if (str == "givesword" && devMode == true) {
+		p->addItem(new Weapon("sword"));
+	}
 	else {
 		//Check for two-word commands (Eg. Move North)
 		int spaceLocation = str.find(" "); //Locates the first space between words
@@ -606,13 +609,18 @@ void TeleportRoom::doOnEnter(std::vector<Room*>& m, Player * p)
 	p->visitRoom(m_toRoom.m_x, m_toRoom.m_y, m);
 }
 
-void TrapRoom::action(Player * p)
+void TrapRoom::action(Player * p, MyString act)
 {
-	if (m_action == "killplayer") {
+	if (act == "killplayer") {
 		p->setHealth(0);
 	}
-	else if (m_action == "healplayer") {
+	else if (act == "healplayer") {
 		p->setHealth((p->getHealth()) + 25);
+	}
+	else if (act == "wingame") {
+		std::cout << " \n" << std::endl;
+		Sleep(1000);
+		p->winGame();
 	}
 }
 
@@ -655,12 +663,78 @@ void TrapRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
 			m_neutralized = true;
 		}
 		else {
-			//Do action, probably cause death
+			//Do action, eg. cause death
 			std::cout << m_actionMessage.stringOutput() << std::endl;
-			action(p);
+			action(p, m_action);
 		}
 	}
 	else {
 		Room::handleInput(str, m, p);
+	}
+}
+
+EndGameRoom::~EndGameRoom()
+{
+}
+
+EndGameRoom::EndGameRoom()
+{
+	m_roomType = "action";
+	m_action = "donothing";
+	m_correctSolution = "survive";
+	m_actionMessage = "";
+	m_solutionMessage = "";
+	m_incorrectSolution = "die";
+	m_winAction = "donothing";
+	m_tryCount = 0;
+	m_neutralized = false;
+}
+
+EndGameRoom::EndGameRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction, MyString txtActionMessage, MyString txtSolutionMessage, MyString txtIncorrectSolution, MyString txtWinAction)
+{
+	m_coord.m_x = posX;
+	m_coord.m_y = posY;
+	m_areaName = txtName;
+	m_discoverText = txtDiscover;
+	m_returnText = txtReturn;
+	m_surroundingsText = txtSurroundings;
+	m_action = txtAction;
+	m_roomType = "action";
+	m_correctSolution = txtCorrectSolution;
+	m_actionMessage = txtActionMessage;
+	m_solutionMessage = txtSolutionMessage;
+	m_incorrectSolution = txtIncorrectSolution;
+	m_winAction = txtWinAction;
+	m_tryCount = 0;
+	m_neutralized = false;
+}
+
+void EndGameRoom::handleInput(MyString str, std::vector<Room*>& m, Player * p)
+{
+	if (m_neutralized == false) {
+		if (str == m_correctSolution) {
+			//Good ending
+			std::cout << m_solutionMessage.stringOutput() << std::endl;
+			m_neutralized = true;
+			action(p, m_winAction);
+		}
+		else if (str == m_incorrectSolution) {
+			//Bad ending
+			std::cout << m_actionMessage.stringOutput() << std::endl;
+			action(p, m_action);
+		}
+		else {
+			//Neither solution, only allow 3 wrong tries before player dies.
+			m_tryCount++;
+			if (m_tryCount >= 3) {
+				//Time is up, kill player
+				std::cout << "Your vision fades to black as your life force is drained by the engines. Collapsing to your knees, you let go of one final breath." << std::endl;
+				p->setHealth(0);
+			}
+			else {
+				//Count down turns to player death
+				std::cout << "You don't have much time left!" << std::endl;
+			}
+		}
 	}
 }

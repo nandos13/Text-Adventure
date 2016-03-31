@@ -160,10 +160,22 @@ protected:
 	MyString m_actionMessage;
 	MyString m_solutionMessage;
 	bool m_neutralized;
-	void action(Player * p);
+	virtual void action(Player * p, MyString act);
 public:
 	virtual ~TrapRoom();
 	TrapRoom();
 	TrapRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction, MyString txtActionMessage, MyString txtSolutionMessage);
+	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
+};
+
+class EndGameRoom : public TrapRoom {
+protected:
+	MyString m_incorrectSolution;
+	MyString m_winAction;
+	unsigned int m_tryCount;
+public:
+	virtual ~EndGameRoom();
+	EndGameRoom();
+	EndGameRoom(int posX, int posY, MyString txtName, MyString txtDiscover, MyString txtReturn, MyString txtSurroundings, MyString txtCorrectSolution, MyString txtAction, MyString txtActionMessage, MyString txtSolutionMessage, MyString txtIncorrectSolution, MyString txtWinAction);
 	virtual void handleInput(MyString str, std::vector<Room*>& m, Player* p);
 };
